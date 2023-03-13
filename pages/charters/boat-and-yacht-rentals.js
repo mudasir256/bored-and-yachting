@@ -7,7 +7,7 @@ export default function BoatAndYachtRentals() {
 		  <meta name="description" content="" />
 		</Head>
 		<main>
-			List boats / yachts and map? Let's look at airbnb first
+			List boats / yachts and map? Let&apos;s look at airbnb first
 		</main>
 	</>)
 }

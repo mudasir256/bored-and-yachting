@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-export default function Privacy Policy() {
+export default function PrivacyPolicy() {
 	return (<>
 		<Head>
 		  <title>Bored and Yachting | Privacy Policy</title>
