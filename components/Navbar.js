@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import Icon from '@/components/Icon'
 import { useState } from 'react'
 import useComponentVisible from '@/hooks/useComponentVisible'
@@ -10,8 +11,8 @@ export default function Navbar() {
 	const DropdownMenu = () => (
 		<div className="w-32 bg-white shadow p-4 rounded-lg">
 			<ul>
-				<li>Sign in</li>
-				<li>Sign up</li>
+				<li><Link href="/login">Log in</Link></li>
+				<li><Link href="/sign-up">Sign up</Link></li>
 			</ul>
 		</div>
 	)

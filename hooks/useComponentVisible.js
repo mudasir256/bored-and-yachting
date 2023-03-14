@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router'
 
 export default function useComponentVisible(initialIsVisible) {
+    const router = useRouter()
     const [isComponentVisible, setIsComponentVisible] = useState(initialIsVisible);
     const ref = useRef(null);
 
@@ -16,6 +18,10 @@ export default function useComponentVisible(initialIsVisible) {
             document.removeEventListener('click', handleClickOutside, true);
         };
     }, []);
+
+    useEffect(() => {
+        setIsComponentVisible(false)
+    }, [router])
 
     return { ref, isComponentVisible, setIsComponentVisible };
 }
