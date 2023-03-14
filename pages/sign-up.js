@@ -1,21 +1,37 @@
 import Input from '@/components/Input'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+
 import { useState } from 'react'
 import { createAccount } from '@/endpoints/post'
 
 export default function SignUp() {
+	const router = useRouter()
 
 	const [email, setEmail] = useState('')
-	const [phoneNumber, setPhoneNumber] = useState(null)
+	const [phoneNumber, setPhoneNumber] = useState('')
 	const [password, setPassword] = useState('')
 	const [roleSelected, setRoleSelected] = useState(null)
 
-	const createAccount = async (e) => {
-		//TODO: create account
-		e.preventDefault()
-		const result = await createAccount({ email, phoneNumber, password })
-		console.log(result)
+	const [errorMessage, setErrorMessage] = useState('')
+
+	const handleCreateAccount = async (e) => {
+		setErrorMessage('')
+		try {
+			e.preventDefault()
+			const result = await createAccount({ email, phoneNumber, password, roles: [roleSelected] })
+			console.log(result)
+			if (result.success) {
+				router.push('/login')
+				return
+			}
+			setErrorMessage(result.message)
+		} catch (err) {
+			console.log(err)
+			setErrorMessage(err)
+		}
+
 	}
 
 	const Card = ({ id, header, description, src , alt = '' }) => (
@@ -60,11 +76,11 @@ export default function SignUp() {
 			</div>}
 			{roleSelected && <div>
 				<p className="text-sm mb-2">Great! Create an account to access these features and more from your account.</p>
-				<form className="space-y-2" onSubmit={(e) => createAccount(e)}>
+				<form className="space-y-2" onSubmit={(e) => handleCreateAccount(e)}>
 					<Input 
 						type="text" 
 						id="email"
-						onChange={(e) => setEmail(e.target? .value)}
+						onChange={(e) => setEmail(e.target?.value)}
 						value={email}
 					 	placeholder="Email*" 
 					 	isRequired={true} 
@@ -86,7 +102,8 @@ export default function SignUp() {
 					 	isRequired={true}
 					 />
 					 <p className="text-xs">*You'll receive an email to confirm and activate your account. <Link className="underline text-blue-500" href="/legal/privacy-policy" target="_blank">Privacy Policy</Link></p>
-					 <Input type="submit" />
+					 <Input type="submit" value="Submit" />
+					 {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
 				</form>
 			</div>
 			}

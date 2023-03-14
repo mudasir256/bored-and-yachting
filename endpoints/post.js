@@ -1,3 +1,4 @@
+
 //POST endpoints with FETCH
 
 const POST_FETCH_OPTIONS = (data) => {
@@ -13,11 +14,11 @@ const POST_FETCH_OPTIONS = (data) => {
 }
 
 const baseUrl = (slug) => {
-	return `${process.env.API_URL}${slug}`
+	return `${process.env.NEXT_PUBLIC_API_URL}${slug}`
 }
 
-export const createAccount = async ({ email, phoneNumber, password }) => {
-	const result = await fetch(baseUrl('/create-account'), POST_FETCH_OPTIONS({ email, phoneNumber, password }))
+export const createAccount = async ({ email, phoneNumber, password, roles }) => {
+	const result = await fetch(baseUrl('/auth/create-user'), POST_FETCH_OPTIONS({ email, phoneNumber, password, roles }))
 	const data = await result.json()
 	return data
 }
