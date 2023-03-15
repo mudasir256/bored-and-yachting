@@ -8,6 +8,8 @@ export default function Navbar() {
 
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
+	//TODO: update component based on localStorage login roles
+	//etc
 	const DropdownMenu = () => (
 		<div className="w-32 bg-white shadow p-4 rounded-lg">
 			<ul>

@@ -105,7 +105,7 @@ export default function SignUp() {
 					 	placeholder="Password"
 					 	isRequired={true}
 					 />
-					 <p className="text-xs">*You'll receive an email to confirm and activate your account. <Link className="underline text-blue-500" href="/legal/privacy-policy" target="_blank">Privacy Policy</Link></p>
+					 <p className="text-xs">*You&apos;ll receive an email to confirm and activate your account. <Link className="underline text-blue-500" href="/legal/privacy-policy" target="_blank">Privacy Policy</Link></p>
 					 <Input type="submit" value="Create Account" />
 					 {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
 				</form>
