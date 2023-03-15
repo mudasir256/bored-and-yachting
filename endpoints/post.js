@@ -23,3 +23,8 @@ export const createAccount = async ({ email, phoneNumber, password, roles }) => 
 	return data
 }
 
+export const login = async ({ email, password }) => {
+	const result = await fetch(baseUrl('/auth/login'), POST_FETCH_OPTIONS({ email, password }))
+	const data = await result.json()
+	return data
+}

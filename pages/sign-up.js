@@ -1,10 +1,14 @@
 import Input from '@/components/Input'
+import Header from '@/components/small/Header'
+import MainPageLayout from '@/components/layouts/MainPageLayout'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { useState } from 'react'
 import { createAccount } from '@/endpoints/post'
+import { USER_TYPES } from '@/helpers/index'
 
 export default function SignUp() {
 	const router = useRouter()
@@ -47,26 +51,26 @@ export default function SignUp() {
 	)
 
 	return(<>
-		<main className="max-w-3xl mx-auto py-4">
-			<h1 className="text-xl font-bold my-2">Sign Up for Bored and Yachting</h1>
+		<MainPageLayout>
+			<Header text="Sign Up for Bored and Yachting" />
 			{roleSelected === null && <div>
 				<p>Tell us a little more about what you&apos;re looking for:</p>
 				
 				<div className="my-2 flex flex-row flex-start gap-4 flex-wrap">
 					<Card 
-						id="CAPTAIN"
+						id={USER_TYPES.CAPTAIN}
 						header="I'm a captain" 
 						description="I'd like to connect with boat owners and renters and make up to $<amount>/hr."
 						src="/content/boat.jpg"
 					/>
 					<Card 
-						id="BOAT_OWNER"
+						id={USER_TYPES.BOAT_OWNER}
 						header="I'm a boat owner" 
 						description="I'd like to connect with boat renters and captains and earn money renting."
 						src="/content/boat.jpg"
 					/>
 					<Card
-						id="CUSTOMER"
+						id={USER_TYPES.CUSTOMER}
 						header="I'm a renter"
 						description="I'd like to discover and explore over <amount> boats with ease."
 						src="/content/boat.jpg"
@@ -88,7 +92,7 @@ export default function SignUp() {
 					<Input 
 						type="number" 
 						id="phoneNumber"
-						onChange={(e) => setPhoneNumber(e.target? .value)}
+						onChange={(e) => setPhoneNumber(e.target?.value)}
 						value={phoneNumber}
 					 	placeholder="Phone Number" 
 					 	isRequired={true} 
@@ -102,11 +106,11 @@ export default function SignUp() {
 					 	isRequired={true}
 					 />
 					 <p className="text-xs">*You'll receive an email to confirm and activate your account. <Link className="underline text-blue-500" href="/legal/privacy-policy" target="_blank">Privacy Policy</Link></p>
-					 <Input type="submit" value="Submit" />
+					 <Input type="submit" value="Create Account" />
 					 {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
 				</form>
 			</div>
 			}
-		</main>
+		</MainPageLayout>
 	</>)
 }

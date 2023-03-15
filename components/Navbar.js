@@ -19,7 +19,7 @@ export default function Navbar() {
 
 	return (
 		<nav className="p-4 shadow flex flex-row items-center justify-between">
-			<Image src="/logo.png" alt="Bored and Yachting Logo" width="290" height="57" />
+			<Link href="/"><Image src="/logo.png" alt="Bored and Yachting Logo" width="290" height="57" /></Link>
 			<div className="mr-4 pt-2 cursor-pointer" onClick={() => setIsComponentVisible(true)}>
 				<Icon name="menu" />
 				<div className="absolute">
