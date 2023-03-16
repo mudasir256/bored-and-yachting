@@ -1,6 +1,8 @@
 import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 import Header from '@/components/small/Header'
 import Subheader from '@/components/small/Subheader'
+import Button from '@/components/small/Button'
+import Link from 'next/link'
 
 import BoatOwnerReservationsTypePicker from '@/components/combined/BoatOwnerReservationsTypePicker'
 
@@ -30,7 +32,7 @@ export default function Dashboard() {
 
 	return (<>
 		<ContentPageLayout>
-			<div className="space-y-8">
+			<div className="space-y-12">
 				<Header text={`Welcome back ${firstName},`} />
 
 				<div className="space-y-2">
@@ -46,7 +48,11 @@ export default function Dashboard() {
 				</div>
 
 				<div>
-					<Subheader text="Your vessels" />
+					<div className="flex flex-row items-center">
+						<Subheader text="Your vessels" />	
+						<Link href="/boat-owner/create" className="ml-auto underline">Add a vessel</Link>
+					</div>
+	
 				</div>
 			</div>	
 		</ContentPageLayout>

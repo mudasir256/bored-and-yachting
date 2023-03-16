@@ -1,23 +1,44 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import Icon from '@/components/Icon'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useComponentVisible from '@/hooks/useComponentVisible'
 import Button from '@/components/small/Button'
 import { removeLoginCredentials } from '@/helpers/index'
+import { useRouter } from 'next/router'
 
 export default function Navbar() {
+	const router = useRouter()
 
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
-	//TODO: update component based on localStorage login roles
-	//etc
+	const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+	useEffect(() => {
+		window.addEventListener('storage', handleStorageChange, false);
+		return () => {
+		    window.removeEventListener('storage', handleStorageChange, false);
+		};
+	}, [])
+
+	const handleStorageChange = () => {
+		console.log(localStorage.getItem('isLoggedIn'))
+		setIsLoggedIn(localStorage.getItem('isLoggedIn'))
+	}
+
+	const handleLogout = () => {
+		removeLoginCredentials()
+		router.push('/')
+	}
+
 	const DropdownMenu = () => (
 		<div className="w-32 bg-white shadow p-4 rounded-lg">
 			<ul>
-				<li><Link href="/login">Log in</Link></li>
-				<li><Link href="/sign-up">Sign up</Link></li>
-				<li><p onClick={() => removeLoginCredentials()}>Logout</p></li>
+				{!isLoggedIn && <>
+					<li><Link href="/login">Log in</Link></li>
+					<li><Link href="/sign-up">Sign up</Link></li>
+				</>}
+				{isLoggedIn && <li><p onClick={() => handleLogout()}>Logout</p></li>}
 			</ul>
 		</div>
 	)

@@ -132,7 +132,7 @@ export default function FirstTimeBoatOwnerForm() {
 	{/* Step 3 Add a Boat */}
 	<div className="mt-8 flex flex-row items-center gap-2">
 		<CircleWithText width="w-8" height="h-8" text="3" />
-		<Subheader text="Boat / Yacht Details" />
+		<Subheader text="Vessel Details" />
 	</div>
 	{step === 3 &&
 	<form className="mt-2 space-y-2" onSubmit={handleBoatDetails}>

@@ -35,6 +35,9 @@ export const saveLoginCredentials = ({ _id, token, firstName, roles }) => {
 		localStorage.setItem('roles', roles)
 	}
 	//TODO: add profile picture
+	localStorage.setItem('isLoggedIn', true)
+	window.dispatchEvent(new Event("storage"));
+
 }
 
 export const removeLoginCredentials = () => {
@@ -42,4 +45,6 @@ export const removeLoginCredentials = () => {
 	localStorage.removeItem('accessToken');
 	localStorage.removeItem('firstName');
 	localStorage.removeItem('roles')
+	localStorage.removeItem('isLoggedIn')
+	window.dispatchEvent(new Event("storage"));
 }

@@ -1,6 +1,13 @@
 import { 
 	faUser,
 	faBars,
+	faArrowLeft,
+	faSailboat,
+	//faLocationDot,
+	faCircleInfo,
+	faImage,
+	faLocationCrosshairs,
+	faDollarSign,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -9,6 +16,12 @@ export default function Icon({ name, color = 'black', size = 'lg' }) {
 	const icons = [
 		{ name: 'user', component: faUser },
 		{ name: 'menu', component: faBars },
+		{ name: 'left-arrow', component: faArrowLeft },
+		{ name: 'boat', component: faSailboat },
+		{ name: 'location', component: faLocationCrosshairs },
+		{ name: 'info', component: faCircleInfo },
+		{ name: 'photo', component: faImage },
+		{ name: 'pricing', component: faDollarSign },
 	]
 
 	const icon = icons.find(icon => icon.name === name) || { component: faUser }
