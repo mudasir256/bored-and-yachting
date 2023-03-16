@@ -5,6 +5,22 @@ export const USER_TYPES = {
 	CAPTAIN: 'CAPTAIN',
 }
 
+export const RESERVATION_STATUS = {
+	TODAY: 'TODAY',
+	UPCOMING: 'UPCOMING',
+	PENDING_REVIEW: 'PENDING_REVIEW',
+	CANCELED: 'CANCELED',
+	COMPLETED: 'COMPLETED'
+}
+
+export const RESERVATION_STATUS_TEXT = {
+	TODAY: 'Today',
+	UPCOMING: 'Upcoming',
+	PENDING_REVIEW: 'Pending Review',
+	CANCELED: 'Canceled',
+	COMPLETED: 'Completed'
+}
+
 export const saveLoginCredentials = ({ _id, token, firstName, roles }) => {
 	if (_id) {
 		localStorage.setItem('userId', _id)
@@ -19,4 +35,11 @@ export const saveLoginCredentials = ({ _id, token, firstName, roles }) => {
 		localStorage.setItem('roles', roles)
 	}
 	//TODO: add profile picture
+}
+
+export const removeLoginCredentials = () => {
+	localStorage.removeItem('userId');
+	localStorage.removeItem('accessToken');
+	localStorage.removeItem('firstName');
+	localStorage.removeItem('roles')
 }

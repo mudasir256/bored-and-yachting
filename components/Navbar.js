@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Icon from '@/components/Icon'
 import { useState } from 'react'
 import useComponentVisible from '@/hooks/useComponentVisible'
+import Button from '@/components/small/Button'
+import { removeLoginCredentials } from '@/helpers/index'
 
 export default function Navbar() {
 
@@ -15,6 +17,7 @@ export default function Navbar() {
 			<ul>
 				<li><Link href="/login">Log in</Link></li>
 				<li><Link href="/sign-up">Sign up</Link></li>
+				<li><p onClick={() => removeLoginCredentials()}>Logout</p></li>
 			</ul>
 		</div>
 	)
