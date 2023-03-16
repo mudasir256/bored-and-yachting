@@ -16,6 +16,7 @@ export default function Navbar() {
 
 	useEffect(() => {
 		window.addEventListener('storage', handleStorageChange, false);
+		handleStorageChange()
 		return () => {
 		    window.removeEventListener('storage', handleStorageChange, false);
 		};
