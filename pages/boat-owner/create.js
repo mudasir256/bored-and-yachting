@@ -1,6 +1,13 @@
 import SidePanelPageLayout from '@/components/layouts/SidePanelPageLayout'
 import LinkWithIcon from '@/components/small/LinkWithIcon'
 import { useState } from 'react'
+import Input from '@/components/Input'
+import BasicInformationForm from '@/components/combined/boat/BasicInformationForm'
+import ExtraDetailsForm from '@/components/combined/boat/ExtraDetailsForm'
+import LocationForm from '@/components/combined/boat/LocationForm'
+import PhotosAndVideoForm from '@/components/combined/boat/PhotosAndVideoForm'
+import PricingForm from '@/components/combined/boat/PricingForm'
+import DeclarationsForm from '@/components/combined/boat/DeclarationsForm'
 
 export default function Create() {
 
@@ -9,7 +16,8 @@ export default function Create() {
 		LOCATION: 'LOCATION',
 		DESCRIPTION: 'DESCRIPTION',
 		MEDIA: 'PHOTOS_AND_VIDEOS',
-		PRICING: 'PRICING_DETAILS'
+		PRICING: 'PRICING_DETAILS',
+		DECLARATIONS: 'DECLARATIONS',
 	}
 
 	const [tabSelected, setTabSelected] = useState(BOAT_TABS.INFO)
@@ -27,32 +35,68 @@ export default function Create() {
 						iconName="info" 
 						onClick={() => setTabSelected(BOAT_TABS.INFO)}
 						text="Vessel Information" 
+						selected={tabSelected === BOAT_TABS.INFO}
 					/>
 					<LinkWithIcon
 						iconName="location"
 						onClick={() => setTabSelected(BOAT_TABS.LOCATION)}
 						text="Vessel Location"
+						selected={tabSelected === BOAT_TABS.LOCATION}
 					/>
 					<LinkWithIcon
 						iconName="boat"
 						onClick={() => setTabSelected(BOAT_TABS.DESCRIPTION)}
 						text="Extra Details"
+						selected={tabSelected === BOAT_TABS.DESCRIPTION}
 					/>
 					<LinkWithIcon
 						iconName="photo"
 						onClick={() => setTabSelected(BOAT_TABS.MEDIA)}
 						text="Photos & Video"
+						selected={tabSelected === BOAT_TABS.MEDIA}
 					/>
 					<LinkWithIcon
 						iconName="pricing"
 						onClick={() => setTabSelected(BOAT_TABS.PRICING)}
 						text="Pricing Details"
+						selected={tabSelected === BOAT_TABS.PRICING}
+					/>
+					<LinkWithIcon
+						iconName="declaration"
+						onClick={() => setTabSelected(BOAT_TABS.DECLARATIONS)}
+						text="Declarations"
+						selected={tabSelected === BOAT_TABS.DECLARATIONS}
 					/>
 				</div>
 			</div>
 			{tabSelected === BOAT_TABS.INFO &&
 				<div className="p-4 shadow w-full">
-					Boat info tab
+					<BasicInformationForm />
+				</div>
+			}
+			{tabSelected === BOAT_TABS.LOCATION &&
+				<div className="p-4 shadow w-full">
+					<LocationForm />
+				</div>
+			}
+			{tabSelected === BOAT_TABS.DESCRIPTION &&
+				<div className="p-4 shadow w-full">
+					<ExtraDetailsForm />
+				</div>
+			}
+			{tabSelected === BOAT_TABS.MEDIA &&
+				<div className="p-4 shadow w-full">
+					<PhotosAndVideoForm />
+				</div>
+			}
+			{tabSelected === BOAT_TABS.PRICING &&
+				<div className="p-4 shadow w-full">
+					<PricingForm />
+				</div>
+			}
+			{tabSelected === BOAT_TABS.DECLARATIONS &&
+				<div className="p-4 shadow w-full">
+					<DeclarationsForm />
 				</div>
 			}
 		</SidePanelPageLayout>

@@ -8,6 +8,7 @@ import {
 	faImage,
 	faLocationCrosshairs,
 	faDollarSign,
+	faCircleExclamation
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -22,6 +23,8 @@ export default function Icon({ name, color = 'black', size = 'lg' }) {
 		{ name: 'info', component: faCircleInfo },
 		{ name: 'photo', component: faImage },
 		{ name: 'pricing', component: faDollarSign },
+		{ name: 'declaration', component: faCircleExclamation }
+
 	]
 
 	const icon = icons.find(icon => icon.name === name) || { component: faUser }
