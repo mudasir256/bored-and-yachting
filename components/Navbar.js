@@ -39,7 +39,11 @@ export default function Navbar() {
 					<li><Link href="/login">Log in</Link></li>
 					<li><Link href="/sign-up">Sign up</Link></li>
 				</>}
-				{isLoggedIn && <li><p onClick={() => handleLogout()}>Logout</p></li>}
+				{isLoggedIn && <>
+					{/*Make account switching / dashboard based on roles */}
+					<li><Link href="/boat-owner/dashboard">Dashboard</Link></li>
+					<li><p onClick={() => handleLogout()}>Logout</p></li>
+				</>}
 			</ul>
 		</div>
 	)
