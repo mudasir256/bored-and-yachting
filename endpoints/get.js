@@ -11,6 +11,10 @@ const GET_FETCH_OPTIONS = () => {
 	}
 }
 
+const baseUrl = (slug) => {
+	return `${process.env.NEXT_PUBLIC_API_URL}${slug}`
+}
+
 const fetcher = ( url, query = '' ) => fetch(
 	`${url}${query}`, 
 	GET_FETCH_OPTIONS()
@@ -20,6 +24,18 @@ const fetcher = ( url, query = '' ) => fetch(
 	}
 	return res.json()
 }) 
+
+//Google Maps API
+export function getAutocompleteAddresses = async (searchText, callback) => {
+	fetch(`${baseUrl('/locations/autocomplete')}?searchText=${searchText}`, GET_FETCH_OPTIONS())
+		.then(res => res.json())
+		.then(data => {
+			callback(data)
+		})
+		.catch(err => {
+			callback(err)
+		}) 
+}
 
 
 
