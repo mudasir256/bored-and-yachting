@@ -7,9 +7,7 @@ export default function Input({ id, placeholder, label, type, onChange, isRequir
 		classStyles = 'cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded'
 	}
 
-
-
-	if (type === 'address') {
+	const AddressInput = () => {
 		const [searchText, setSearchText] = useState('')
 		const [timer, setTimer] = useState()
 		const [predictions, setPredictions] = useState([])
@@ -36,7 +34,6 @@ export default function Input({ id, placeholder, label, type, onChange, isRequir
 					placeholder={placeholder} 
 					id={id} 
 					className={className} 
-					placeholder={placeholder} 
 					required={isRequired}
 					onChange={(e) => queryPlaces(e)} 
 					value={searchText}
@@ -45,6 +42,10 @@ export default function Input({ id, placeholder, label, type, onChange, isRequir
 				/>
 			</div>
 		)
+	}
+
+	if (type === 'address') {
+		return <AddressInput />
 	}
 
 	if (type === 'file') {
