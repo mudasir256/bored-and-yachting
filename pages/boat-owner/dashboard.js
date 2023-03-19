@@ -3,16 +3,20 @@ import Header from '@/components/small/Header'
 import Subheader from '@/components/small/Subheader'
 import Button from '@/components/small/Button'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import BoatOwnerReservationsTypePicker from '@/components/combined/BoatOwnerReservationsTypePicker'
+import { createBoat } from '@/endpoints/post'
+import { useUserBoats } from '@/endpoints/get'
 
 import { useEffect, useState } from 'react' 
 import { useRouter } from 'next/router'
 
 export default function Dashboard() {
 
+	const { boats, isLoading } = useUserBoats()
 	const router = useRouter()
-
+	console.log(boats)
 	const [isFirstTimeBoatOwnerLogin, setIsFirstTimeBoatOwnerLogin] = useState(false)
 	const [firstName, setFirstName] = useState('')
 
@@ -28,6 +32,13 @@ export default function Dashboard() {
 
 	if (isFirstTimeBoatOwnerLogin) {
 		router.push('/boat-owner/setup')
+	}
+
+	const handleCreateNewBoat = async () => {
+		const result = await createBoat(localStorage.getItem('userId'))
+		//TODO: error handle
+		console.log(result)
+		router.push(`/boat-owner/${result.boat._id}`)
 	}
 
 	return (<>
@@ -50,9 +61,16 @@ export default function Dashboard() {
 				<div>
 					<div className="flex flex-row items-center">
 						<Subheader text="Your vessels" />	
-						<Link href="/boat-owner/create" className="ml-auto underline">Add a vessel</Link>
+						<button onClick={() => handleCreateNewBoat()} className="ml-auto underline">Add a vessel</button>
 					</div>
-	
+					<div className="mt-2 flex flex-row gap-2 justify-between flex-wrap">
+					{boats?.map(boat => (
+						<Link href={`/boat-owner/${boat._id}`} key={boat._id} className="shadow rounded">
+							<Image width="240" height="160" /> {/* boat.photos */}
+							<h2 className="ml-2">{boat.name}</h2>
+						</Link>
+					))}
+					</div>
 				</div>
 			</div>	
 		</ContentPageLayout>

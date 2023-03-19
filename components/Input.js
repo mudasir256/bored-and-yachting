@@ -29,7 +29,7 @@ export default function Input({ id, placeholder, label, type, onChange, isRequir
 		}
 		return (
 			<div>
-				{label && <label for={id} class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label}</label>}
+				{label && <label for={id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label}</label>}
 				<input 
 					placeholder={placeholder} 
 					id={id} 
@@ -51,7 +51,7 @@ export default function Input({ id, placeholder, label, type, onChange, isRequir
 	if (type === 'file') {
 		return(
 			<div>
-	      {label && <label for={id} class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label}</label>}
+	      {label && <label for={id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label}</label>}
 	      <input 
 	      	type={type} 
 	      	id={id} 
@@ -69,7 +69,7 @@ export default function Input({ id, placeholder, label, type, onChange, isRequir
 
 	return(
 		<div>
-      {label && <label for={id} class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label}</label>}
+      {label && <label for={id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label}</label>}
       <input 
       	type={type} 
       	id={id} 

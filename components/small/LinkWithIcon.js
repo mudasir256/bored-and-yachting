@@ -12,7 +12,7 @@ export default function LinkWithIcon({ iconName = '', href, onClick, text, selec
 	 if (onClick) {
 	 	return(
 	 		<div onClick={onClick} className={style}>
-	 			<Icon name={iconName} size="md" />
+	 			<Icon name={iconName} size="sm" />
 	 			<p className="text-sm">{text}</p>
 	 		</div>
 	 	)
@@ -20,7 +20,7 @@ export default function LinkWithIcon({ iconName = '', href, onClick, text, selec
 
 	 return(
 	 	<div className={style}>
-	 		<Icon name={iconName} size="md" />
+	 		<Icon name={iconName} size="sm" />
 	 		<Link className="text-sm" href={href}>{text}</Link>
 	 	</div>
 	)

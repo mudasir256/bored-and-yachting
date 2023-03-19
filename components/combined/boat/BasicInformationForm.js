@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import Input from '@/components/Input'
+import { useBoat } from '@/endpoints/get'
 
 export default function BasicInformationForm() {
+
+	const { boat, isLoading } = useBoat()
 
 	const [vesselName, setVesselName] = useState('')
 	const [yearBuilt, setYearBuilt] = useState('')
