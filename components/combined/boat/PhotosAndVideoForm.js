@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Input from '@/components/Input'
 
-export default function PhotosAndVideoForm() {
+export default function PhotosAndVideoForm({ boatId }) {
 
 	const [photos, setPhotos] = useState([])
 	const [videoLink, setVideoLink] = useState('')

@@ -1,24 +1,60 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Input from '@/components/Input'
 import { useBoat } from '@/endpoints/get'
+import { baseUrl, updateBoat } from '@/endpoints/post'
 
-export default function BasicInformationForm() {
+export default function BasicInformationForm({ boatId }) {
 
-	const { boat, isLoading } = useBoat()
+	const { boat, isLoading } = useBoat(boatId)
 
-	const [vesselName, setVesselName] = useState('')
+	const [name, setName] = useState('')
 	const [yearBuilt, setYearBuilt] = useState('')
 	const [make, setMake] = useState('')
 	const [model, setModel] = useState('')
 	const [maxNumberOfPassengers, setMaxNumberOfPassengers] = useState('')
-	const [numberOfCabins, setNumberOfCabins] = useState('')
-	const [numberOfBathrooms, setNumberOfBathrooms] = useState('')
+	const [cabins, setCabins] = useState('')
+	const [bathrooms, setBathrooms] = useState('')
 	const [vesselLength, setVesselLength] = useState('')
 
+	const [saved, setSaved] = useState(false)
 
-	const handleBoatInfo = () => {
-
+	const handleBoatInfo = async (e) => {
+		e.preventDefault()
+		const result = await updateBoat(boatId, 
+			{ 
+				name, 
+				yearBuilt, 
+				make, 
+				model, 
+				indoorFeatures: {
+					maxNumberOfPassengers,
+					cabins,
+					bathrooms
+				},
+				vesselLengthInFeet: vesselLength
+			}
+		)
+		if (result.success) {
+			setSaved(true)
+		}
 	}
+
+	useEffect(() => {
+		if (boat) {
+			setName(boat.name || '')
+			setYearBuilt(boat.yearBuilt || '')
+			setMake(boat.make || '')
+			setModel(boat.model || '')
+			setMaxNumberOfPassengers(boat.indoorFeatures?.maxNumberOfPassengers || '')
+			setCabins(boat.indoorFeatures?.cabins || '')
+			setBathrooms(boat.indoorFeatures?.bathrooms || '')
+			setVesselLength(boat.vesselLengthInFeet || '')
+		}
+	}, [boat])
+
+	useEffect(() => {
+		setSaved(false)
+	}, [name, yearBuilt, make, model, maxNumberOfPassengers, cabins, bathrooms, vesselLength])
 
 	return (
 		<form onSubmit={handleBoatInfo}>
@@ -26,10 +62,10 @@ export default function BasicInformationForm() {
 				<Input 
 					type="text" 
 					label="Vessel Name"
-					id="vesselName"
+					id="name"
 				 	placeholder="Vessel Name" 
-				 	onChange={(e) => setVesselName(e.target?.value)}
-				 	value={vesselName}
+				 	onChange={(e) => setName(e.target?.value)}
+				 	value={name}
 				 	isRequired={true} 
 				 />
 				<Input 
@@ -62,28 +98,28 @@ export default function BasicInformationForm() {
 		   	 <Input 
 			     	type="text" 
 			     	label="Max # of Passengers"
-			     	id="model"
-			      placeholder="Model"
-			      onChange={(e) => setModel(e.target?.value)}
-			      value={model} 
+			     	id="maxNumberOfPassengers"
+			      placeholder="Max # of Passengers"
+			      onChange={(e) => setMaxNumberOfPassengers(e.target?.value)}
+			      value={maxNumberOfPassengers} 
 			      isRequired={true} 
 		      />
          	<Input 
-      	    type="text" 
+      	    type="number" 
       	    label="Number of Cabins"
-      	    id="numberOfCabins"
+      	    id="cabins"
       	    placeholder="# of Cabins"
-      	    onChange={(e) => setNumberOfCabins(e.target?.value)}
-      	    value={numberOfCabins} 
+      	    onChange={(e) => setCabins(e.target?.value)}
+      	    value={cabins} 
       	    isRequired={true} 
            />
 	       	 <Input 
-    	     		type="text" 
+    	     		type="number" 
     	     		label="Number of Bathrooms"
-    	     		id="numberOfBathrooms"
+    	     		id="bathrooms"
     	      	placeholder="Number of Bathrooms"
-    	      	onChange={(e) => setNumberOfBathrooms(e.target?.value)}
-    	      	value={numberOfBathrooms} 
+    	      	onChange={(e) => setBathrooms(e.target?.value)}
+    	      	value={bathrooms} 
     	      	isRequired={true} 
           	/>
        	 <Input 
@@ -98,7 +134,7 @@ export default function BasicInformationForm() {
 			 		<div className="col-span-3">
 			   	 <Input 
 			   	 	type="submit"
-			   	 	value="Save"
+			   	 	value={saved ? '✓' : "Save"} 
 			   	 />
 			   	</div>
 			</div>

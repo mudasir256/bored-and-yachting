@@ -100,32 +100,32 @@ export default function Create() {
 			</div>
 			{tabSelected === BOAT_TABS.INFO &&
 				<div className="p-4 shadow w-full">
-					<BasicInformationForm />
+					<BasicInformationForm boatId={boatId} />
 				</div>
 			}
 			{tabSelected === BOAT_TABS.LOCATION &&
 				<div className="p-4 shadow w-full">
-					<LocationForm />
+					<LocationForm boatId={boatId} />
 				</div>
 			}
 			{tabSelected === BOAT_TABS.DESCRIPTION &&
 				<div className="p-4 shadow w-full">
-					<ExtraDetailsForm />
+					<ExtraDetailsForm boatId={boatId} />
 				</div>
 			}
 			{tabSelected === BOAT_TABS.MEDIA &&
 				<div className="p-4 shadow w-full">
-					<PhotosAndVideoForm />
+					<PhotosAndVideoForm boatId={boatId} />
 				</div>
 			}
 			{tabSelected === BOAT_TABS.PRICING &&
 				<div className="p-4 shadow w-full">
-					<PricingForm />
+					<PricingForm boatId={boatId} />
 				</div>
 			}
 			{tabSelected === BOAT_TABS.DECLARATIONS &&
 				<div className="p-4 shadow w-full">
-					<DeclarationsForm />
+					<DeclarationsForm boatId={boatId} />
 				</div>
 			}
 			<div ref={ref}>

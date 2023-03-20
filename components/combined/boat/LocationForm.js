@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Input from '@/components/Input'
 
-export default function LocationForm() {
+export default function LocationForm({ boatId }) {
 
 	const [boatAddress, setBoatAddress] = useState('')
 	const [charterAddress, setCharterAddress] = useState('')

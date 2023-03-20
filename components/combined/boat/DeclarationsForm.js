@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Input from '@/components/Input'
 
-export default function DeclarationsForm() {
+export default function DeclarationsForm({ boatId }) {
 
 	const [cashValue, setCashValue] = useState('')
 	const [hullId, setHullId] = useState('')
