@@ -8,8 +8,16 @@ import LocationForm from '@/components/combined/boat/LocationForm'
 import PhotosAndVideoForm from '@/components/combined/boat/PhotosAndVideoForm'
 import PricingForm from '@/components/combined/boat/PricingForm'
 import DeclarationsForm from '@/components/combined/boat/DeclarationsForm'
+import { useRouter } from 'next/router'
+import WarningDeleteModal from '@/components/modals/WarningDeleteModal'
+import useComponentVisible from '@/hooks/useComponentVisible'
 
 export default function Create() {
+
+	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
+
+	const router = useRouter()
+	const { boatId } = router.query
 
 	const BOAT_TABS = {
 		INFO: 'INFO',
@@ -21,6 +29,10 @@ export default function Create() {
 	}
 
 	const [tabSelected, setTabSelected] = useState(BOAT_TABS.INFO)
+
+	const deleteBoat = async () => {
+		
+	}
 
 	return (<>
 		<SidePanelPageLayout>
@@ -67,6 +79,11 @@ export default function Create() {
 						text="Declarations"
 						selected={tabSelected === BOAT_TABS.DECLARATIONS}
 					/>
+					<LinkWithIcon
+						iconName="delete"
+						onClick={() => setIsComponentVisible(true)}
+						text="Delete Vessel"
+					/>
 				</div>
 			</div>
 			{tabSelected === BOAT_TABS.INFO &&
@@ -99,6 +116,14 @@ export default function Create() {
 					<DeclarationsForm />
 				</div>
 			}
+			<div ref={ref}>
+				{isComponentVisible && <WarningDeleteModal 
+					header="Delete Vessel?" 
+					description="Are you sure you want to delete this vessel? This action cannot be undone." 
+					onDelete={deleteBoat}
+				/>
+			}
+			</div>
 		</SidePanelPageLayout>
 	</>)
 }
