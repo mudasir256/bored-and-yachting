@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Input from '@/components/Input'
 import { updateBoat } from '@/endpoints/post'
 import { useBoat } from '@/endpoints/get'
+import { FEATURES_LIST, AMENITIES_LIST } from '@/helpers/index'
 
 export default function ExtraDetailsForm({ boatId }) {
 
@@ -24,27 +25,6 @@ export default function ExtraDetailsForm({ boatId }) {
 	useEffect(() => {
 		setSaved(false)
 	}, [description, selectedAmenities, selectedFeatures])
-
-	const FEATURES_LIST = {
-		SPEAKER_SYSTEM: 'Speaker system',
-		TELEVISION: 'Television',
-		BATHROOM: 'Bathroom',
-		REFRIGERATOR: 'Refrigerator',
-		MICROWAVE: 'Microwave',
-		STOVE_TOP: 'Stove-top',
-		BEDROOMS: 'Bedrooms',
-		SWIM_PLATFORM: 'Swim platform',
-		LADDER: 'Ladder'
-	}
-
-	const AMENITIES_LIST = {
-		COOLER: 'Cooler',
-		LILY_PAD: 'Lily pad',
-		NOODLES: 'Noodles',
-		FLOATIES: 'Floaties',
-		GOGGLES: 'Goggles',
-		FLIPPERS: 'Flippers'
-	}
 
 	const handleBoatExtraDetails = async (e) => {
 		e.preventDefault()

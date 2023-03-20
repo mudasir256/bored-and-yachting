@@ -21,6 +21,27 @@ export const RESERVATION_STATUS_TEXT = {
 	COMPLETED: 'Completed'
 }
 
+export const FEATURES_LIST = {
+	SPEAKER_SYSTEM: 'Speaker system',
+	TELEVISION: 'Television',
+	BATHROOM: 'Bathroom',
+	REFRIGERATOR: 'Refrigerator',
+	MICROWAVE: 'Microwave',
+	STOVE_TOP: 'Stove-top',
+	BEDROOMS: 'Bedrooms',
+	SWIM_PLATFORM: 'Swim platform',
+	LADDER: 'Ladder'
+}
+
+export const AMENITIES_LIST = {
+	COOLER: 'Cooler',
+	LILY_PAD: 'Lily pad',
+	NOODLES: 'Noodles',
+	FLOATIES: 'Floaties',
+	GOGGLES: 'Goggles',
+	FLIPPERS: 'Flippers'
+}
+
 export const saveLoginCredentials = ({ _id, token, firstName, roles }) => {
 	if (_id) {
 		localStorage.setItem('userId', _id)

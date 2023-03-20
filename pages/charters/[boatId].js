@@ -20,6 +20,7 @@ export default function BoatAndYachtRentals() {
 		</Head>
 		<main>
 			Boat / yacht pictures + info
+			{JSON.stringify(boat)}
 			<button>Instant Book</button>
 			<button>Request Reservation</button>
 		</main>
