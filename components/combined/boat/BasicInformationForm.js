@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Input from '@/components/Input'
 import { useBoat } from '@/endpoints/get'
-import { baseUrl, updateBoat } from '@/endpoints/post'
+import { updateBoat } from '@/endpoints/post'
 
 export default function BasicInformationForm({ boatId }) {
 
