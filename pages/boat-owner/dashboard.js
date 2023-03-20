@@ -4,6 +4,7 @@ import Subheader from '@/components/small/Subheader'
 import Button from '@/components/small/Button'
 import Link from 'next/link'
 import Image from 'next/image'
+import { USER_TYPES } from '@/helpers/index'
 
 import BoatOwnerReservationsTypePicker from '@/components/combined/BoatOwnerReservationsTypePicker'
 import { createBoat } from '@/endpoints/post'
@@ -41,6 +42,10 @@ export default function Dashboard() {
 		router.push(`/boat-owner/${result.boat._id}`)
 	}
 
+	const handleAddRole = (role) => {
+		
+	}
+
 	return (<>
 		<ContentPageLayout>
 			<div className="space-y-12">
@@ -72,6 +77,10 @@ export default function Dashboard() {
 					))}
 					</div>
 				</div>
+
+				<p className="underline text-sm" onClick={() => handleAddRole(USER_TYPES.CAPTAIN)}>Become a captain</p>
+				<p className="underline text-sm" onClick={() => handleAddRole(USER_TYPES.CUSTOMER)}>k</p>
+
 			</div>	
 		</ContentPageLayout>
 	</>)
