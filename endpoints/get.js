@@ -13,7 +13,7 @@ const GET_FETCH_OPTIONS = () => {
 	}
 }
 
-const baseUrl = (slug) => {
+export const baseUrl = (slug) => {
 	return `${process.env.NEXT_PUBLIC_API_URL}${slug}`
 }
 

@@ -2,18 +2,23 @@ import SidePanelPageLayout from '@/components/layouts/SidePanelPageLayout'
 import LinkWithIcon from '@/components/small/LinkWithIcon'
 import { useState } from 'react'
 import Input from '@/components/Input'
+
 import BasicInformationForm from '@/components/combined/boat/BasicInformationForm'
 import ExtraDetailsForm from '@/components/combined/boat/ExtraDetailsForm'
 import LocationForm from '@/components/combined/boat/LocationForm'
 import PhotosAndVideoForm from '@/components/combined/boat/PhotosAndVideoForm'
 import PricingForm from '@/components/combined/boat/PricingForm'
 import DeclarationsForm from '@/components/combined/boat/DeclarationsForm'
+
 import { useRouter } from 'next/router'
 import WarningDeleteModal from '@/components/modals/WarningDeleteModal'
 import useComponentVisible from '@/hooks/useComponentVisible'
+import { baseUrl, updateBoat } from '@/endpoints/post'
+import { useSWRConfig } from 'swr'
 
 export default function Create() {
 
+	const { mutate } = useSWRConfig()
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
 	const router = useRouter()
@@ -31,7 +36,14 @@ export default function Create() {
 	const [tabSelected, setTabSelected] = useState(BOAT_TABS.INFO)
 
 	const deleteBoat = async () => {
-		
+		const result = await updateBoat(boatId, { isActive: false })
+		console.log(result)
+		if (result.success) {
+			mutate(baseUrl(`/boats/user/${localStorage.getItem('userId')}`))
+			setIsComponentVisible(false)
+			router.push('/boat-owner/dashboard')
+		}
+		//TODO: show error or alert
 	}
 
 	return (<>

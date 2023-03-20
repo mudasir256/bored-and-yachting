@@ -19,7 +19,7 @@ const POST_FETCH_OPTIONS = (data, useAuth = false) => {
 
 
 
-const baseUrl = (slug) => {
+export const baseUrl = (slug) => {
 	return `${process.env.NEXT_PUBLIC_API_URL}${slug}`
 }
 
@@ -40,6 +40,12 @@ export const login = async ({ email, password }) => {
 /*     Boat Endpoints     */
 export const createBoat = async (belongsTo) => {
 	const result = await fetch(baseUrl('/boats/create'), POST_FETCH_OPTIONS({ belongsTo }, true))
+	const data = await result.json()
+	return data
+}
+
+export const updateBoat = async (boatId, json) => {
+	const result = await fetch(baseUrl(`/boats/update/${boatId}`), POST_FETCH_OPTIONS(json, true))
 	const data = await result.json()
 	return data
 }
