@@ -10,6 +10,7 @@ import {
 	faDollarSign,
 	faCircleExclamation,
 	faTrashCan,
+	faCircleCheck,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -25,7 +26,8 @@ export default function Icon({ name, color = 'black', size = 'lg' }) {
 		{ name: 'photo', component: faImage },
 		{ name: 'pricing', component: faDollarSign },
 		{ name: 'declaration', component: faCircleExclamation },
-		{ name: 'delete', component: faTrashCan }
+		{ name: 'delete', component: faTrashCan },
+		{ name: 'circle-checkmark', component: faCircleCheck },
 	]
 
 	const icon = icons.find(icon => icon.name === name) || { component: faUser }
