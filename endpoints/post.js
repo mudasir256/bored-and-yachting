@@ -50,13 +50,16 @@ export const updateBoat = async (boatId, json) => {
 }
 
 export const updateBoatFiles = async (boatId, files, key) => {
+	const array = Array.from(files)
+
 	const formData = new FormData();
-	Array.from(files).forEach((file, i) => {
+	formData.append('key', key)
+	formData.append('isSingleFile', array.length == 1)
+	array.forEach((file, i) => {
 		//TODO: replace file name with uuid?
 		console.log(file)
 		formData.append(`file-${i}`, file, file.name);
 	})
-	formData.append('key', key)
 
 	const result = await fetch(baseUrl(`/boats/files/${boatId}`), POST_FETCH_OPTIONS(formData, true, true))
 	const data = await result.json()

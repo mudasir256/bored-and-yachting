@@ -23,7 +23,7 @@ export default function DeclarationsForm({ boatId }) {
 			 	onChange={(e) => setInsuranceFile(e.target?.files)}
 			 	value={insuranceFile?.name}
 			 	isRequired={true} 
-			 	multiple={true}
+			 	multiple={false}
 			 	accept="all"
 
 			/>
