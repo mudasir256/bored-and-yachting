@@ -72,12 +72,53 @@ export const AVAILABLE_TIME_SLOTS = { //hours to seconds conversion
 	T_8PM: 72000
 }
 
+export const CAPTAIN_RATES = {
+	HALF_DAY: 275,
+	FULL_DAY: 400,
+	HOURLY: 45
+}
+
+export const CLEANING_FEE = 150
+export const GRATUITY = {
+	LABEL: 25,
+	RATE: 0.25
+}
+
+export const TAX_RATES_BY_REGION = {
+	FLORIDA: .07
+}
+
 export const formatAMPM = (hoursInSeconds) => {
 	if (hoursInSeconds === -1) {
 		return 'N/A'
 	}
 	if (hoursInSeconds) {
 		return DateTime.fromSeconds(hoursInSeconds, { zone: 'UTC' }).toLocaleString(DateTime.TIME_SIMPLE)
+	}
+	return ''
+}
+
+const wholeNumberFormat = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  // These options are needed to round to whole numbers if that's what you want.
+  minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+const decimalNumberFormat = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  // These options are needed to round to whole numbers if that's what you want.
+  // minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+
+export const formatMoney = (dollarAmount) => {
+	if (dollarAmount) {
+		if (dollarAmount % 1 == 0) {
+			return wholeNumberFormat.format(dollarAmount)	
+		}
+		return decimalNumberFormat.format(dollarAmount)
 	}
 	return ''
 }

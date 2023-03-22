@@ -9,7 +9,7 @@ export default function WarningDeleteModal({ header, description, onDelete }) {
 	}, []);
 
 	const modalContent = (
-		<div className="absolute w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
+		<div className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
 			<div className="fixed inset-0 z-10 overflow-y-auto">
 			   <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
 			     <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
