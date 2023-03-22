@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Input from '@/components/Input'
+import { updateBoat, updateBoatFiles } from '@/endpoints/post'
 
 export default function DeclarationsForm({ boatId }) {
 
@@ -7,8 +8,10 @@ export default function DeclarationsForm({ boatId }) {
 	const [hullId, setHullId] = useState('')
 	const [insuranceFile, setInsuranceFile] = useState('')
 
-	const handleBoatDeclarations = () => {
-
+	const handleBoatDeclarations = async (e) => {
+		e.preventDefault()
+		const result = await updateBoatFiles(boatId, insuranceFile, 'proofOfInsurance')
+		console.log(result)
 	}
 
 	return (<>
@@ -17,11 +20,12 @@ export default function DeclarationsForm({ boatId }) {
 				type="file" 
 				label="Proof of Insurance"
 				id="insuranceFile"
-			 	onChange={(e) => setInsuranceFile(e.target?.value)}
-			 	value={insuranceFile}
+			 	onChange={(e) => setInsuranceFile(e.target?.files)}
+			 	value={insuranceFile?.name}
 			 	isRequired={true} 
-			 	multiple={false}
+			 	multiple={true}
 			 	accept="all"
+
 			/>
 			<div className="grid grid-cols-2 gap-2">
 				<Input 

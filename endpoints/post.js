@@ -1,23 +1,22 @@
 
 //POST endpoints with FETCH
+const POST_FETCH_OPTIONS = (data, useAuth = false, isFormData = false) => {
 
-const POST_FETCH_OPTIONS = (data, useAuth = false) => {
-
-	const headers = useAuth ? {
+	let headers = useAuth ? {
 		'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
 		'Content-Type': 'application/json',
 	} : {
 		'Content-Type': 'application/json',	
 	}
+	isFormData && delete headers['Content-Type']
+
 	return {
 		method: 'POST',
 		headers,
 		mode: 'cors',
-		body: JSON.stringify(data)
+		body: !isFormData ? JSON.stringify(data) : data
 	}
 }
-
-
 
 export const baseUrl = (slug) => {
 	return `${process.env.NEXT_PUBLIC_API_URL}${slug}`
@@ -46,6 +45,20 @@ export const createBoat = async (belongsTo) => {
 
 export const updateBoat = async (boatId, json) => {
 	const result = await fetch(baseUrl(`/boats/update/${boatId}`), POST_FETCH_OPTIONS(json, true))
+	const data = await result.json()
+	return data
+}
+
+export const updateBoatFiles = async (boatId, files, key) => {
+	const formData = new FormData();
+	Array.from(files).forEach((file, i) => {
+		//TODO: replace file name with uuid?
+		console.log(file)
+		formData.append(`file-${i}`, file, file.name);
+	})
+	formData.append('key', key)
+
+	const result = await fetch(baseUrl(`/boats/files/${boatId}`), POST_FETCH_OPTIONS(formData, true, true))
 	const data = await result.json()
 	return data
 }
