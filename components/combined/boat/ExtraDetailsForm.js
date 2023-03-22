@@ -3,6 +3,7 @@ import Input from '@/components/Input'
 import { updateBoat } from '@/endpoints/post'
 import { useBoat } from '@/endpoints/get'
 import { FEATURES_LIST, AMENITIES_LIST } from '@/helpers/index'
+import CheckboxWithText from '@/components/small/CheckboxWithText'
 
 export default function ExtraDetailsForm({ boatId }) {
 
@@ -67,20 +68,30 @@ export default function ExtraDetailsForm({ boatId }) {
 		    	<div>
 		    		<p className="text-sm underline mb-2">Features:</p>
 						{Object.keys(FEATURES_LIST).map(key => (
-							<div key={key} className="my-0.5 flex flex-row items-center gap-1">
-								<input checked={selectedFeatures.includes(key)} onChange={() => handleFeaturesSelect(key)} id={FEATURES_LIST[key]} type="checkbox" value={key} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-								<label htmlFor={FEATURES_LIST[key]} class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{FEATURES_LIST[key]}</label>
-							</div>
+							<CheckboxWithText 
+								key={key} 
+								isChecked={selectedFeatures.includes(key)}
+								handleSelect={handleFeaturesSelect}
+								id={FEATURES_LIST[key]}
+								value={key}
+								htmlFor={FEATURES_LIST[key]}
+								label={FEATURES_LIST[key]}
+							/>		
 						))}
 					</div>
 
 					<div>
 						<p className="text-sm underline mb-2">Amenities:</p>
 						{Object.keys(AMENITIES_LIST).map(key => (
-							<div key={key} className="my-0.5 flex flex-row  items-center gap-1">
-								<input checked={selectedAmenities.includes(key)} onChange={() => handleAmenitiesSelect(key)} id={AMENITIES_LIST[key]} type="checkbox" value={key} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-								<label htmlFor={AMENITIES_LIST[key]} class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{AMENITIES_LIST[key]}</label>
-							</div>
+							<CheckboxWithText 
+								key={key} 
+								isChecked={selectedAmenities.includes(key)}
+								handleSelect={handleAmenitiesSelect}
+								id={AMENITIES_LIST[key]}
+								value={key}
+								htmlFor={AMENITIES_LIST[key]}
+								label={AMENITIES_LIST[key]}
+							/>	
 						))}
 					</div>
 				</div>

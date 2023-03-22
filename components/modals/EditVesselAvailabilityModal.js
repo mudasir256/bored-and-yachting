@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import Subheader from '@/components/small/Subheader'
 import Input from '@/components/Input'
+import { AVAILABLE_TIME_SLOTS } from '@/helpers/index'
+import { DateTime } from "luxon";
+import CheckboxWithText from '@/components/small/CheckboxWithText'
 
 export default function EditVesselAvailability() {
 	const [isBrowser, setIsBrowser] = useState(false);
@@ -103,6 +106,26 @@ export default function EditVesselAvailability() {
 		console.log(mondayStartTime)
 	}
 
+	const handleCheckbox = (day) => {
+		console.log(day)
+		const field = fields.find(field => field.label === day)
+		if (field.startValue === 'N/A') {
+			field.onStartChange('')
+			field.onEndChange('')
+			return
+		}
+		field.onStartChange('N/A')
+		field.onEndChange('N/A')
+	}
+
+	const formattedTime = Object.values(AVAILABLE_TIME_SLOTS).map(hoursInSeconds => {
+		return {
+			value: hoursInSeconds,
+			label: DateTime.fromSeconds(hoursInSeconds, { zone: 'UTC' }).toLocaleString(DateTime.TIME_SIMPLE)
+		}
+	})
+
+
 	const modalContent = (
 		<div className="absolute w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
 			<div className="bg-white rounded p-4">
@@ -110,38 +133,49 @@ export default function EditVesselAvailability() {
 				<hr/>
 				<form className="mt-4 space-y-6" onSubmit={(e) => handleVesselAvailabilitySubmit(e)}>
 					{fields.map(field => (<div key={field.label} className="grid grid-cols-4 gap-2">
-						<p className="text-sm font-bold">{field.label}</p>
+						<div className="space-y-2">
+							<p className="text-sm font-bold">{field.label}</p>
+							<CheckboxWithText 
+								isChecked={field.startValue === 'N/A'}
+								handleSelect={handleCheckbox}
+								id={field.label}
+								value={field.label}
+								htmlFor={field.label}
+								label="Not available"
+								isInModal={true}
+							/>	
+						</div>
 				   	<Input 
-					    type="text" 
+					    type="select" 
 					    label="First Charter Start Time"
 					    id={field.label + 'StartTime'}
-					    placeholder="8:00AM"
+					    placeholder={field.startValue === 'N/A' ? 'N/A' : "Select a start time"}
 					    onChange={(e) => field.onStartChange(e.target?.value)}
-					    value={field.startValue} 
+					    value={field.startValue === 'N/A' ? '' : field.startValue} 
 					    isRequired={true}
-					    isInModal={true} 
+					    isInModal={true}
+					    options={formattedTime}//.filter(time => time.value < field.endValue)}
 				     />
 		       	<Input 
-		    	    type="text" 
+		    	    type="select" 
 		    	    label="Last Charter Start Time"
 		    	    id={field.label + 'EndTime'}
-		    	    placeholder="8:00PM"
+		    	    placeholder={field.endValue === 'N/A' ? 'N/A' : "Select an end time"}
 		    	    onChange={(e) => field.onEndChange(e.target?.value)}
-		    	    value={field.endValue} 
+		    	    value={field.endValue === 'N/A' ? '' : field.endValue} 
 		    	    isRequired={true}
-		    	    isInModal={true} 
+		    	    isInModal={true}
+		    	    options={formattedTime.filter(time => time.value > field.startValue)} 
 		         />
 		       	<Input 
-		    	    type="text" 
-		    	    label="Discount"
+		    	    type="number" 
+		    	    label="Discount (%)"
 		    	    id={field.label + 'Discount'}
 		    	    placeholder="Discount"
 		    	    onChange={(e) => field.onDiscountChange(e.target?.value)}
 		    	    value={field.discountValue} 
 		    	    isInModal={true} 
 		         />
-
-
 					</div>))}
 					<Input 
 						type="submit"
