@@ -1,6 +1,17 @@
 import { useState } from 'react'
 
-export default function Input({ id, placeholder, label, type, onChange, isRequired = false, value, multiple = false, accept = 'image/*' }) {
+export default function Input({ 
+	id, 
+	placeholder, 
+	label, 
+	type, 
+	onChange, 
+	isRequired = false, 
+	value, 
+	multiple = false, 
+	accept = 'image/*',
+	isInModal = false
+}) {
 	
 	let classStyles = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
 	if (type === 'submit') {
@@ -39,6 +50,7 @@ export default function Input({ id, placeholder, label, type, onChange, isRequir
 					value={searchText}
 					autoComplete="off" 
 					type="text" 
+					data-action={isInModal ? 'click' : ''}
 				/>
 			</div>
 		)
@@ -62,6 +74,7 @@ export default function Input({ id, placeholder, label, type, onChange, isRequir
 	      	value={value}
 	      	multiple={multiple}
 	      	accept={accept}
+	      	data-action={isInModal ? 'click' : ''}
 	      />
 	  	</div>
 		)
@@ -78,6 +91,7 @@ export default function Input({ id, placeholder, label, type, onChange, isRequir
       	required={isRequired}
       	onChange={onChange}
       	value={value}
+      	data-action={isInModal ? 'click' : ''}
       />
   	</div>
 	)
