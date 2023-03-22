@@ -3,15 +3,44 @@ import { createPortal } from 'react-dom'
 import Subheader from '@/components/small/Subheader'
 import Input from '@/components/Input'
 import { AVAILABLE_TIME_SLOTS } from '@/helpers/index'
-import { DateTime } from "luxon";
 import CheckboxWithText from '@/components/small/CheckboxWithText'
+import { baseUrl, updateBoat } from '@/endpoints/post'
+import { formatAMPM } from '@/helpers/index'
+import { useSWRConfig } from 'swr'
 
-export default function EditVesselAvailability() {
+export default function EditVesselAvailability({ boat, boatId, setIsComponentVisible }) {
 	const [isBrowser, setIsBrowser] = useState(false);
+	const { mutate } = useSWRConfig()
 
 	useEffect(() => {
 	  setIsBrowser(true);
 	}, []);
+
+	useEffect(() => {
+		if (boat) {
+			setMondayStartTime(boat.monday?.startTime || '')
+			setMondayEndTime(boat.monday?.endTime || '')
+			setMondayDiscount(boat.monday?.discount || '')
+			setTuesdayStartTime(boat.tuesday?.startTime || '')
+			setTuesdayEndTime(boat.tuesday?.endTime || '')
+			setTuesdayDiscount(boat.tuesday?.discount || '')
+			setWednesdayStartTime(boat.wednesday?.startTime || '')
+			setWednesdayEndTime(boat.wednesday?.endTime || '')
+			setWednesdayDiscount(boat.wednesday?.discount || '')
+			setThursdayStartTime(boat.thursday?.startTime || '')
+			setThursdayEndTime(boat.thursday?.endTime || '')
+			setThursdayDiscount(boat.thursday?.discount || '')
+			setFridayStartTime(boat.friday?.startTime || '')
+			setFridayEndTime(boat.friday?.endTime || '')
+			setFridayDiscount(boat.friday?.discount || '')
+			setSaturdayStartTime(boat.saturday?.startTime || '')
+			setSaturdayEndTime(boat.saturday?.endTime || '')
+			setSaturdayDiscount(boat.saturday?.discount || '')
+			setSundayStartTime(boat.sunday?.startTime || '')
+			setSundayEndTime(boat.sunday?.endTime || '')
+			setSundayDiscount(boat.sunday?.discount || '')
+		}
+	}, [boat])
 
 	const [mondayStartTime, setMondayStartTime] = useState('')
 	const [mondayEndTime, setMondayEndTime] = useState('')
@@ -101,27 +130,66 @@ export default function EditVesselAvailability() {
 		}
 	]
 
-	const handleVesselAvailabilitySubmit = (e) => {
+	const handleVesselAvailabilitySubmit = async (e) => {
 		e.preventDefault()
-		console.log(mondayStartTime)
+		const result = await updateBoat(boatId, {
+			monday: {
+				startTime: mondayStartTime,
+				endTime: mondayEndTime,
+				discount: mondayDiscount
+			},
+			tuesday: {
+				startTime: tuesdayStartTime,
+				endTime: tuesdayEndTime,
+				discount: tuesdayDiscount
+			},
+			wednesday: {
+				startTime: wednesdayStartTime,
+				endTime: wednesdayEndTime,
+				discount: wednesdayDiscount
+			},
+			thursday: {
+				startTime: thursdayStartTime,
+				endTime: thursdayEndTime,
+				discount: thursdayDiscount
+			},
+			friday: {
+				startTime: fridayStartTime,
+				endTime: fridayEndTime,
+				discount: fridayDiscount
+			},
+			saturday: {
+				startTime: saturdayStartTime,
+				endTime: saturdayEndTime,
+				discount: saturdayDiscount
+			},
+			sunday: {
+				startTime: sundayStartTime,
+				endTime: sundayEndTime,
+				discount: sundayDiscount
+			}
+		})
+		if (result.success) {
+			mutate(baseUrl(`/boats/${boatId}`))
+			setIsComponentVisible(false)
+		}
 	}
 
 	const handleCheckbox = (day) => {
-		console.log(day)
 		const field = fields.find(field => field.label === day)
-		if (field.startValue === 'N/A') {
+		if (field.startValue === -1) {
 			field.onStartChange('')
 			field.onEndChange('')
 			return
 		}
-		field.onStartChange('N/A')
-		field.onEndChange('N/A')
+		field.onStartChange(-1)
+		field.onEndChange(-1)
 	}
 
 	const formattedTime = Object.values(AVAILABLE_TIME_SLOTS).map(hoursInSeconds => {
 		return {
 			value: hoursInSeconds,
-			label: DateTime.fromSeconds(hoursInSeconds, { zone: 'UTC' }).toLocaleString(DateTime.TIME_SIMPLE)
+			label: formatAMPM(hoursInSeconds)
 		}
 	})
 
@@ -136,7 +204,7 @@ export default function EditVesselAvailability() {
 						<div className="space-y-2">
 							<p className="text-sm font-bold">{field.label}</p>
 							<CheckboxWithText 
-								isChecked={field.startValue === 'N/A'}
+								isChecked={field.startValue === -1}
 								handleSelect={handleCheckbox}
 								id={field.label}
 								value={field.label}
@@ -149,10 +217,9 @@ export default function EditVesselAvailability() {
 					    type="select" 
 					    label="First Charter Start Time"
 					    id={field.label + 'StartTime'}
-					    placeholder={field.startValue === 'N/A' ? 'N/A' : "Select a start time"}
+					    placeholder={field.startValue === -1 ? 'N/A' : "Select a start time"}
 					    onChange={(e) => field.onStartChange(e.target?.value)}
-					    value={field.startValue === 'N/A' ? '' : field.startValue} 
-					    isRequired={true}
+					    value={field.startValue === -1 ? '' : field.startValue} 
 					    isInModal={true}
 					    options={formattedTime}//.filter(time => time.value < field.endValue)}
 				     />
@@ -160,16 +227,17 @@ export default function EditVesselAvailability() {
 		    	    type="select" 
 		    	    label="Last Charter Start Time"
 		    	    id={field.label + 'EndTime'}
-		    	    placeholder={field.endValue === 'N/A' ? 'N/A' : "Select an end time"}
+		    	    placeholder={field.endValue === -1 ? 'N/A' : "Select an end time"}
 		    	    onChange={(e) => field.onEndChange(e.target?.value)}
-		    	    value={field.endValue === 'N/A' ? '' : field.endValue} 
-		    	    isRequired={true}
+		    	    value={field.endValue === -1 ? '' : field.endValue} 
 		    	    isInModal={true}
 		    	    options={formattedTime.filter(time => time.value > field.startValue)} 
 		         />
 		       	<Input 
 		    	    type="number" 
 		    	    label="Discount (%)"
+		    	    max="100"
+		    	    min="0"
 		    	    id={field.label + 'Discount'}
 		    	    placeholder="Discount"
 		    	    onChange={(e) => field.onDiscountChange(e.target?.value)}

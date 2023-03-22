@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 export const USER_TYPES = {
 	ADMIN: 'ADMIN',
 	BOAT_OWNER: 'BOAT_OWNER',
@@ -68,6 +70,16 @@ export const AVAILABLE_TIME_SLOTS = { //hours to seconds conversion
 	T_7PM: 68400,
 	T_730PM: 70200,
 	T_8PM: 72000
+}
+
+export const formatAMPM = (hoursInSeconds) => {
+	if (hoursInSeconds === -1) {
+		return 'N/A'
+	}
+	if (hoursInSeconds) {
+		return DateTime.fromSeconds(hoursInSeconds, { zone: 'UTC' }).toLocaleString(DateTime.TIME_SIMPLE)
+	}
+	return ''
 }
 
 export const saveLoginCredentials = ({ _id, token, firstName, roles }) => {

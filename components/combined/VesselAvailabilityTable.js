@@ -1,14 +1,19 @@
 import EditVesselAvailabilityModal from '@/components/modals/EditVesselAvailabilityModal'
 import useComponentVisible from '@/hooks/useComponentVisible'
+import { useBoat } from '@/endpoints/get'
+import { formatAMPM } from '@/helpers/index'
 
-export default function VesselAvailabilityTable() {
+export default function VesselAvailabilityTable({ boatId }) {
 
+	const { boat, isLoading } = useBoat(boatId)
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
-	const handleEditAvailability = () => {
-
+	const formatDiscount = (discount) => {
+		if (discount) {
+			return `${discount}%`
+		}
+		return '✕'
 	}
-
 	return(<>
 		<div className="relative overflow-x-auto sm:rounded-lg">
 		    <table className="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -30,7 +35,7 @@ export default function VesselAvailabilityTable() {
 		                <th scope="col" className="px-6 py-3">
 		                   	Last charter start time
 		                </th>
-		                <th scope="col" className="px-6 py-3">
+		                <th scope="col" className="px-6 py-3" align="center">
 		                    Discount?
 		                </th>
 		            </tr>
@@ -41,13 +46,13 @@ export default function VesselAvailabilityTable() {
 		                  	Monday
 		                </th>
 		                <td className="px-6 py-4">
-		                   
+		                  {formatAMPM(boat.monday?.startTime)}
 		                </td>
 		                <td className="px-6 py-4">
-		                    
+		                  {formatAMPM(boat.monday?.endTime)}
 		                </td>
-		                <td className="px-6 py-4">
-		                    
+		                <td className="px-6 py-4" align="center">
+		                  {formatDiscount(boat.monday?.discount)}
 		                </td>
 		            </tr>
 		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
@@ -55,29 +60,29 @@ export default function VesselAvailabilityTable() {
 		                    Tuesday
 		                </th>
 		                <td className="px-6 py-4">
-		                   
+		                  {formatAMPM(boat.tuesday?.startTime)}
 		                </td>
 		                <td className="px-6 py-4">
-		                    
+		                  {formatAMPM(boat.tuesday?.endTime)}
 		                </td>
-		                <td className="px-6 py-4">
-		                    
+		                <td className="px-6 py-4" align="center">
+		                  {formatDiscount(boat.tuesday?.discount)}
 		                </td>
-		   
+		
 		            </tr>
 		            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
 		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 		                  	Wednesday
 		                </th>
-		                <td className="px-6 py-4">
-		                   
-		                </td>
-		                <td className="px-6 py-4">
-		                    
-		                </td>
-		                <td className="px-6 py-4">
-		                    
-		                </td>
+		               	<td className="px-6 py-4">
+		               	  {formatAMPM(boat.wednesday?.startTime)}
+		               	</td>
+		               	<td className="px-6 py-4">
+		               	  {formatAMPM(boat.wednesday?.endTime)}
+		               	</td>
+		               	<td className="px-6 py-4" align="center">
+		               	  {formatDiscount(boat.wednesday?.discount)}
+		               	</td>
 		          
 		            </tr>
 		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
@@ -85,13 +90,13 @@ export default function VesselAvailabilityTable() {
 		                    Thursday
 		                </th>
 		                <td className="px-6 py-4">
-		                   
+		                  {formatAMPM(boat.thursday?.startTime)}
 		                </td>
 		                <td className="px-6 py-4">
-		                    
+		                  {formatAMPM(boat.thursday?.endTime)}
 		                </td>
-		                <td className="px-6 py-4">
-		                    
+		                <td className="px-6 py-4" align="center">
+		                  {formatDiscount(boat.thursday?.discount)}
 		                </td>
 		         
 		            </tr>
@@ -100,21 +105,48 @@ export default function VesselAvailabilityTable() {
 		                  	Friday
 		                </th>
 		                <td className="px-6 py-4">
-		                   
+		                  {formatAMPM(boat.friday?.startTime)}
 		                </td>
 		                <td className="px-6 py-4">
-		                    
+		                  {formatAMPM(boat.friday?.endTime)}
+		                </td>
+		                <td className="px-6 py-4" align="center">
+		                  {formatDiscount(boat.friday?.discount)}
+		                </td>
+		            </tr>
+		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		                    Saturday
+		                </th>
+		                <td className="px-6 py-4">
+		                  {formatAMPM(boat.saturday?.startTime)}
 		                </td>
 		                <td className="px-6 py-4">
-		                    
+		                  {formatAMPM(boat.saturday?.endTime)}
 		                </td>
-		          
+		                <td className="px-6 py-4" align="center">
+		                  {formatDiscount(boat.saturday?.discount)}
+		                </td>
+		            </tr>
+		            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		                  	Sunday
+		                </th>
+		                <td className="px-6 py-4">
+		                  {formatAMPM(boat.sunday?.startTime)}
+		                </td>
+		                <td className="px-6 py-4">
+		                  {formatAMPM(boat.sunday?.endTime)}
+		                </td>
+		                <td className="px-6 py-4" align="center">
+		                  {formatDiscount(boat.sunday?.discount)}
+		                </td>
 		            </tr>
 		       	</tbody>
 		    </table>
 		 </div>
 		 <div ref={ref}>
-		 	{isComponentVisible && <EditVesselAvailabilityModal />}
+		 	{isComponentVisible && <EditVesselAvailabilityModal boat={boat} boatId={boatId} setIsComponentVisible={setIsComponentVisible} />}
 		 </div>
 	</>)
 }

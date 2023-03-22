@@ -9,8 +9,8 @@ export default function PricingForm({ boatId }) {
 
 	return (<>
 	
-		<VesselAvailabilityTable />
-		
+		<VesselAvailabilityTable boatId={boatId} />
+
 		<br />
 
 		<div className="relative overflow-x-auto sm:rounded-lg">
