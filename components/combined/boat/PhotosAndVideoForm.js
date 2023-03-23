@@ -35,7 +35,7 @@ export default function PhotosAndVideoForm({ boatId }) {
 	}, [boat])
 
 	useEffect(() => {
-		if (newPhotos) {
+		if (newPhotos.length > 0) {
 			uploadBoatImages()
 		}
 	}, [newPhotos])
@@ -60,15 +60,18 @@ export default function PhotosAndVideoForm({ boatId }) {
 
 	const handleBoatPhotosAndVideos = async (e) => {
 		e.preventDefault()
-		console.log(currentPhotos)
-		const photoUrls = currentPhotos.map(photo => photo.src)
-		const result = await updateBoat(boatId, {
-			photos: photoUrls,
-			videoLink
-		})
-		console.log(result)
-		if (result.success) {
-			setSaved(true)
+		try {
+			const photoUrls = currentPhotos.map(photo => photo.src)
+			const result = await updateBoat(boatId, {
+				photos: photoUrls,
+				videoLink
+			})
+			console.log(result)
+			if (result.success) {
+				setSaved(true)
+			}
+		} catch (err) {
+			console.log(err)
 		}
 	}
 
