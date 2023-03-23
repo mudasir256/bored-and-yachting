@@ -2,6 +2,9 @@ import Head from 'next/head'
 import { useBoat } from '@/endpoints/get'
 import { useRouter } from 'next/router'
 import Loading from '@/components/small/Loading'
+import Header from '@/components/small/Header'
+import Image from 'next/image'
+import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 
 export default function BoatAndYachtRentals() {
 	const router = useRouter()
@@ -15,14 +18,22 @@ export default function BoatAndYachtRentals() {
 
 	return(<>
 		<Head>
-		  <title>Bored and Yachting | {boat.name}</title>
+		  <title>Bored and Yachting | {boat?.name}</title>
 		  <meta name="description" content="" />
 		</Head>
-		<main>
-			Boat / yacht pictures + info
-			{JSON.stringify(boat)}
-			<button>Instant Book</button>
-			<button>Request Reservation</button>
-		</main>
+		<ContentPageLayout>
+			<div className="space-y-2">
+				<Header text={boat.name} />
+				<p>address snippet</p>
+				<div className="flex flex-row flex-wrap gap-2">
+					{boat.photos.map(photo => (<div className="relative w-72 h-52">
+						<Image key={photo} src={photo} layout="fill" objectFit="cover" />
+					</div>))}
+				</div>
+				{JSON.stringify(boat)}
+				<button>Instant Book</button>
+				<button>Request Reservation</button>
+			</div>
+		</ContentPageLayout>
 	</>)
 }
