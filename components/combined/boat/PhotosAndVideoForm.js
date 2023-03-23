@@ -1,24 +1,128 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Input from '@/components/Input'
-
+import { baseUrl, updateBoat, updateBoatFiles } from '@/endpoints/post'
+import { useBoat } from '@/endpoints/get'
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { ReactSortable } from "react-sortablejs";
+import Image from 'next/image'
+import Subheader from '@/components/small/Subheader'
+import Icon from '@/components/Icon'
+import { useSWRConfig } from 'swr'
 export default function PhotosAndVideoForm({ boatId }) {
 
-	const [photos, setPhotos] = useState([])
+	const { boat, isLoading } = useBoat(boatId)
+	const { mutate } = useSWRConfig()
+
+	const [currentPhotos, setCurrentPhotos] = useState([])
+	const [newPhotos, setNewPhotos] = useState([])
 	const [videoLink, setVideoLink] = useState('')
+	const [saved, setSaved] = useState(false)
+	const [draggedIndex, setDraggedIndex] = useState('')
 
-	const handleBoatPhotosAndVideos = () => {
+	useEffect(() => {
+		if (boat) {
+			setVideoLink(boat?.videoLink)
+			console.log(boat)
+			const format = boat?.photos.map((photo, i) => {
+				return {
+					id: i,
+					src: photo
+				}
+			})
+			console.log(format)
+			setCurrentPhotos(format)
+		}
+	}, [boat])
 
+	useEffect(() => {
+		if (newPhotos) {
+			uploadBoatImages()
+		}
+	}, [newPhotos])
+
+	useEffect(() => {
+		setSaved(false)
+	}, [currentPhotos, newPhotos, videoLink])
+
+	const uploadBoatImages = async () => {
+		console.log('upload images')
+		try {
+			const result = await updateBoatFiles(boatId, newPhotos, 'photos')
+			console.log(result)		
+			if (result.success) {
+				setNewPhotos([])
+				mutate(baseUrl(`/boats/${boatId}`))
+			}	
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
-	return (
+	const handleBoatPhotosAndVideos = async (e) => {
+		e.preventDefault()
+		console.log(currentPhotos)
+		const photoUrls = currentPhotos.map(photo => photo.src)
+		const result = await updateBoat(boatId, {
+			photos: photoUrls,
+			videoLink
+		})
+		console.log(result)
+		if (result.success) {
+			setSaved(true)
+		}
+	}
+
+	const handleCaptureIndex = (e) => {
+		setDraggedIndex(e.oldIndex || e.newIndex)
+	}
+
+	const handleDelete = (e) => {
+		e.preventDefault()
+		const newArray = [...currentPhotos]
+		newArray.splice(draggedIndex, 1)
+		setCurrentPhotos([...newArray])
+	}
+
+	return (<>
+		<div className="space-y-4">
+			<div>
+				<Subheader text="All Photos" />
+				<p className="text-sm text-gray-500">Drag and drop to reorder your photos. Make sure to save your changes!</p>
+			</div>
+
+			<ReactSortable 
+				className="flex flex-row flex-wrap gap-4" 
+				swap 
+				list={currentPhotos} 
+				setList={(newState) => setCurrentPhotos(newState)}
+				onStart={handleCaptureIndex}
+				onChange={handleCaptureIndex}
+			>
+			  {currentPhotos.map((item, index) => (
+			    <div className="relative w-60 h-48" key={item?.id}>
+			     	<Image src={item?.src} layout="fill" objectFit="cover"  alt={item?.src} />
+			    </div>
+			   ))}
+			</ReactSortable>
+			<div 
+				onDragOver={(e) => {
+					e.stopPropagation()
+					e.preventDefault()
+				}} 
+				onDrop={handleDelete} 
+				className="delete-box w-full h-28 border-dashed border rounded flex justify-center items-center"
+			>
+				<Icon name="delete" size="xl" color="gray" />
+			</div>
+		</div>
+
 		<form className="space-y-4" onSubmit={handleBoatPhotosAndVideos}>
 			<Input 
 				type="file" 
-				label="Photos"
+				label="Upload New Photos"
 				id="photos"
-			 	onChange={(e) => setPhotos(e.target?.value)}
-			 	value={photos}
-			 	isRequired={true} 
+			 	onChange={(e) => setNewPhotos(e.target?.files)}
+			 	value={newPhotos?.name}
 			 	multiple={true}
 			 	accept="image/*"
 			 />
@@ -33,9 +137,9 @@ export default function PhotosAndVideoForm({ boatId }) {
 			 <div className="col-span-2">
 			 	 <Input 
 			 	 	type="submit"
-			 	 	value="Save"
+			 	 	value={saved ? '✓' : "Save"} 
 			 	 />
 			 </div>
 		</form>
-	)
+	</>)
 }

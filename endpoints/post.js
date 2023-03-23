@@ -55,6 +55,7 @@ export const updateBoatFiles = async (boatId, files, key) => {
 	const formData = new FormData();
 	formData.append('key', key)
 	formData.append('isSingleFile', array.length == 1)
+	formData.append('fileCount', array.length)
 	array.forEach((file, i) => {
 		//TODO: replace file name with uuid?
 		//TODO: check multi file same name problems
