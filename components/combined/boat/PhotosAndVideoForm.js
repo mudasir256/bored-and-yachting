@@ -35,7 +35,6 @@ export default function PhotosAndVideoForm({ boatId }) {
 
 
 	const handleNewFiles = async (files) => {
-		e.preventDefault()
 		setNewPhotos(files)
 		try {
 			const result = await updateBoatFiles(boatId, files, 'photos')
