@@ -8,10 +8,6 @@ export default function VesselPricingTable({ boatId }) {
 	const { boat, isLoading } = useBoat(boatId)
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
-	const handleEditPricing = () => {
-
-	}
-
 	const totalHalfDayPriceWithoutGratuity = 
 		boat?.boatRentalPrice?.halfDayRate 
 			+ (boat?.boatRentalPrice?.halfDayRate * TAX_RATES_BY_REGION.FLORIDA) 

@@ -72,6 +72,12 @@ export const AVAILABLE_TIME_SLOTS = { //hours to seconds conversion
 	T_8PM: 72000
 }
 
+export const RATE_LENGTHS = {
+	HALF_DAY: 'HALF_DAY',
+	FULL_DAY: 'FULL_DAY',
+	HOURLY: 'HOURLY'
+}
+
 export const CAPTAIN_RATES = {
 	HALF_DAY: 275,
 	FULL_DAY: 400,

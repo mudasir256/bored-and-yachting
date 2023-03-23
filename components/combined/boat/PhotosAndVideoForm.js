@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import Input from '@/components/Input'
 import { baseUrl, updateBoat, updateBoatFiles } from '@/endpoints/post'
 import { useBoat } from '@/endpoints/get'
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { ReactSortable } from "react-sortablejs";
 import Image from 'next/image'
 import Subheader from '@/components/small/Subheader'
