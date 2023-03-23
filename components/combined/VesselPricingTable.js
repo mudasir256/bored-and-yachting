@@ -3,7 +3,7 @@ import useComponentVisible from '@/hooks/useComponentVisible'
 import { useBoat } from '@/endpoints/get'
 import { formatMoney, TAX_RATES_BY_REGION, GRATUITY, CAPTAIN_RATES, CLEANING_FEE } from '@/helpers/index'
 
-export default function VesselPricingTable({ boatId }) {
+export default function VesselPricingTable({ isEditable = false, boatId }) {
 
 	const { boat, isLoading } = useBoat(boatId)
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
@@ -35,17 +35,19 @@ export default function VesselPricingTable({ boatId }) {
 	return(<>
 		<div className="relative overflow-x-auto sm:rounded-lg">
 		    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-		        <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-		          <span>Vessel Pricing</span>
-		          <div className="flex flex-row gap-2">
-		          	<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Set your vessel&apos;s pricing. The total price is the final price the customer will see which includes our 25% platform fee.</p>
-		        		<button onClick={() => setIsComponentVisible(true)} className="text-sm underline ml-auto underline">Edit</button>
-		        	</div>
-		        </caption>	   
+		        {isEditable &&
+			        <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+			          <span>Vessel Pricing</span>
+			          <div className="flex flex-row gap-2">
+			          	<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Set your vessel&apos;s pricing. The total price is the final price the customer will see which includes our 25% platform fee.</p>
+			        		<button onClick={() => setIsComponentVisible(true)} className="text-sm underline ml-auto underline">Edit</button>
+			        	</div>
+			        </caption>	  
+		        } 
 		        <thead className="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 		            <tr>
 		                <th scope="col" className="px-6 py-3">
-		                    Name
+		                    Item
 		                </th>
 		                <th scope="col" className="px-6 py-3">
 		                    Half Day Rate
@@ -152,7 +154,7 @@ export default function VesselPricingTable({ boatId }) {
 		 
 		            <tr>
 		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-		                  	Gratuity ({GRATUITY.LABEL}%)
+		                  	Service fee ({GRATUITY.LABEL}%)
 		                </th>
 		                <td className="px-6 py-4">
 		                  {formatMoney(totalHalfDayPriceWithoutGratuity * GRATUITY.RATE)}

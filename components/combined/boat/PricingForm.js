@@ -5,6 +5,6 @@ export default function PricingForm({ boatId }) {
 	return (<>
 		<VesselAvailabilityTable boatId={boatId} />
 		<br />
-		<VesselPricingTable boatId={boatId} />
+		<VesselPricingTable isEditable={true} boatId={boatId} />
 	</>)
 }

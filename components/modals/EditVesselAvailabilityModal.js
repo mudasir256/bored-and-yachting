@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import Subheader from '@/components/small/Subheader'
 import Input from '@/components/Input'
-import { AVAILABLE_TIME_SLOTS } from '@/helpers/index'
 import CheckboxWithText from '@/components/small/CheckboxWithText'
 import { baseUrl, updateBoat } from '@/endpoints/post'
-import { formatAMPM } from '@/helpers/index'
+import { formatAMPM, formattedTime } from '@/helpers/index'
 import { useSWRConfig } from 'swr'
 
 export default function EditVesselAvailability({ boat, boatId, setIsComponentVisible }) {
@@ -185,14 +184,6 @@ export default function EditVesselAvailability({ boat, boatId, setIsComponentVis
 		field.onStartChange(-1)
 		field.onEndChange(-1)
 	}
-
-	const formattedTime = Object.values(AVAILABLE_TIME_SLOTS).map(hoursInSeconds => {
-		return {
-			value: hoursInSeconds,
-			label: formatAMPM(hoursInSeconds)
-		}
-	})
-
 
 	const modalContent = (
 		<div className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">

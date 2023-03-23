@@ -104,6 +104,14 @@ export const formatAMPM = (hoursInSeconds) => {
 	return ''
 }
 
+export const formattedTime = Object.values(AVAILABLE_TIME_SLOTS).map(hoursInSeconds => {
+	return {
+		value: hoursInSeconds,
+		label: formatAMPM(hoursInSeconds)
+	}
+})
+
+
 const wholeNumberFormat = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',

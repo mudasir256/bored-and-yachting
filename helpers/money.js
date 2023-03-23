@@ -6,9 +6,8 @@ import {
 	RATE_LENGTHS 
 } from '@/helpers/index'
 
-export const getLowestRateWithoutGratuity = (boat, type) => {
+export const getRateWithoutGratuity = (boat, type) => {
 	if (boat) {
-
 		switch (type) {
 			case RATE_LENGTHS.HALF_DAY:
 				return (
@@ -40,4 +39,14 @@ export const getLowestRateWithoutGratuity = (boat, type) => {
 		}
 	}
 	return 0 
+}
+
+export const getFinalRateWithGratuity = (boat, type) => {
+	if (boat) {
+		const price = getRateWithoutGratuity(boat, type)
+		const gratuity = price * GRATUITY.RATE
+		const finalPrice = price + gratuity
+		return finalPrice
+	}
+	return 0
 }
