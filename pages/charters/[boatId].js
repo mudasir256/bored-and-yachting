@@ -23,11 +23,11 @@ export default function BoatAndYachtRentals() {
 		</Head>
 		<ContentPageLayout>
 			<div className="space-y-2">
-				<Header text={boat.name} />
+				<Header text={boat?.name} />
 				<p>address snippet</p>
 				<div className="flex flex-row flex-wrap gap-2">
-					{boat.photos.map(photo => (<div className="relative w-72 h-52">
-						<Image key={photo} src={photo} layout="fill" objectFit="cover" />
+					{boat?.photos.map(photo => (<div key={photo} className="relative w-72 h-52">
+						<Image src={photo} alt={photo} layout="fill" objectFit="cover" />
 					</div>))}
 				</div>
 				{JSON.stringify(boat)}

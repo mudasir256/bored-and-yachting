@@ -34,24 +34,19 @@ export default function PhotosAndVideoForm({ boatId }) {
 	}, [boat])
 
 
-	useEffect((boatId, mutate) => {
-		const uploadBoatImages = async () => {
-			console.log('upload images')
-			try {
-				const result = await updateBoatFiles(boatId, newPhotos, 'photos')
-				console.log(result)		
-				if (result.success) {
-					setNewPhotos([])
-					mutate(baseUrl(`/boats/${boatId}`))
-				}	
-			} catch (err) {
-				console.log(err)
-			}
+	const handleNewFiles = async (files) => {
+		e.preventDefault()
+		setNewPhotos(files)
+		try {
+			const result = await updateBoatFiles(boatId, files, 'photos')
+			if (result.success) {
+				setNewPhotos([])
+				mutate(baseUrl(`/boats/${boatId}`))
+			}	
+		} catch (err) {
+			console.log(err)
 		}
-		if (newPhotos.length > 0) {
-			uploadBoatImages()
-		}
-	}, [newPhotos])
+	}
 
 	useEffect(() => {
 		setSaved(false)
@@ -125,7 +120,7 @@ export default function PhotosAndVideoForm({ boatId }) {
 				type="file" 
 				label="Upload New Photos"
 				id="photos"
-			 	onChange={(e) => setNewPhotos(e.target?.files)}
+			 	onChange={(e) => handleNewFiles(e.target?.files)}
 			 	value={newPhotos?.name}
 			 	multiple={true}
 			 	accept="image/*"
