@@ -14,7 +14,7 @@ export default function Home() {
     const cards = boats?.map(boat => (
       <Link href={`/charters/${boat._id}`} key={boat._id} className="rounded m-4 cursor-pointer">
         <div className="shadow relative w-80 h-72">
-          <Image className="rounded" alt={boat.name} layout="fill" src={boat.photos[0]} objectFit="cover"  />
+          <Image className="rounded object-cover" alt={boat.name} layout="fill" src={boat.photos[0]} />
         </div>
         <div className="mt-2 space-y-1">
           <p className="font-bold">{boat.name}</p>

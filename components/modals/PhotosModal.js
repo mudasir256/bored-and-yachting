@@ -14,7 +14,7 @@ export default function PhotosModal({ photoUrls = [] }) {
 			<div className="overflow-auto bg-white w-screen h-screen rounded p-16">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-2 justify-center items-center">
 				{photoUrls.map(url => (<div key={url} className="relative w-full h-72">
-					<Image src={url} alt={url} layout="fill" objectFit="cover" />
+					<Image src={url} alt={url} layout="fill" className="object-cover" />
 				</div>))}
 				</div>
 			</div>

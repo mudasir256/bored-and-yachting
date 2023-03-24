@@ -54,11 +54,11 @@ export default function BoatAndYachtRentals() {
 				{width > 1281 ?
 				<div className="grid grid-cols-2 gap-2 relative">
 					<div className="relative w-full h-full">
-						<Image className="rounded-l-md" src={boat?.photos.find(Boolean)} alt={boat?.photos.find(Boolean)} layout="fill" objectFit="cover" />
+						<Image className="rounded-l-md object-cover" src={boat?.photos.find(Boolean)} alt={boat?.photos.find(Boolean)} layout="fill"  />
 					</div>
 					<div className="grid grid-cols-2 gap-2 flex-wrap">
 						{boat?.photos.slice(1, 5).map((photo, index) => (<div key={photo} className="relative w-full h-52">
-							<Image src={photo} alt={photo} layout="fill" objectFit="cover" className={`${index === 1 && 'rounded-tr-md'} ${index === 3 && 'rounded-br-md'}`}/>
+							<Image src={photo} alt={photo} layout="fill" className={`object-cover ${index === 1 && 'rounded-tr-md'} ${index === 3 && 'rounded-br-md'}`}/>
 						</div>))}
 					</div>
 					<div className="absolute bottom-3 right-3">
