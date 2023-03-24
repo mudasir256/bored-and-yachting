@@ -8,7 +8,7 @@ import Image from 'next/image'
 import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 import Input from '@/components/Input'
 import { useState } from 'react'
-import { formatMoney, formattedTime, RATE_LENGTHS } from '@/helpers/index'
+import { formatMoney, formattedTime, RATE_LENGTHS, formatAddressLine } from '@/helpers/index'
 import { getFinalRateWithGratuity } from '@/helpers/money'
 import VesselPricingTableModal from '@/components/modals/VesselPricingTableModal'
 import Icon from '@/components/Icon'
@@ -48,7 +48,7 @@ export default function BoatAndYachtRentals() {
 			<div className="space-y-6">
 				<div>
 					<Header text={boat?.name} />
-					<p>address snippet</p>
+					<p>{formatAddressLine(boat?.parkingLocation.address)}</p>
 				</div>
 
 				{width > 1281 ?
@@ -76,7 +76,7 @@ export default function BoatAndYachtRentals() {
 				<div className="flex flex-row">
 					<div className="space-y-6">
 						<div>
-							<Subheader text={`Hosted by ${boat?.belongsTo}`} />
+							<Subheader text={`Hosted by ${boat?.belongsTo.firstName}`} />
 							<div className="flex flex-row gap-2">
 								<p>{boat?.indoorFeatures?.maxNumberOfPassengers} passengers max •</p>
 								<p>{boat?.indoorFeatures?.cabins} cabins •</p>

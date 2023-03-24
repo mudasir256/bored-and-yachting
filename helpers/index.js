@@ -44,6 +44,13 @@ export const AMENITIES_LIST = {
 	FLIPPERS: 'Flippers'
 }
 
+export const LOCATION_TYPE = {
+	IS_HARBOR: 'IS_HARBOR', 
+	IS_CHARTER: 'IS_CHARTER', 
+	IS_PARKING_LOT: 'IS_PARKING_LOT',
+	IS_HOME: 'IS_HOME'
+}
+
 export const AVAILABLE_TIME_SLOTS = { //hours to seconds conversion
 	T_8AM: 28800,
 	T_830AM: 30600,
@@ -92,6 +99,13 @@ export const GRATUITY = {
 
 export const TAX_RATES_BY_REGION = {
 	FLORIDA: .07
+}
+
+export const formatAddressLine = (address) => {
+	if (address) {
+		return address.slice(0, address.length - 5)
+	} 
+	return ''
 }
 
 export const formatAMPM = (hoursInSeconds) => {

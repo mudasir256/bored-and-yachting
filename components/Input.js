@@ -1,5 +1,7 @@
 import { useState } from 'react'
-
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
+import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete'
+//https://tintef.github.io/react-google-places-autocomplete/docs/get-lat-lng
 export default function Input({ 
 	id, 
 	placeholder, 
@@ -16,47 +18,47 @@ export default function Input({
 	min = '',
 }) {
 	
-	let classStyles = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+	let classStyles = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
 	if (type === 'submit') {
 		classStyles = 'cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded'
 	}
 
 	const AddressInput = () => {
-		const [searchText, setSearchText] = useState('')
-		const [timer, setTimer] = useState()
-		const [predictions, setPredictions] = useState([])
 
-		const queryPlaces = (e) => {
-			if (timer) {
-				clearTimeout(timer)
+		const handlePlaceSelected = async (e) => {
+			try {
+				if (e.label) {
+					const address = await geocodeByAddress(e.label)
+					console.log(address)
+					const location = await address[0]
+					onChange({ 
+						label: e.label,
+						lat: location.geometry.location.lat(),
+						lng: location.geometry.location.lng(),
+						address: address[0].formatted_address,
+						place_id: address[0].place_id,
+						value: {} //prevents place_id reference crash
+					})
+				} 
+
+			} catch (err) {
+				console.log(err)
 			}
-			setSearchText(e.target.value)
-
-			setTimer(setTimeout(() => {
-				if (e.target.value.trim() === '') { setShowPredictions(false); return }
-
-				getAutoCompletePlaces(e.target.value.trim(), function(data) {
-					//TODO: add error check
-					onChange(data)
-				})
-			}, 1000))
 		}
-		return (
-			<div>
-				{label && <label htmlFor={id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label}</label>}
-				<input 
-					placeholder={placeholder} 
-					id={id} 
-					className={className} 
-					required={isRequired}
-					onChange={(e) => queryPlaces(e)} 
-					value={searchText}
-					autoComplete="off" 
-					type="text" 
-					data-action={isInModal ? 'click' : ''}
-				/>
-			</div>
-		)
+
+		return (<div data-action={isInModal ? 'click' : ''}>
+			{label && <label htmlFor={id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label}</label>}
+			<GooglePlacesAutocomplete 
+				apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY} 
+				selectProps={{
+					 value,
+	         onChange: handlePlaceSelected,
+	         placeholder: placeholder,
+	         className: 'text-sm'
+	       }}
+			/>
+			
+		</div>)
 	}
 
 	if (type === 'select') {

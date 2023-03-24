@@ -35,6 +35,13 @@ export const login = async ({ email, password }) => {
 	return data
 }
 
+/*    User Endpoints    */
+export const updateUser = async (json) => {
+	//uses auth token to get userId
+	const result = await fetch(baseUrl(`/users/update/`), POST_FETCH_OPTIONS(json, true))
+	const data = await result.json()
+	return data
+}
 
 /*     Boat Endpoints     */
 export const createBoat = async (belongsTo) => {
@@ -45,6 +52,12 @@ export const createBoat = async (belongsTo) => {
 
 export const updateBoat = async (boatId, json) => {
 	const result = await fetch(baseUrl(`/boats/update/${boatId}`), POST_FETCH_OPTIONS(json, true))
+	const data = await result.json()
+	return data
+}
+
+export const updateBoatLocation = async (boatId, location, type, key) => {
+	const result = await fetch(baseUrl(`/boats/change-location/${boatId}`), POST_FETCH_OPTIONS({ location, type, key }, true))
 	const data = await result.json()
 	return data
 }

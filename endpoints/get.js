@@ -58,7 +58,7 @@ export const useUserBoats = () => {
 }
 
 export const useBoats = () => {
-	const { data, error } = useSWR(baseUrl(`/boats`), fetcher)
+	const { data, error } = useSWR(baseUrl(`/boats/`), fetcher)
 	console.log(data)
 	return {
 		boats: data?.boats,

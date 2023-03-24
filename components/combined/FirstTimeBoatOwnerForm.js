@@ -7,6 +7,7 @@ import { saveLoginCredentials } from '@/helpers/index'
 import MainPageLayout from '@/components/layouts/MainPageLayout'
 import Header from '@/components/small/Header'
 import Input from '@/components/Input'
+import { updateUser } from '@/endpoints/post'
 
 export default function FirstTimeBoatOwnerForm() {
 	const router = useRouter()
@@ -30,8 +31,13 @@ export default function FirstTimeBoatOwnerForm() {
 
 	const handleUserInformation = async (e) => {
 		e.preventDefault()
-		//TODO: save
-		setStep(2)
+
+		if (firstName && lastName) {
+			const result = await updateUser({ firstName, lastName })
+			//go to last step for now
+			setStep(4)
+		}
+	
 	}
 
 	const handlePaymentInformation = async (e) => {
