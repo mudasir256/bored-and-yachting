@@ -36,10 +36,6 @@ export default function BoatAndYachtRentals() {
 		return <div className="flex justify-center mt-12"><Loading /></div>
 	}
 
-	const handleEnter = () => {
-		console.log('entering')
-		setIsComponentVisible(true)
-	}
 
 	//TODO: block off time slots based on bookings 
 
@@ -104,7 +100,7 @@ export default function BoatAndYachtRentals() {
 							type="date" 
 							id="date"
 							label="Select a date"
-							onChange={setDateSelected} 
+							onChange={(e) => setDateSelected(e.target?.value)} 
 							value={dateSelected} 
 						/>
 						<Input
@@ -112,7 +108,7 @@ export default function BoatAndYachtRentals() {
 							id="duration"
 							label="Duration"
 							placeholder="Select a duration"
-							onChange={setDurationSelected}
+							onChange={(e) => setDurationSelected(e.target?.value)}
 							value={durationSelected}
 							options={[
 								{
@@ -131,7 +127,7 @@ export default function BoatAndYachtRentals() {
 					    label="Start Time"
 					    id="start-time"
 					    placeholder="Select a start time"
-					    onChange={setStartTime}
+					    onChange={(e) => setStartTime(e.target?.value)}
 					    value={startTime} 
 					    options={formattedTime}//.filter(time => time.value < field.endValue)}
 				    />
