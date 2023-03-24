@@ -16,10 +16,12 @@ import useComponentVisible from '@/hooks/useComponentVisible'
 import Button from '@/components/small/Button'
 import Link from 'next/link'
 import ViewPhotosButton from '@/components/combined/ViewPhotosButton'
+import useWindowDimensions from '@/hooks/useWindowDimensions'
 
 export default function BoatAndYachtRentals() {
 
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
+	const { height, width } = useWindowDimensions();
 
 	const router = useRouter()
 	const { boatId } = router.query
@@ -47,23 +49,33 @@ export default function BoatAndYachtRentals() {
 		  <meta name="description" content="" />
 		</Head>
 		<ContentPageLayout>
-			<div className="space-y-2">
-				<Header text={boat?.name} />
-				<p>address snippet</p>
+			<div className="space-y-6">
+				<div>
+					<Header text={boat?.name} />
+					<p>address snippet</p>
+				</div>
 
+				{width > 1281 ?
 				<div className="grid grid-cols-2 gap-2 relative">
 					<div className="relative w-full h-full">
 						<Image className="rounded-l-md" src={boat?.photos.find(Boolean)} alt={boat?.photos.find(Boolean)} layout="fill" objectFit="cover" />
 					</div>
-					<div className="flex flex-row gap-2 flex-wrap">
-						{boat?.photos.slice(1, 5).map((photo, index) => (<div key={photo} className="relative w-72 h-52">
-							<Image src={photo} alt={photo} layout="fill" objectFit="cover" className={index % 2 === 1 ? 'rounded-r-md' : ''} />
+					<div className="grid grid-cols-2 gap-2 flex-wrap">
+						{boat?.photos.slice(1, 5).map((photo, index) => (<div key={photo} className="relative w-full h-52">
+							<Image src={photo} alt={photo} layout="fill" objectFit="cover" className={`${index === 1 && 'rounded-tr-md'} ${index === 3 && 'rounded-br-md'}`}/>
 						</div>))}
 					</div>
-					<div className="absolute bottom-3 right-16">
+					<div className="absolute bottom-3 right-3">
 						<ViewPhotosButton text="See all photos" photoUrls={boat?.photos || []} />
 					</div>
 				</div>
+					: <div className="relative w-full h-96">
+							<Image className="rounded-t-md" src={boat?.photos.find(Boolean)} alt={boat?.photos.find(Boolean)} layout="fill" objectFit="cover" />
+							<div className="absolute bottom-2 right-3">
+								<ViewPhotosButton text="See all photos" photoUrls={boat?.photos || []} />
+							</div>
+						</div>
+				}
 
 				<div className="flex flex-row">
 					<div className="space-y-6">
