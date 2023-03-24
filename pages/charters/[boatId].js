@@ -14,6 +14,8 @@ import VesselPricingTableModal from '@/components/modals/VesselPricingTableModal
 import Icon from '@/components/Icon'
 import useComponentVisible from '@/hooks/useComponentVisible'
 import Button from '@/components/small/Button'
+import Link from 'next/link'
+import ViewPhotosButton from '@/components/combined/ViewPhotosButton'
 
 export default function BoatAndYachtRentals() {
 
@@ -48,10 +50,19 @@ export default function BoatAndYachtRentals() {
 			<div className="space-y-2">
 				<Header text={boat?.name} />
 				<p>address snippet</p>
-				<div className="flex flex-row flex-wrap gap-2">
-					{boat?.photos.map(photo => (<div key={photo} className="relative w-72 h-52">
-						<Image src={photo} alt={photo} layout="fill" objectFit="cover" />
-					</div>))}
+
+				<div className="grid grid-cols-2 gap-2 relative">
+					<div className="relative w-full h-full">
+						<Image className="rounded-l-md" src={boat?.photos.find(Boolean)} alt={boat?.photos.find(Boolean)} layout="fill" objectFit="cover" />
+					</div>
+					<div className="flex flex-row gap-2 flex-wrap">
+						{boat?.photos.slice(1, 5).map((photo, index) => (<div key={photo} className="relative w-72 h-52">
+							<Image src={photo} alt={photo} layout="fill" objectFit="cover" className={index % 2 === 1 ? 'rounded-r-md' : ''} />
+						</div>))}
+					</div>
+					<div className="absolute bottom-3 right-16">
+						<ViewPhotosButton text="See all photos" photoUrls={boat?.photos || []} />
+					</div>
 				</div>
 
 				<div className="flex flex-row">
@@ -102,6 +113,7 @@ export default function BoatAndYachtRentals() {
 								}
 							]}
 						/>
+						<Link href={`/contact-us?charter=${boatId}`} className="underline text-blue-400 hover:text-blue-500 text-xs">Contact us for multi-day and weekly rates</Link>
 				   	<Input 
 					    type="select" 
 					    label="Start Time"
