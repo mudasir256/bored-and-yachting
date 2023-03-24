@@ -71,7 +71,7 @@ export default function Dashboard() {
 					<div className="mt-2 flex flex-row gap-4 justify-start flex-wrap">
 					{boats?.map(boat => (
 						<Link href={`/boat-owner/${boat._id}`} key={boat._id} className="shadow rounded">
-							<Image src={boat.photos?.pop()} alt="boat" width="240" height="160" /> {/* boat.photos */}
+							<Image src={boat.photos?.find(Boolean)} alt="boat" width="240" height="160" /> 
 							<h2 className="ml-2">{boat.name}</h2>
 						</Link>
 					))}
