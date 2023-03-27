@@ -125,6 +125,13 @@ export const formattedTime = Object.values(AVAILABLE_TIME_SLOTS).map(hoursInSeco
 	}
 })
 
+export const boatHasAllValidInformation = (boat) => {
+	if (boat.parkingLocation && boat.photos.length > 2) { //TODO: add more qualifiers
+		console.log('valid')
+		return true
+	}
+	return false
+}
 
 const wholeNumberFormat = new Intl.NumberFormat('en-US', {
   style: 'currency',
