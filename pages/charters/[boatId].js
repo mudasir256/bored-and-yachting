@@ -39,13 +39,20 @@ export default function BoatAndYachtRentals() {
 	}
 
 	const handleRequestReservation = async () => {
-		console.log('reserve!')
+		if (!dateSelected || !durationSelected || !startTime) {
+			return
+		}
+
  		try {
  			const startTimeDate = DateTime.fromISO(dateSelected).plus({ seconds: startTime })
  			const hoursToAdd = RATE_IN_HOURS[durationSelected]
  			const endTimeDate = startTimeDate.plus({ hours: hoursToAdd })
  			const totalPrice = getFinalRateWithGratuity(boat, durationSelected)
- 			const result = await createBooking(startTimeDate.toJSDate(), endTimeDate.toJSDate(), { boatId, totalPrice, duration: durationSelected })
+ 			const result = await createBooking(
+				startTimeDate.toJSDate(), 
+				endTimeDate.toJSDate(), 
+				{ boatId, totalPrice, duration: durationSelected, belongsTo: boat?.belongsTo._id }
+ 			)
  			console.log(result)
  			if (result.success) {
  				router.push('/reservation-confirmed')

@@ -77,6 +77,40 @@ export const useBoat = (id) => {
 	}
 }
 
+export const useReservations = () => {
+	if (typeof window === 'undefined') {
+	  return {
+	  	bookings: [],
+	  	isLoading: true,
+	  	isError: false
+	  }
+	}
+	const { data, error } = useSWR(baseUrl(`/bookings/reservations/${localStorage.getItem('userId')}`), fetcher)
+
+	return {
+		bookings: data?.bookings,
+		isLoading: !error && !data,
+		isError: error
+	}
+}
+
+export const useTrips = () => {
+	if (typeof window === 'undefined') {
+	  return {
+	  	bookings: [],
+	  	isLoading: true,
+	  	isError: false
+	  }
+	}
+	const { data, error } = useSWR(baseUrl(`/bookings/trips/${localStorage.getItem('userId')}`), fetcher)
+
+	return {
+		bookings: data?.bookings,
+		isLoading: !error && !data,
+		isError: error
+	}
+}
+
 
 
 //Examples

@@ -5,8 +5,7 @@ import Button from '@/components/small/Button'
 import Link from 'next/link'
 import Image from 'next/image'
 import { USER_TYPES } from '@/helpers/index'
-
-import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker'
+import BoatOwnerReservations from '@/components/combined/dashboard/BoatOwnerReservations'
 import { createBoat } from '@/endpoints/post'
 import { useUserBoats } from '@/endpoints/get'
 
@@ -51,17 +50,7 @@ export default function Dashboard() {
 			<div className="space-y-12">
 				<Header text={`Welcome back ${firstName},`} />
 
-				<div className="space-y-2">
-					<Subheader text="Your reservations" />
-					<div className="flex flex-row items-center">
-						<ReservationsTypePicker />
-						<div className="ml-auto">
-							<p className="underline cursor-pointer">All reservations</p>
-						</div>
-					</div>
-					{/* Load reservations here */}
-					<p className="pt-6 text-center">No reservations found.</p>
-				</div>
+				<BoatOwnerReservations />
 
 				<div>
 					<div className="flex flex-row items-center">

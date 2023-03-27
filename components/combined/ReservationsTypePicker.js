@@ -1,11 +1,8 @@
 import Button from '@/components/small/Button'
 import { RESERVATION_STATUS, RESERVATION_STATUS_TEXT } from '@/helpers/index'
-import { useState } from 'react'
 
-export default function ReservationsTypePicker() {
+export default function ReservationsTypePicker({ selected, setSelected }) {
 	
-	const [selected, setSelected] = useState(RESERVATION_STATUS.UPCOMING)
-
 	return (<div className="space-x-2">
 		<Button 
 			onClick={() => setSelected(RESERVATION_STATUS.UPCOMING)} 

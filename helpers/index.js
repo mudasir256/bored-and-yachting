@@ -130,6 +130,33 @@ export const formattedTime = Object.values(AVAILABLE_TIME_SLOTS).map(hoursInSeco
 	}
 })
 
+export const formatDay = (isoTimestamp) => {
+	console.log(isoTimestamp)
+	if (isoTimestamp) {
+		return DateTime.fromISO(isoTimestamp).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY) //DATETIME_FULL debug timezone
+	}
+	return ''
+}
+
+export const differenceBetweenDates = (startDate, endDate) => {
+	const date1 = DateTime.fromISO(startDate)
+	const date2 = DateTime.fromISO(endDate)
+
+
+	const diff = date1.diff(date2, ["years", "months", "days", "hours"])
+	console.log(diff)
+	
+	const object = diff.toObject()
+
+	if (object.days) {
+		return `${Math.abs(object.days).toFixed(0)} days`
+	} else if (object.hours) {
+		return `${Math.abs(object.hours).toFixed(0)} hours`
+	} else {
+		return `${Math.abs(object.minutes).toFixed(0)} minutes`
+	}
+}
+
 export const boatHasAllValidInformation = (boat) => {
 	if (boat.parkingLocation && boat.photos.length > 2) { //TODO: add more qualifiers
 		return true
