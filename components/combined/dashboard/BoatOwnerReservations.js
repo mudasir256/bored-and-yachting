@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { RATE_LENGTHS, formatDay, differenceBetweenDates, formatMoney } from '@/helpers/index'
 import Image from 'next/image'
 
-export default function BoatOwnerReservations() {
+export default function BoatOwnerReservations({ boatsOwned = [] }) {
 
 	const { bookings, isLoading } = useReservations()
 
@@ -22,6 +22,11 @@ export default function BoatOwnerReservations() {
 			default: 
 				return reservationDuration
 		}
+	}
+
+	const matchBoat= (boatId) => {
+		const boat = boatsOwned.find(boat => boat._id == boatId)
+		return boat
 	}
 
 	const approveCharter = () => {
@@ -51,6 +56,7 @@ export default function BoatOwnerReservations() {
 								</div>
 								<p className="text-sm">{formatDay(booking.startDate)}</p>
 								<p className="text-sm">{mapDuration(booking.duration)}</p>
+								<p className="text-sm">on {matchBoat(booking.boatId).name}</p>
 							</div>
 							<div className="ml-auto mr-4 mt-2 flex flex-col justify-center items-center">
 								<div className="relative w-14 h-14">
@@ -60,7 +66,7 @@ export default function BoatOwnerReservations() {
 							</div>
 						</div>
 
-						<p className="mt-2 font-bold text-right mr-2">Total: {formatMoney(booking.totalPrice)}</p>
+						<p className="font-bold text-right mr-2">Total: {formatMoney(booking.totalPrice)}</p>
 
 						<div className="mt-4 flex flex-row">
 							<button onClick={() => approveCharter()} className="w-full border py-1">Approve</button>

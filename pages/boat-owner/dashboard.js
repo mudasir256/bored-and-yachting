@@ -50,7 +50,7 @@ export default function Dashboard() {
 			<div className="space-y-12">
 				<Header text={`Welcome back ${firstName},`} />
 
-				<BoatOwnerReservations />
+				<BoatOwnerReservations boatsOwned={boats} />
 
 				<div>
 					<div className="flex flex-row items-center">
