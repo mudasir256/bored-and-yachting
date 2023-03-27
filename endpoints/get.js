@@ -111,6 +111,23 @@ export const useTrips = () => {
 	}
 }
 
+export const useUser = () => {
+	if (typeof window === 'undefined') {
+	  return {
+	  	user: [],
+	  	isLoading: true,
+	  	isError: false
+	  }
+	}
+	const { data, error } = useSWR(baseUrl(`/users/${localStorage.getItem('userId')}`), fetcher)
+
+	return {
+		user: data?.user,
+		isLoading: !error && !data,
+		isError: error
+	}
+}
+
 
 
 //Examples

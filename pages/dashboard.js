@@ -3,8 +3,11 @@ import Header from '@/components/small/Header'
 import Subheader from '@/components/small/Subheader'
 import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker'
 import Link from 'next/link'
+import { useUser } from '@/endpoints/get'
 
 export default function Dashboard() {
+
+		const { user, isLoading } = useUser()
 
 		const Card = ({ title, text, buttonText, href }) => (
 			<div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -19,6 +22,10 @@ export default function Dashboard() {
 			</div>
 		)
 
+		const isBasicProfileFilled = () => {
+			
+		}
+
 	 return(
 	 	<ContentPageLayout>
 	 		<div className="space-y-8">
@@ -28,19 +35,19 @@ export default function Dashboard() {
 			 			<Card 
 			 				title="Basic profile information" 
 			 				text="This information allows us to keep a safe and secure network, and is needed before you're allowed to book a rental."
-			 				href="/profile"
+			 				href="/user/profile?redirect=true"
 			 				buttonText="Add information"
 			 			/>
 			 			<Card 
 			 				title="Driver's license photos" 
 			 				text="This information allows us to keep a safe and secure network, and is needed before you're allowed to book a rental."
-			 				href="/drivers-license"
+			 				href="/user/drivers-license"
 			 				buttonText="Add license"
 			 			/>
 			 			<Card 
 			 				title="Billing details" 
 			 				text="This information allows us to keep a safe and secure network, and is needed before you're allowed to book a rental."
-			 				href="/drivers-license"
+			 				href="/user/billing"
 			 				buttonText="Add payment method"
 			 			/>
 		 			</div>

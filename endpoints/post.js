@@ -43,6 +43,18 @@ export const updateUser = async (json) => {
 	return data
 }
 
+export const updateUserFiles = async (file, key) => {
+	const formData = new FormData();
+	formData.append('key', key)
+	formData.append('isSingleFile', true)
+	formData.append('fileCount', 1)
+	formData.append(`file-0`, file, file.name);
+
+	const result = await fetch(baseUrl(`/users/files/${localStorage.getItem('userId')}`), POST_FETCH_OPTIONS(formData, true, true))
+	const data = await result.json()
+	return data
+}
+
 /*     Boat Endpoints     */
 export const createBoat = async (belongsTo) => {
 	const result = await fetch(baseUrl('/boats/create'), POST_FETCH_OPTIONS({ belongsTo }, true))
