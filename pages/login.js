@@ -25,6 +25,8 @@ export default function Login() {
 					router.push('/boat-owner/dashboard')
 				} else if (result.user.roles.includes(USER_TYPES.CAPTAIN)) {
 					router.push('/captain/dashboard')
+				} else if (result.user.roles.includes(USER_TYPES.CUSTOMER)) {
+					router.push('/dashboard')
 				} else {
 					router.reload()
 				}

@@ -79,6 +79,11 @@ export const AVAILABLE_TIME_SLOTS = { //hours to seconds conversion
 	T_8PM: 72000
 }
 
+export const RATE_IN_HOURS = {
+	HALF_DAY: 4,
+	FULL_DAY: 8
+}
+
 export const RATE_LENGTHS = {
 	HALF_DAY: 'HALF_DAY',
 	FULL_DAY: 'FULL_DAY',
@@ -127,7 +132,6 @@ export const formattedTime = Object.values(AVAILABLE_TIME_SLOTS).map(hoursInSeco
 
 export const boatHasAllValidInformation = (boat) => {
 	if (boat.parkingLocation && boat.photos.length > 2) { //TODO: add more qualifiers
-		console.log('valid')
 		return true
 	}
 	return false

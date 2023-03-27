@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { USER_TYPES } from '@/helpers/index'
 
-import BoatOwnerReservationsTypePicker from '@/components/combined/BoatOwnerReservationsTypePicker'
+import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker'
 import { createBoat } from '@/endpoints/post'
 import { useUserBoats } from '@/endpoints/get'
 
@@ -54,7 +54,7 @@ export default function Dashboard() {
 				<div className="space-y-2">
 					<Subheader text="Your reservations" />
 					<div className="flex flex-row items-center">
-						<BoatOwnerReservationsTypePicker />
+						<ReservationsTypePicker />
 						<div className="ml-auto">
 							<p className="underline cursor-pointer">All reservations</p>
 						</div>

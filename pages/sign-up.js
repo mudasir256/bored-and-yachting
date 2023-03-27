@@ -57,6 +57,13 @@ export default function SignUp() {
 				<p>Tell us a little more about what you&apos;re looking for:</p>
 				
 				<div className="my-2 flex flex-row flex-start gap-4 flex-wrap">
+					
+					<Card
+						id={USER_TYPES.CUSTOMER}
+						header="I'm a renter"
+						description="I'd like to discover and explore over <amount> boats with ease."
+						src="/content/boat.jpg"
+					/>
 					<Card 
 						id={USER_TYPES.CAPTAIN}
 						header="I'm a captain" 
@@ -67,12 +74,6 @@ export default function SignUp() {
 						id={USER_TYPES.BOAT_OWNER}
 						header="I'm a boat owner" 
 						description="I'd like to connect with boat renters and captains and earn money renting."
-						src="/content/boat.jpg"
-					/>
-					<Card
-						id={USER_TYPES.CUSTOMER}
-						header="I'm a renter"
-						description="I'd like to discover and explore over <amount> boats with ease."
 						src="/content/boat.jpg"
 					/>
 

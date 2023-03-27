@@ -4,7 +4,7 @@ import Icon from '@/components/Icon'
 import { useState, useEffect } from 'react'
 import useComponentVisible from '@/hooks/useComponentVisible'
 import Button from '@/components/small/Button'
-import { removeLoginCredentials } from '@/helpers/index'
+import { USER_TYPES, removeLoginCredentials } from '@/helpers/index'
 import { useRouter } from 'next/router'
 
 export default function Navbar() {
@@ -13,6 +13,7 @@ export default function Navbar() {
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
+	const [roles, setRoles] = useState([])
 
 	useEffect(() => {
 		window.addEventListener('storage', handleStorageChange, false);
@@ -25,6 +26,7 @@ export default function Navbar() {
 	const handleStorageChange = () => {
 		console.log(localStorage.getItem('isLoggedIn'))
 		setIsLoggedIn(localStorage.getItem('isLoggedIn'))
+		setRoles(localStorage.getItem('roles'))
 	}
 
 	const handleLogout = () => {
@@ -33,7 +35,7 @@ export default function Navbar() {
 	}
 
 	const DropdownMenu = () => (
-		<div className="w-32 bg-white shadow p-4 rounded-lg">
+		<div className="w-36 bg-white shadow p-4 rounded-lg">
 			<ul>
 				{!isLoggedIn && <>
 					<li><Link href="/login">Log in</Link></li>
@@ -41,7 +43,9 @@ export default function Navbar() {
 				</>}
 				{isLoggedIn && <>
 					{/*Make account switching / dashboard based on roles */}
-					<li><Link href="/boat-owner/dashboard">Dashboard</Link></li>
+					{roles.includes(USER_TYPES.CUSTOMER) && <li><Link href="/dashboard">Rentals</Link></li>}
+					{roles.includes(USER_TYPES.BOAT_OWNER) && <li><Link href="/boat-owner/dashboard">My Boats</Link></li>}
+					{roles.includes(USER_TYPES.CAPTAIN) && <li><Link href="/captain/dashboard">Captain Dashboard</Link></li>}
 					<li><p onClick={() => handleLogout()}>Logout</p></li>
 				</>}
 			</ul>

@@ -133,6 +133,7 @@ export default function Input({
       	required={isRequired}
       	onChange={onChange}
       	value={value}
+      	min={min}
       	data-action={isInModal ? 'click' : ''}
       />
   	</div>

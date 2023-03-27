@@ -1,7 +1,7 @@
 export default function Dashboard() {
 	return (<>
 		<main>
-			Boatyard
+			Captain onboarding
 		</main>
 	</>)
 }

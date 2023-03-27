@@ -8,7 +8,7 @@ import Image from 'next/image'
 import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 import Input from '@/components/Input'
 import { useState } from 'react'
-import { formatMoney, formattedTime, RATE_LENGTHS, formatAddressLine } from '@/helpers/index'
+import { formatMoney, formattedTime, RATE_LENGTHS, RATE_IN_HOURS, formatAddressLine } from '@/helpers/index'
 import { getFinalRateWithGratuity } from '@/helpers/money'
 import VesselPricingTableModal from '@/components/modals/VesselPricingTableModal'
 import Icon from '@/components/Icon'
@@ -17,6 +17,8 @@ import Button from '@/components/small/Button'
 import Link from 'next/link'
 import ViewPhotosButton from '@/components/combined/ViewPhotosButton'
 import useWindowDimensions from '@/hooks/useWindowDimensions'
+import { DateTime } from 'luxon'
+import { createBooking } from '@/endpoints/post'
 
 export default function BoatAndYachtRentals() {
 
@@ -36,6 +38,24 @@ export default function BoatAndYachtRentals() {
 		return <div className="flex justify-center mt-12"><Loading /></div>
 	}
 
+	const handleRequestReservation = async () => {
+		console.log('reserve!')
+ 		try {
+ 			const startTimeDate = DateTime.fromISO(dateSelected).plus({ seconds: startTime })
+ 			const hoursToAdd = RATE_IN_HOURS[durationSelected]
+ 			const endTimeDate = startTimeDate.plus({ hours: hoursToAdd })
+ 			const totalPrice = getFinalRateWithGratuity(boat, durationSelected)
+ 			const result = await createBooking(startTimeDate.toJSDate(), endTimeDate.toJSDate(), { boatId, totalPrice, duration: durationSelected })
+ 			console.log(result)
+ 			if (result.success) {
+ 				router.push('/reservation-confirmed')
+ 			}
+
+ 		} catch (err) {
+ 			console.log(err)
+ 			//TODO: must provide errors
+ 		}
+	}
 
 	//TODO: block off time slots based on bookings 
 
@@ -100,6 +120,7 @@ export default function BoatAndYachtRentals() {
 							type="date" 
 							id="date"
 							label="Select a date"
+							min={DateTime.now().toFormat('yyyy-MM-dd')}
 							onChange={(e) => setDateSelected(e.target?.value)} 
 							value={dateSelected} 
 						/>
@@ -151,7 +172,7 @@ export default function BoatAndYachtRentals() {
 							<Button text="apply" />
 						</div>
 
-						<Button text="Request reservation" isFull />
+						<Button onClick={() => handleRequestReservation()} text="Request reservation" isFull />
 						<div className="text-center text-xs space-y-2">
 							<p>You won&apos;t be charged yet.</p>
 							<p>Your reservation will be only be confirmed after a captain accepts this charter.</p>

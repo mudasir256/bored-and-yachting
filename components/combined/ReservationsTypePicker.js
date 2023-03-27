@@ -2,7 +2,7 @@ import Button from '@/components/small/Button'
 import { RESERVATION_STATUS, RESERVATION_STATUS_TEXT } from '@/helpers/index'
 import { useState } from 'react'
 
-export default function BoatOwnerReservationsTypePicker() {
+export default function ReservationsTypePicker() {
 	
 	const [selected, setSelected] = useState(RESERVATION_STATUS.UPCOMING)
 
