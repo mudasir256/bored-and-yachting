@@ -1,5 +1,5 @@
 import ContentPageLayout from '@/components/layouts/ContentPageLayout'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useUser } from '@/endpoints/get'
 import { updateUser, updateUserFiles, baseUrl } from '@/endpoints/post'
 import Input from '@/components/Input'
@@ -22,6 +22,14 @@ export default function Profile() {
 
 	const [profilePic, setProfilePic] = useState('') //fill with image from https
 	const [fileSelected, setFileSelected] = useState(null)
+
+	useEffect(() => {
+		if (user) {
+			setFirstName(user?.firstName)
+			setLastName(user?.lastName)
+			setProfilePic(user?.profilePicture)
+		}
+	}, [user])
 
 	const handleUserInformation = async (e) => {
 		e.preventDefault()

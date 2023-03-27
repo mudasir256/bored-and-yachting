@@ -8,7 +8,7 @@ export default function FileInputWithPicture({ handleFileSelect, fileSelected, s
 		{(fileSelected) ? <img alt="profile picture" className="rounded-full w-12 h-12 object-cover" src={URL.createObjectURL(fileSelected)} />
 			: src ? <img alt="empty profile picture placeholder" className="rounded-full w-16 h-16 object-cover" src={src} />
 			: <div className="bg-gray-100 rounded-full w-12 h-12 flex flex-row items-center justify-center">
-					<Icon iconName="user" size="md" color="gray" />
+					<Icon iconName="user" size="sm" color="gray" />
 				</div>
 		}
 			<div className="space-y-2">

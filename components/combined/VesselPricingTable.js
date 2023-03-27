@@ -56,7 +56,7 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		                    Full Day Rate
 		                </th>
 		                <th scope="col" className="px-6 py-3">
-		                    Hourly Rate
+		                    Extra Charter Time / HR
 		                </th>
 		          
 		            </tr>
