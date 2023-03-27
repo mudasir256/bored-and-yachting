@@ -3,6 +3,7 @@ import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker
 import Subheader from '@/components/small/Subheader'
 import { useState } from 'react'
 import { RATE_LENGTHS, formatDay, differenceBetweenDates, formatMoney } from '@/helpers/index'
+import Image from 'next/image'
 
 export default function BoatOwnerReservations() {
 
@@ -43,15 +44,24 @@ export default function BoatOwnerReservations() {
 			<div className="grid grid-cols-2 gap-2">
 				{bookings?.map(booking => (
 					<div key={booking._id} className="max-w-sm shadow rounded">
-						<div className="mt-2 ml-2 space-y-2">
-							<div className="">
-								<p className="font-bold">charter in {differenceBetweenDates(new Date().toISOString(), booking.startDate)}</p>
+						<div className="flex flex-row">
+							<div className="mt-2 ml-2 space-y-2 p-2">
+								<div className="">
+									<p className="font-bold">charter in {differenceBetweenDates(new Date().toISOString(), booking.startDate)}</p>
+								</div>
+								<p className="text-sm">{formatDay(booking.startDate)}</p>
+								<p className="text-sm">{mapDuration(booking.duration)}</p>
 							</div>
-							<p className="text-sm">{formatDay(booking.startDate)}</p>
-							<p className="text-sm">{mapDuration(booking.duration)}</p>
-							<p className="text-sm">Booked by: {booking.bookedBy.firstName}</p>
-							<p className="font-bold text-right mr-2">Total: {formatMoney(booking.totalPrice)}</p>
+							<div className="ml-auto mr-4 mt-2 flex flex-col justify-center items-center">
+								<div className="relative w-14 h-14">
+									<Image alt={booking.bookedBy?.firstName} src={booking.bookedBy?.profilePicture} className="object-cover rounded-full" layout="fill" />
+								</div>
+								<p className="text-sm">Booked by {booking.bookedBy?.firstName}</p>
+							</div>
 						</div>
+
+						<p className="mt-2 font-bold text-right mr-2">Total: {formatMoney(booking.totalPrice)}</p>
+
 						<div className="mt-4 flex flex-row">
 							<button onClick={() => approveCharter()} className="w-full border py-1">Approve</button>
 							<button onClick={() => declineCharter()} className="w-full border py-1">Decline</button>
