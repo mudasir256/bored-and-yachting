@@ -5,10 +5,17 @@ import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker
 import Link from 'next/link'
 import { useUser } from '@/endpoints/get'
 import Icon from '@/components/Icon'
+import { useTrips } from '@/endpoints/get'
+import { useState } from 'react'
+import { RESERVATION_STATUS, RATE_LENGTHS, formatDay, differenceBetweenDates, formatMoney, mapDuration } from '@/helpers/index'
+import Image from 'next/image'
 
 export default function Dashboard() {
 
 		const { user, isLoading } = useUser()
+		const { bookings, isLoading: isLoadingBookings } = useTrips()
+
+		const [selected, setSelected] = useState('')
 
 		const Card = ({ title, text, buttonText, href, isComplete }) => {
 			return(
@@ -32,6 +39,24 @@ export default function Dashboard() {
 				</div>
 			)
 		}
+
+		const ImageWithName = ({ src, text, alt }) => (
+			<div className="flex flex-col items-center">
+				<div className="relative w-14 h-14">
+					<Image src={src} alt={alt} className="object-cover rounded-full" layout="fill" />
+				</div>
+				<p className="text-sm">{text}</p>
+			</div>
+		)
+
+		const EmptyPicture = () => (
+			<div className="flex flex-col items-center justify-center">
+				<div className="flex flex-row justify-center items-center w-14 h-14 rounded-full bg-gray-200">
+					<Icon name="user" />
+				</div>
+				<p className="text-sm">Finding Captain</p>
+			</div>
+		)
 		
 
 		const isBasicProfileFilled = () => {
@@ -69,16 +94,60 @@ export default function Dashboard() {
 			 			/>
 		 			</div>
 		 		</div>
-		 		<div className="space-y-2">
+		 		<div className="space-y-4">
 		 			<Subheader text="Your reservations" />
 		 			<div className="flex flex-row items-center">
-		 				<ReservationsTypePicker />
+		 				<ReservationsTypePicker selected={selected} setSelected={setSelected} />
 		 				<div className="ml-auto">
 		 					<p className="underline cursor-pointer">All reservations</p>
 		 				</div>
 		 			</div>
-		 			{/* Load reservations here */}
-		 			<p className="pt-6 text-center">No reservations found.</p>
+		 			<div className="flex flex-row flex-wrap gap-4">
+			 			{bookings?.filter(booking => { 
+			 				if (!selected) { return true } else {
+			 					return booking.status === selected
+			 				}
+			 			}).map(booking => {
+			 				console.log(booking)
+			 				return (
+			 					<div key={booking._id} className="max-w-[360px] min-w-[360px] shadow rounded">
+			 						<div className="flex flex-row">
+			 							<div className="mt-2 ml-2 space-y-2 p-2">
+			 								<div className="relative w-32 h-24">
+			 									<Image alt={booking.boatId?.name} src={booking.boatId?.photos[0]} className="object-cover rounded" layout="fill" />
+			 								</div>
+			 							</div>
+			 							<div className="ml-auto mr-4 flex flex-col justify-center gap-1.5">
+			 								<p className="text-sm">{formatDay(booking.startDate)}</p>
+			 								<p className="text-sm">{mapDuration(booking.duration)}</p>
+			 								<p className="text-sm">on {booking.boatId?.name}</p>
+
+			 							</div>
+			 						</div>
+
+			 						<div className="mb-2 flex flex-row gap-4 justify-around">
+				 						<ImageWithName 
+				 							alt={booking.belongsTo?.firstName} 
+				 							src={booking.belongsTo?.profilePicture}
+				 							text={`Hosted by ${booking.belongsTo?.firstName}`}
+				 						/>
+				 						{booking.captainId?.firstName 
+				 							? <ImageWithName alt={booking.captainId?.firstName} src={booking.captainId?.profilePicture} text={`Captained by ${booking.captainId?.firstName}`} />
+				 							: <EmptyPicture />
+				 						}
+			 						</div>
+			 						<hr />
+			 						<p className="my-2 text-sm px-4">{booking.boatId?.parkingLocation?.address.slice(0, -5)}</p>
+
+			 					</div>
+			 				)
+			 			})}
+		 			</div>
+		 			{bookings?.filter(booking => { 
+			 				if (!selected) { return true } else {
+			 					return booking.status === selected
+			 				}
+			 		}).length === 0 && <p className="pt-6 text-center">No reservations found.</p>}
 		 		</div>
 	 		</div>
 	 	</ContentPageLayout>

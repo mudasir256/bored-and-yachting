@@ -104,6 +104,17 @@ export const GRATUITY = {
 	RATE: 0.25
 }
 
+export const mapDuration = (reservationDuration) => {
+	switch (reservationDuration) {
+		case RATE_LENGTHS.HALF_DAY:
+			return 'Half Day (4 hours)'
+		case RATE_LENGTHS.FULL_DAY:
+			return 'Full Day (8 hours'
+		default: 
+			return reservationDuration
+	}
+}
+
 export const TAX_RATES_BY_REGION = {
 	FLORIDA: .07
 }

@@ -71,6 +71,7 @@ export default function Dashboard() {
 				<div>
 					<h2 className="text-lg mb-2">Other Features</h2>
 					<div className="flex flex-row gap-2">
+						<Link href="/user/profile?redirect=true" className="cursor-pointer underline text-sm">Update profile</Link>
 						<p className="cursor-pointer underline text-sm" onClick={() => handleAddRole(USER_TYPES.CAPTAIN)}>Become a captain</p>
 						<p className="cursor-pointer underline text-sm" onClick={() => handleAddRole(USER_TYPES.CUSTOMER)}>Create a customer account</p>
 					</div>

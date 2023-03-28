@@ -4,7 +4,7 @@ import { updateBooking } from '@/endpoints/post'
 import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker'
 import Subheader from '@/components/small/Subheader'
 import { useState } from 'react'
-import { RESERVATION_STATUS, RATE_LENGTHS, formatDay, differenceBetweenDates, formatMoney } from '@/helpers/index'
+import { RESERVATION_STATUS, RATE_LENGTHS, formatDay, differenceBetweenDates, formatMoney, mapDuration } from '@/helpers/index'
 import Image from 'next/image'
 
 export default function BoatOwnerReservations({ boatsOwned = [] }) {
@@ -12,17 +12,6 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 	const { bookings, isLoading, mutate } = useReservations()
 
 	const [selected, setSelected] = useState('')
-
-	const mapDuration = (reservationDuration) => {
-		switch (reservationDuration) {
-			case RATE_LENGTHS.HALF_DAY:
-				return 'Half Day (4 hours)'
-			case RATE_LENGTHS.FULL_DAY:
-				return 'Full Day (8 hours'
-			default: 
-				return reservationDuration
-		}
-	}
 
 	const matchBoat= (boatId) => {
 		const boat = boatsOwned.find(boat => boat._id == boatId)
@@ -53,7 +42,7 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 	}
 
 	return (
-		<div className="space-y-2">
+		<div className="space-y-4">
 			<Subheader text="Your reservations" />
 			<div className="flex flex-row items-center">
 				<ReservationsTypePicker selected={selected} setSelected={setSelected} />
@@ -61,14 +50,14 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 					<p onClick={() => setSelected('')} className={`underline cursor-pointer ${selected === '' && 'text-blue-500'}`}>All reservations</p>
 				</div>
 			</div>
-			<div className="grid grid-cols-2 gap-2">
+			<div className="flex flex-row flex-wrap gap-4">
 				{bookings?.filter(booking => { 
 					if (!selected) { return true } else {
 						return booking.status === selected
 					}
 				}).map(booking => {
 					return (
-						<div key={booking._id} className="max-w-sm shadow rounded">
+						<div key={booking._id} className="min-w-[360px] shadow rounded">
 							<div className="flex flex-row">
 								<div className="mt-2 ml-2 space-y-2 p-2">
 									<div className="">
@@ -97,7 +86,11 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 					)
 				})}
 			</div>
-			<p className="pt-6 text-center">No reservations found.</p>
+ 			{bookings?.filter(booking => { 
+	 				if (!selected) { return true } else {
+	 					return booking.status === selected
+	 				}
+	 		}).length === 0 && <p className="pt-6 text-center">No reservations found.</p>}
 		</div>
 	)
 }
