@@ -98,5 +98,10 @@ export const createBooking = async (startDate, endDate, { boatId, totalPrice, du
 	const result = await fetch(baseUrl(`/bookings/create/`), POST_FETCH_OPTIONS({ boatId, totalPrice, startDate, endDate, duration, belongsTo }, true))
 	const data = await result.json()
 	return data
+}
 
+export const updateBooking = async (bookingId, { status }) => {
+	const result = await fetch(baseUrl(`/bookings/update/${bookingId}`), POST_FETCH_OPTIONS({ status }, true))
+	const data = await result.json()
+	return data
 }

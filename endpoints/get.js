@@ -85,12 +85,13 @@ export const useReservations = () => {
 	  	isError: false
 	  }
 	}
-	const { data, error } = useSWR(baseUrl(`/bookings/reservations/${localStorage.getItem('userId')}`), fetcher)
+	const { data, error, mutate } = useSWR(baseUrl(`/bookings/reservations/${localStorage.getItem('userId')}`), fetcher)
 
 	return {
 		bookings: data?.bookings,
 		isLoading: !error && !data,
-		isError: error
+		isError: error,
+		mutate: mutate
 	}
 }
 
