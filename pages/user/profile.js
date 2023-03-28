@@ -60,9 +60,11 @@ export default function Profile() {
 	}
 
 	return (<>
-		<div className='absolute ml-4 mt-4 cursor-pointer' onClick={() => router.back()} > 
-			<Icon name="left-arrow" />
-		</div>
+		{redirect == 'true' &&
+			<div className='absolute ml-4 mt-4 cursor-pointer' onClick={() => router.back()} > 
+				<Icon name="left-arrow" />
+			</div>
+		}
 		<ContentPageLayout>
 			<Header text="Basic Profile Information" />
 			<form className="mt-2 space-y-2" onSubmit={handleUserInformation}>

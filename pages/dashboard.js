@@ -99,7 +99,7 @@ export default function Dashboard() {
 		 			<div className="flex flex-row items-center">
 		 				<ReservationsTypePicker selected={selected} setSelected={setSelected} />
 		 				<div className="ml-auto">
-		 					<p className="underline cursor-pointer">All reservations</p>
+		 					<p onClick={() => setSelected('')} className={`underline cursor-pointer ${selected === '' && 'text-blue-500'}`}>All reservations</p>
 		 				</div>
 		 			</div>
 		 			<div className="flex flex-row flex-wrap gap-4">

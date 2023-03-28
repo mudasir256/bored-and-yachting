@@ -6,7 +6,7 @@ const GET_FETCH_OPTIONS = () => {
 	return {
 		method: 'get',
 		headers: { 
-			'Authorization': `Bearer ${localStorage.getItem('token')}`,
+			'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
 			'Content-Type': 'application/json',
 		},
 		mode: 'cors',
@@ -37,6 +37,12 @@ export const getAutocompleteAddresses = (searchText, callback) => {
 		.catch(err => {
 			callback(err)
 		}) 
+}
+
+export const getStripeAccountLink = async (userId, isBoatOwner) => {
+	const result = await 	fetch(`${baseUrl(`/users/onboard-stripe/${userId}`)}?isBoatOwner=${isBoatOwner}`, GET_FETCH_OPTIONS())
+	const data = await result.json()
+	return data
 }
 
 /*      Boats      */
