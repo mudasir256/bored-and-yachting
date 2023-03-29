@@ -13,6 +13,7 @@ import {
 	faCircleCheck,
 	faStar,
 	faCreditCard,
+	faCalendarCheck,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -31,7 +32,8 @@ export default function Icon({ name, color = 'black', size = 'lg' }) {
 		{ name: 'delete', component: faTrashCan },
 		{ name: 'circle-checkmark', component: faCircleCheck },
 		{ name: 'star', component: faStar },
-		{ name: 'credit-card', component: faCreditCard }
+		{ name: 'credit-card', component: faCreditCard },
+		{ name: 'confirm-calendar', component: faCalendarCheck }
 	]
 
 	const icon = icons.find(icon => icon.name === name) || { component: faUser }

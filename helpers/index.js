@@ -109,7 +109,7 @@ export const mapDuration = (reservationDuration) => {
 		case RATE_LENGTHS.HALF_DAY:
 			return 'Half Day (4 hours)'
 		case RATE_LENGTHS.FULL_DAY:
-			return 'Full Day (8 hours'
+			return 'Full Day (8 hours)'
 		default: 
 			return reservationDuration
 	}
@@ -144,7 +144,9 @@ export const formattedTime = Object.values(AVAILABLE_TIME_SLOTS).map(hoursInSeco
 })
 
 export const formatDay = (isoTimestamp) => {
-	console.log(isoTimestamp)
+	if (isoTimestamp?.isLuxonDateTime) {
+		return isoTimestamp.toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)
+	}
 	if (isoTimestamp) {
 		return DateTime.fromISO(isoTimestamp).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY) //DATETIME_FULL debug timezone
 	}

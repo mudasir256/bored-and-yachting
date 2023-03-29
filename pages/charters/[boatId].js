@@ -10,8 +10,6 @@ import Input from '@/components/Input'
 import { useState } from 'react'
 import { formatMoney, formattedTime, RATE_LENGTHS, RATE_IN_HOURS, formatAddressLine } from '@/helpers/index'
 import { getFinalRateWithGratuity, getRateWithoutGratuity } from '@/helpers/money'
-import VesselPricingTableModal from '@/components/modals/VesselPricingTableModal'
-import Icon from '@/components/Icon'
 import useComponentVisible from '@/hooks/useComponentVisible'
 import Button from '@/components/small/Button'
 import Link from 'next/link'
@@ -19,6 +17,8 @@ import ViewPhotosButton from '@/components/combined/ViewPhotosButton'
 import useWindowDimensions from '@/hooks/useWindowDimensions'
 import { DateTime } from 'luxon'
 import { createBooking } from '@/endpoints/post'
+import PriceBreakdownButton from '@/components/combined/PriceBreakdownButton'
+import BookingConfirmationModal from '@/components/modals/BookingConfirmationModal'
 
 export default function BoatAndYachtRentals() {
 
@@ -33,6 +33,8 @@ export default function BoatAndYachtRentals() {
 	const [dateSelected, setDateSelected] = useState('')
 	const [durationSelected, setDurationSelected] = useState('')
 	const [startTime, setStartTime] = useState('')
+
+	const [bookingData, setBookingData] = useState({})
 
 	if (isLoading) {
 		return <div className="flex justify-center mt-12"><Loading /></div>
@@ -49,20 +51,40 @@ export default function BoatAndYachtRentals() {
  			const endTimeDate = startTimeDate.plus({ hours: hoursToAdd })
  			const totalPrice = getFinalRateWithGratuity(boat, durationSelected)
  			const subtotalPrice = getRateWithoutGratuity(boat, durationSelected)
+ 			
+ 			setBookingData({
+ 				startTimeDate,
+ 				endTimeDate,
+ 				totalPrice,
+ 				subtotalPrice,
+ 				duration: durationSelected,
+ 				belongsTo: boat?.belongsTo._id
+ 			})
+
+ 			setIsComponentVisible(true)
+ 
+ 		} catch (err) {
+ 			console.log(err)
+ 		}
+	}
+
+	const confirmBooking = async () => {
+		try {
+			console.log('confirming')
+			//send payment method to endpoint
  			const result = await createBooking(
-				startTimeDate.toJSDate(), 
-				endTimeDate.toJSDate(), 
-				{ boatId, totalPrice, subtotalPrice, duration: durationSelected, belongsTo: boat?.belongsTo._id }
+				bookingData.startTimeDate.toJSDate(), 
+				bookingData.endTimeDate.toJSDate(), 
+				{ ...bookingData, boatId: boatId }
  			)
  			console.log(result)
  			if (result.success) {
  				router.push('/reservation-confirmed')
  			}
-
- 		} catch (err) {
- 			console.log(err)
- 			//TODO: must provide errors
- 		}
+		} catch (err) {
+			console.log(err)
+			//TODO: must provide errors
+		}
 	}
 
 	//TODO: block off time slots based on bookings 
@@ -101,7 +123,7 @@ export default function BoatAndYachtRentals() {
 						</div>
 				}
 
-				<div className="flex flex-row">
+				<div className="flex flex-row gap-4">
 					<div className="space-y-6">
 						<div>
 							<Subheader text={`Hosted by ${boat?.belongsTo.firstName}`} />
@@ -113,9 +135,9 @@ export default function BoatAndYachtRentals() {
 							</div>
 						</div>
 
-						<div>
+						<div className="space-y-4">
 							<p>{boat?.videoLink}</p>
-							<p>{boat?.description}</p>
+							<p className="max-w-4xl">{boat?.description}</p>
 							<p>{boat?.amenitiesList}</p>
 							<p>{boat?.featuresList}</p>
 
@@ -170,11 +192,8 @@ export default function BoatAndYachtRentals() {
 								<p>{formatMoney(getFinalRateWithGratuity(boat, RATE_LENGTHS.FULL_DAY))}</p>
 							</div>
 						</div>
-						<div onClick={() => setIsComponentVisible(true)} className="border-dotted border p-2 flex flex-row items-center justify-center gap-2 cursor-pointer">
-							<Icon name="info" color="gray" size="xs" />
-							<p className="text-gray-500 text-xs italic">full price breakdown</p>
-						</div>
-
+						
+						<PriceBreakdownButton boatId={boatId} />
 						<div className="flex flex-row gap-2">
 							<Input type="text" placeholder="promo code" />
 							<Button text="apply" />
@@ -189,7 +208,7 @@ export default function BoatAndYachtRentals() {
 				</div>
 				
 				<div ref={ref}>
-					{isComponentVisible && <VesselPricingTableModal isEditable={false} boatId={boatId} />}
+					{isComponentVisible && <BookingConfirmationModal boat={boat} bookingData={bookingData} confirmBooking={confirmBooking} />}
 				</div>
 			</div>
 		</ContentPageLayout>
