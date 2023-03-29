@@ -45,6 +45,18 @@ export const getStripeAccountLink = async (userId, isBoatOwner) => {
 	return data
 }
 
+export const getStripeAccountStatus = async () => {
+	const result = await 	fetch(baseUrl(`/users/stripe-account-status`), GET_FETCH_OPTIONS())
+	const data = await result.json()
+	return data
+}
+
+export const getStripeSetupIntent = async () => {
+	const result = await 	fetch(baseUrl(`/users/stripe-setup-intent`), GET_FETCH_OPTIONS())
+	const data = await result.json()
+	return data
+}
+
 /*      Boats      */
 export const useUserBoats = () => {
 	if (typeof window === 'undefined') {

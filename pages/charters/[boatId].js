@@ -9,7 +9,7 @@ import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 import Input from '@/components/Input'
 import { useState } from 'react'
 import { formatMoney, formattedTime, RATE_LENGTHS, RATE_IN_HOURS, formatAddressLine } from '@/helpers/index'
-import { getFinalRateWithGratuity } from '@/helpers/money'
+import { getFinalRateWithGratuity, getRateWithoutGratuity } from '@/helpers/money'
 import VesselPricingTableModal from '@/components/modals/VesselPricingTableModal'
 import Icon from '@/components/Icon'
 import useComponentVisible from '@/hooks/useComponentVisible'
@@ -48,10 +48,11 @@ export default function BoatAndYachtRentals() {
  			const hoursToAdd = RATE_IN_HOURS[durationSelected]
  			const endTimeDate = startTimeDate.plus({ hours: hoursToAdd })
  			const totalPrice = getFinalRateWithGratuity(boat, durationSelected)
+ 			const subtotalPrice = getRateWithoutGratuity(boat, durationSelected)
  			const result = await createBooking(
 				startTimeDate.toJSDate(), 
 				endTimeDate.toJSDate(), 
-				{ boatId, totalPrice, duration: durationSelected, belongsTo: boat?.belongsTo._id }
+				{ boatId, totalPrice, subtotalPrice, duration: durationSelected, belongsTo: boat?.belongsTo._id }
  			)
  			console.log(result)
  			if (result.success) {

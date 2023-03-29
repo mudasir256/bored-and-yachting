@@ -1,31 +1,49 @@
 import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 import Header from '@/components/small/Header'
-import Icon from '@/components/Icon'
-import { useRouter } from 'next/router'
-import Button from '@/components/small/Button'
-import { getStripeAccountLink } from '@/endpoints/get'
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import StripeSetupIntentForm from '@/components/combined/StripeSetupIntentForm'
+import { useState, useEffect } from 'react'
+import { getStripeSetupIntent } from '@/endpoints/get'
+import Loading from '@/components/small/Loading'
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 export default function Billing() {
 
-	const router = useRouter()
-	const { redirect, key } = router.query
+	const [isLoading, setIsLoading] = useState(true)
+	const [clientSecret, setClientSecret] = useState('')
 
-	const connectWithStripe = async () => {
-		const isBoatOwner = key === 'boat-owner'
-		const result = await getStripeAccountLink(localStorage.getItem('userId'), isBoatOwner)
-		console.log(result)
-		window.location.href = result.link.url
+	useEffect(() => {
+		const initializeStripe = async () => {
+			const setupIntent = await getStripeSetupIntent()
+			setIsLoading(false)
+			setClientSecret(setupIntent?.setupIntent?.client_secret)
+		}
+		initializeStripe()
+	}, [])
+
+	if (isLoading) {
+		return(
+			<ContentPageLayout>
+				<div className="flex justify-center items-center"><Loading /></div>
+			</ContentPageLayout>
+		)
 	}
 
-	return(<>
-		{redirect == 'true' &&
-			<div className='absolute ml-4 mt-4 cursor-pointer' onClick={() => router.back()} > 
-				<Icon name="left-arrow" />
-			</div>
-		}
+	const options =  {
+		clientSecret: clientSecret,
+		appearance: {}
+	}
+
+	return(<Elements stripe={stripePromise} options={options}>
 		<ContentPageLayout>
-			<Header text="Billing Information" />
-			<Button text="Connect with Stripe for payments" onClick={() => connectWithStripe()} />
+			<div className="pb-4">
+				<Header text="Manage Payment Methods" />
+				TODO: load payment methods / preferred method
+			</div>
+			<Header text="Add a payment method" />
+			<StripeSetupIntentForm />
 		</ContentPageLayout>
-	</>)
+	</Elements>)
 }
