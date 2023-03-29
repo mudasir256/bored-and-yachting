@@ -158,9 +158,7 @@ export const differenceBetweenDates = (startDate, endDate) => {
 	const date2 = DateTime.fromISO(endDate)
 
 
-	const diff = date1.diff(date2, ["years", "months", "days", "hours"])
-	console.log(diff)
-	
+	const diff = date1.diff(date2, ["years", "months", "days", "hours"])	
 	const object = diff.toObject()
 
 	if (object.days) {

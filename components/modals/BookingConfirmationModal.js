@@ -4,16 +4,23 @@ import Subheader from '@/components/small/Subheader'
 import { mapDuration, formatDay, formatMoney } from '@/helpers/index'
 import Icon from '@/components/Icon'
 import Button from '@/components/small/Button'
+import PaymentSelector from '@/components/combined/PaymentSelector'
 
 export default function BookingConfirmationModal({ boat, bookingData, confirmBooking }) {
 	const [isBrowser, setIsBrowser] = useState(false);
+
+	const [paymentSelected, setPaymentSelected] = useState('')
 
 	useEffect(() => {
 	  setIsBrowser(true);
 	}, []);
 
 	const handleConfirmBooking = async () => {
-		confirmBooking() //include CC selected
+		if (paymentSelected) {
+			confirmBooking(paymentSelected)
+			return
+		} 
+		//TODO: please select a payment method
 	}
 
 	const modalContent = (
@@ -29,7 +36,7 @@ export default function BookingConfirmationModal({ boat, bookingData, confirmBoo
 						</div>
 						<div>
 							<p className="font-bold">Pay With</p>
-							<p className="text-sm text-gray-500">TODO CC selector / payment selector</p>
+							<PaymentSelector paymentSelected={paymentSelected} setPaymentSelected={setPaymentSelected} />
 						</div>
 						<div>
 							<p className="font-bold">Ground Rules</p>

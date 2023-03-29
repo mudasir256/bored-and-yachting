@@ -13,9 +13,11 @@ export default function Login() {
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [errorMessage, setErrorMessage] = useState('')
 
 	const handleLogin = async (e) => {
 		e.preventDefault()
+		setErrorMessage('')
 		try {
 			const result = await login({ email, password })
 			console.log(result)
@@ -32,8 +34,10 @@ export default function Login() {
 				}
 				return
 			}
+			setErrorMessage(result?.message)
 		} catch (err) {
 			console.log(err)
+			setErrorMessage(err?.message || err)
 		}
 	}
 
@@ -61,6 +65,7 @@ export default function Login() {
 				 	placeholder="Password"
 				 	isRequired={true}
 				 />
+				 {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
 				 <Input
 				 	type="submit"
 				 	value="Login" 

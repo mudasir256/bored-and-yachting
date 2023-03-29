@@ -52,7 +52,7 @@ export default function Billing() {
 			</div>
 			<p>•••• •••• •••• {card.last4}</p>
 			<p className="mb-4">{card.exp_month} / {card.exp_year}</p>
-			<Button onClick={() => handleCardDelete(card)} text="Delete" isFull isOutlined />
+			{/*<Button onClick={() => handleCardDelete(card)} text="Delete" isFull isOutlined />*/}
 		</div>
 	)
 	

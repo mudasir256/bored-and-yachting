@@ -93,15 +93,21 @@ export const updateBoatFiles = async (boatId, files, key) => {
 }
 
 /*   Booking Endpoints   */
-export const createBooking = async (startDate, endDate, { boatId, subtotalPrice, totalPrice, duration, belongsTo }) => {
+export const createBooking = async (startDate, endDate, { boatId, subtotalPrice, totalPrice, duration, belongsTo, customerStripePaymentMethod }) => {
 	//TODO: force startDate / endDate time zone to match the boat's location instead of the user's timezone
-	const result = await fetch(baseUrl(`/bookings/create/`), POST_FETCH_OPTIONS({ boatId, subtotalPrice, totalPrice, startDate, endDate, duration, belongsTo }, true))
+	const result = await fetch(baseUrl(`/bookings/create/`), POST_FETCH_OPTIONS({ boatId, subtotalPrice, totalPrice, startDate, endDate, duration, belongsTo, customerStripePaymentMethod }, true))
 	const data = await result.json()
 	return data
 }
 
 export const updateBooking = async (bookingId, { status }) => {
 	const result = await fetch(baseUrl(`/bookings/update/${bookingId}`), POST_FETCH_OPTIONS({ status }, true))
+	const data = await result.json()
+	return data
+}
+
+export const approveCharter = async (bookingId) => {
+	const result = await fetch(baseUrl(`/bookings/approve-charter/${bookingId}`), POST_FETCH_OPTIONS({}, true))
 	const data = await result.json()
 	return data
 }

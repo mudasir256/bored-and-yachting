@@ -106,14 +106,11 @@ export const useBoat = (id) => {
 }
 
 export const useReservations = () => {
-	if (typeof window === 'undefined') {
-	  return {
-	  	bookings: [],
-	  	isLoading: true,
-	  	isError: false
-	  }
+	let userId = ''
+	if (typeof window !== 'undefined') {
+		userId = localStorage?.getItem('userId')
 	}
-	const { data, error, mutate } = useSWR(baseUrl(`/bookings/reservations/${localStorage.getItem('userId')}`), fetcher)
+	const { data, error, mutate } = useSWR(baseUrl(`/bookings/reservations/${userId}`), fetcher)
 
 	return {
 		bookings: data?.bookings,

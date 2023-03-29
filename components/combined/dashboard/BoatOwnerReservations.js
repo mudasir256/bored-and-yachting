@@ -1,5 +1,5 @@
 import { useReservations } from '@/endpoints/get'
-import { updateBooking } from '@/endpoints/post'
+import { approveCharter } from '@/endpoints/post'
 
 import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker'
 import Subheader from '@/components/small/Subheader'
@@ -18,13 +18,13 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 		return boat
 	}
 
-	const approveCharter = async (booking) => {
+	const handleApproveCharter = async (booking) => {
 		try {
 			const status =  RESERVATION_STATUS.UPCOMING
 			const newBookings = [...bookings]
 			const change = newBookings.find(booking => booking === booking)
 			change.status = status
-			const result = await updateBooking(booking._id, { status })
+			const result = await approveCharter(booking._id)
 		
 			if (result.success) {
 				mutate([...newBookings])
@@ -32,9 +32,6 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 		} catch (err) {
 			console.log(err)
 		}
-		//TODO: notify captains
-		//TODO: notify user
-		//TODO: charge user CC on file
 	}
 
 	const declineCharter = () => {
@@ -78,7 +75,7 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 							<p className="mb-4 font-bold text-right mr-2">Total: {formatMoney(booking.totalPrice)}</p>
 							{booking.status === RESERVATION_STATUS.PENDING_REVIEW && 
 							<div className="flex flex-row">
-								<button onClick={() => approveCharter(booking)} className="w-full border py-1 hover:bg-gray-200">Approve</button>
+								<button onClick={() => handleApproveCharter(booking)} className="w-full border py-1 hover:bg-gray-200">Approve</button>
 								<button onClick={() => declineCharter()} className="w-full border py-1 hover:bg-gray-200">Decline</button>
 							</div>
 							}

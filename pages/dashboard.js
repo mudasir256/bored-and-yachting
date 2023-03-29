@@ -49,12 +49,12 @@ export default function Dashboard() {
 			</div>
 		)
 
-		const EmptyPicture = () => (
+		const EmptyPicture = ({ text }) => (
 			<div className="flex flex-col items-center justify-center">
 				<div className="flex flex-row justify-center items-center w-14 h-14 rounded-full bg-gray-200">
 					<Icon name="user" />
 				</div>
-				<p className="text-sm">Finding Captain</p>
+				<p className="text-sm">{text}</p>
 			</div>
 		)
 		
@@ -133,14 +133,17 @@ export default function Dashboard() {
 			 						</div>
 
 			 						<div className="mb-2 flex flex-row gap-4 justify-around">
-				 						<ImageWithName 
-				 							alt={booking.belongsTo?.firstName} 
-				 							src={booking.belongsTo?.profilePicture}
-				 							text={`Hosted by ${booking.belongsTo?.firstName}`}
-				 						/>
+				 						{booking.status !== RESERVATION_STATUS.PENDING_REVIEW ?
+				 							<ImageWithName 
+					 							alt={booking.belongsTo?.firstName} 
+					 							src={booking.belongsTo?.profilePicture}
+					 							text={`Hosted by ${booking.belongsTo?.firstName}`}
+				 							/>
+				 							: <EmptyPicture text="Awaiting Confirmation" />
+				 						}
 				 						{booking.captainId?.firstName 
 				 							? <ImageWithName alt={booking.captainId?.firstName} src={booking.captainId?.profilePicture} text={`Captained by ${booking.captainId?.firstName}`} />
-				 							: <EmptyPicture />
+				 							: <EmptyPicture text="Finding Captain" />
 				 						}
 			 						</div>
 			 						<hr />

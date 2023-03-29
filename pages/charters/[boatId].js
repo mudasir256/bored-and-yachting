@@ -68,14 +68,18 @@ export default function BoatAndYachtRentals() {
  		}
 	}
 
-	const confirmBooking = async () => {
+	const confirmBooking = async (paymentMethodId) => {
 		try {
 			console.log('confirming')
 			//send payment method to endpoint
  			const result = await createBooking(
 				bookingData.startTimeDate.toJSDate(), 
 				bookingData.endTimeDate.toJSDate(), 
-				{ ...bookingData, boatId: boatId }
+				{ 
+					...bookingData, 
+					boatId: boatId, 
+					customerStripePaymentMethod: paymentMethodId 
+				}
  			)
  			console.log(result)
  			if (result.success) {
