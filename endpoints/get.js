@@ -45,6 +45,12 @@ export const getStripeAccountLink = async (userId, isBoatOwner) => {
 	return data
 }
 
+export const getStripeAccountLogin = async () => {
+	const result = await 	fetch(`${baseUrl(`/users/stripe-express-login`)}`, GET_FETCH_OPTIONS())
+	const data = await result.json()
+	return data
+}
+
 export const getStripeAccountStatus = async () => {
 	const result = await 	fetch(baseUrl(`/users/stripe-account-status`), GET_FETCH_OPTIONS())
 	const data = await result.json()
