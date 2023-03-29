@@ -66,6 +66,13 @@ export default function Dashboard() {
 			return false
 		}
 
+		const isBillingInformationFilled = () => {
+			if (user?.stripePreferredPaymentMethodId) {
+				return true
+			}
+			return false
+		}
+
 	 return(
 	 	<ContentPageLayout>
 	 		<div className="space-y-8">
@@ -91,6 +98,7 @@ export default function Dashboard() {
 			 				text="This information allows us to keep a safe and secure network, and is needed before you're allowed to book a rental."
 			 				href="/user/billing"
 			 				buttonText="Add payment method"
+			 				isComplete={isBillingInformationFilled()}
 			 			/>
 		 			</div>
 		 		</div>
@@ -108,7 +116,6 @@ export default function Dashboard() {
 			 					return booking.status === selected
 			 				}
 			 			}).map(booking => {
-			 				console.log(booking)
 			 				return (
 			 					<div key={booking._id} className="max-w-[360px] min-w-[360px] shadow rounded">
 			 						<div className="flex flex-row">

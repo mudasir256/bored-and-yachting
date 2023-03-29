@@ -8,6 +8,7 @@ import { getStripeSetupIntent, useStripePaymentMethods } from '@/endpoints/get'
 import Loading from '@/components/small/Loading'
 import Button from '@/components/small/Button'
 import Icon from '@/components/Icon'
+import Link from 'next/link'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
@@ -66,14 +67,20 @@ export default function Billing() {
 
 
 	return(<Elements stripe={stripePromise} options={options}>
+		<Link href="/dashboard" className="absolute ml-4 mt-4">
+			<Icon name="left-arrow" />
+		</Link>
 		<ContentPageLayout>
 			<div className="pb-4">
 				<Header text="Manage Payment Methods" />
+				{paymentMethods?.data?.length > 0 ?
 				<div className="flex flex-row gap-4 flex-wrap">
 					{paymentMethods?.data?.map(item => (
 						<Card key={item.id} card={item.card} />
 					))}
 				</div>
+				: <p className="text-gray-500 text-sm">No payment methods found.</p>
+				}
 			</div>
 			<Header text="Add a payment method" />
 			<StripeSetupIntentForm />
