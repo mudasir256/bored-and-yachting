@@ -57,6 +57,16 @@ export const getStripeSetupIntent = async () => {
 	return data
 }
 
+export const useStripePaymentMethods = () => {
+	const { data, error } = useSWR(baseUrl(`/users/stripe-payment-methods`), fetcher)
+
+	return {
+		paymentMethods: data?.paymentMethods,
+		isLoading: !error && !data,
+		isError: error
+	}
+}
+
 /*      Boats      */
 export const useUserBoats = () => {
 	if (typeof window === 'undefined') {

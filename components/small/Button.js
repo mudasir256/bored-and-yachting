@@ -1,4 +1,4 @@
-export default function Button({ text, onClick, isFull = false, isOutlined = false }) {
+export default function Button({ text, onClick, isFull = false, isOutlined = false, color = 'bg-blue-500', hoverColor = 'hover:bg-blue-700' }) {
 		
 		if (isOutlined) {
 			return (
@@ -14,7 +14,7 @@ export default function Button({ text, onClick, isFull = false, isOutlined = fal
 	 return (
 	 		<button 
 	 			onClick={onClick} 
-	 			className={`bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 text-sm rounded-lg rounded ${isFull && 'w-full'}`}>
+	 			className={`${color} ${hoverColor} text-white font-bold px-4 py-2 text-sm rounded-lg rounded ${isFull && 'w-full'}`}>
 	 			{text}
 	 		</button>
 	 )
