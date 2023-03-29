@@ -42,10 +42,12 @@ export default function Billing() {
 	}
 
 	const Card = ({ card }) => (
-		<div className="max-w-xs shadow-md rounded-lg p-4">
+		<div className="w-72 shadow-md rounded-lg p-4">
 			<div className="flex flex-row justify-between mb-2">
-				<Icon name="star" size="sm" color="blue" />
-				<p>{card.brand.toUpperCase()}</p>
+				{/* todo: handle bank accounts */}
+				<Icon name="credit-card" size="sm" color="gray" />
+				{/* if preferred <Icon name="star" size="sm" color="blue" />*/}
+				<p className="ml-auto">{card.brand.toUpperCase()}</p>
 			</div>
 			<p>•••• •••• •••• {card.last4}</p>
 			<p className="mb-4">{card.exp_month} / {card.exp_year}</p>
@@ -67,9 +69,11 @@ export default function Billing() {
 		<ContentPageLayout>
 			<div className="pb-4">
 				<Header text="Manage Payment Methods" />
-				{paymentMethods?.data?.map(item => (
-					<Card key={item.id} card={item.card} />
-				))}
+				<div className="flex flex-row gap-4 flex-wrap">
+					{paymentMethods?.data?.map(item => (
+						<Card key={item.id} card={item.card} />
+					))}
+				</div>
 			</div>
 			<Header text="Add a payment method" />
 			<StripeSetupIntentForm />
