@@ -19,6 +19,9 @@ import { DateTime } from 'luxon'
 import { createBooking } from '@/endpoints/post'
 import PriceBreakdownButton from '@/components/combined/PriceBreakdownButton'
 import BookingConfirmationModal from '@/components/modals/BookingConfirmationModal'
+import AmenitiesList from '@/components/combined/AmenitiesList'
+import FeaturesList from '@/components/combined/FeaturesList'
+import GoogleMaps from '@/components/combined/GoogleMaps'
 
 export default function BoatAndYachtRentals() {
 
@@ -91,8 +94,26 @@ export default function BoatAndYachtRentals() {
 		}
 	}
 
-	//TODO: block off time slots based on bookings 
-
+	const YoutubeEmbed = ({ url }) => {
+		if (url) {
+			const parsedId = url.split('=').slice(-1)
+			return(
+				<div className="video-responsive">
+				  <iframe
+				    width="880"
+				    height="480"
+				    src={`https://www.youtube-nocookie.com/embed/${parsedId}`}
+				    frameBorder="0"
+				    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				    allowFullScreen
+				    title="showcase video"
+				  />
+				</div>
+			)
+		}
+		return null
+	}
+	console.log(boat)
 	return(<>
 		<Head>
 		  <title>Bored and Yachting | {boat?.name}</title>
@@ -105,6 +126,7 @@ export default function BoatAndYachtRentals() {
 					<p>{formatAddressLine(boat?.parkingLocation.address)}</p>
 				</div>
 
+				{/* Photos Section */}
 				{width > 1281 ?
 				<div className="grid grid-cols-2 gap-2 relative">
 					<div className="relative w-full h-full">
@@ -127,6 +149,7 @@ export default function BoatAndYachtRentals() {
 						</div>
 				}
 
+				{/* Information Section */}
 				<div className="flex flex-row gap-4">
 					<div className="space-y-6">
 						<div>
@@ -139,17 +162,28 @@ export default function BoatAndYachtRentals() {
 							</div>
 						</div>
 
-						<div className="space-y-4">
-							<p>{boat?.videoLink}</p>
+						<div className="space-y-8">
+							<YoutubeEmbed url={boat?.videoLink} />
+
 							<p className="max-w-4xl">{boat?.description}</p>
-							<p>{boat?.amenitiesList}</p>
-							<p>{boat?.featuresList}</p>
+							
+							<div>
+								<Subheader text="What this vessel offers" />
+								<div className="flex flex-row gap-12">
+									<AmenitiesList amenities={boat?.amenitiesList} />
+									<FeaturesList features={boat?.featuresList} />
+								</div>
+							</div>
 
 							{/* location of boat */}
+							<Subheader text="Where you'll be" />
+							<GoogleMaps width={width * 2/3} lat={boat?.parkingLocation?.lat} lng={boat?.parkingLocation?.lng} />
 						</div>
 					</div>
 
-					<div className="space-y-3 ml-auto shadow rounded border w-72 p-4">
+
+					{/* Side panel form */}
+					<div className={`ml-auto mt-8 space-y-3 shadow rounded border w-72 p-4 h-fit`}> {/* style={{ marginTop: calculatedMargin }}>*/}
 						<Input 
 							type="date" 
 							id="date"

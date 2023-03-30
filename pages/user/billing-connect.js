@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import Button from '@/components/small/Button'
 import { getStripeAccountLink, getStripeAccountStatus, getStripeAccountLogin } from '@/endpoints/get'
 import { useEffect, useState } from 'react'
+import Loading from '@/components/small/Loading'
 
 export default function BillingConnect() {
 
@@ -13,6 +14,8 @@ export default function BillingConnect() {
 
 	const [isConnected, setIsConnected] = useState(false)
 	const [showExplainer, setShowExplainer] = useState(false)
+	
+	const [checkingStatus, setCheckingStatus] = useState(true)
 	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
@@ -23,6 +26,7 @@ export default function BillingConnect() {
 			} else if (result.success & result.account?.requirements?.length > 0) {
 				setShowExplainer(true)
 			}
+			setCheckingStatus(false)
 		}
 		checkConnectStatus()
 	}, [])
@@ -51,10 +55,14 @@ export default function BillingConnect() {
 		}
 		<ContentPageLayout>
 			<Header text="Billing Information" />
-			{isConnected 
-				? <Button text="View payment details through Stripe" onClick={() => loginWithStripe()} isLoading={loading} />
-				: <Button text="Connect with Stripe for payments" onClick={() => connectWithStripe()} isLoading={loading} />
-			} 
+			{checkingStatus ? <Loading />
+				:<div>
+					{isConnected 
+						? <Button text="View payment details through Stripe" onClick={() => loginWithStripe()} isLoading={loading} />
+						: <Button text="Connect with Stripe for payments" onClick={() => connectWithStripe()} isLoading={loading} />
+					} 
+				</div>
+			}
 			{showExplainer && <p className="text-sm max-w-lg mt-4">Your account information needs updating. Please complete your billing registration process by clicking the button above.</p>}
 		</ContentPageLayout>
 	</>)
