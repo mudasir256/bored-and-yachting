@@ -113,7 +113,7 @@ export default function BoatAndYachtRentals() {
 		}
 		return null
 	}
-	console.log(boat)
+
 	return(<>
 		<Head>
 		  <title>Bored and Yachting | {boat?.name}</title>

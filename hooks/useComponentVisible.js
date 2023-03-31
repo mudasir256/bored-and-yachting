@@ -11,6 +11,8 @@ export default function useComponentVisible(initialIsVisible) {
         //Add this to any buttons that need actions that need to fire first
         if (event.target?.getAttribute('data-action') === 'click') {
             return
+        } else if (event.target?.parentElement?.getAttribute('data-action') === 'click') {
+            return
         }
         if (ref.current && !ref.current.contains(event.target)) {
             setIsComponentVisible(false);

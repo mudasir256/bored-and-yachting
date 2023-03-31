@@ -10,8 +10,8 @@ export default function PaymentSelector({ paymentSelected, setPaymentSelected })
 			<option value="">Select a payment method</option>
 			{paymentMethods?.data?.map(item => (
 				<option value={item.id} key={item.id}>			
-					<p>•••• •••• •••• {item.card.last4}</p>&nbsp;|&nbsp;
-					<p>{item.card.brand.toUpperCase()}, {item.card.exp_month} / {item.card.exp_year}</p>
+					•••• •••• •••• {item.card.last4} &nbsp;|&nbsp;
+					{item.card.brand.toUpperCase()}, {item.card.exp_month} / {item.card.exp_year}
 				</option>
 			))}
 		</select>
