@@ -1,10 +1,12 @@
 import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
 import Loading from '@/components/small/Loading'
 
+const libraries = ['places']
+
 export default function GoogleMaps({ lat, lng, width }) {
 	const { isLoaded } = useLoadScript({
 	    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY,
-	    libraries: ['places']
+	    libraries: libraries
 	  });
 
 	if (!isLoaded) {
