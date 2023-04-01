@@ -5,6 +5,7 @@ import { mapDuration, formatDay, formatMoney } from '@/helpers/index'
 import Icon from '@/components/Icon'
 import Button from '@/components/small/Button'
 import PaymentSelector from '@/components/combined/PaymentSelector'
+import VesselPricingTable from '@/components/combined/VesselPricingTable'
 
 export default function BookingConfirmationModal({ boat, bookingData, confirmBooking }) {
 	const [isBrowser, setIsBrowser] = useState(false);
@@ -24,9 +25,9 @@ export default function BookingConfirmationModal({ boat, bookingData, confirmBoo
 	}
 
 	const modalContent = (
-		<div className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
-			<div className="bg-white rounded p-4">
-				<div className="max-w-xl space-y-4">
+		<div data-action="close-modal" className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
+			<div className="bg-white rounded p-4 overflow-y-scroll h-[90vh]">
+				<div className="space-y-4">
 					<Subheader text="Confirm Your Reservation" />
 					<div className="grid grid-cols-2 gap-4">
 						<div>
@@ -45,6 +46,9 @@ export default function BookingConfirmationModal({ boat, bookingData, confirmBoo
 						<div>
 							<p className="font-bold">Charter Insurance</p>
 							<p>TODO:insurance section</p>
+						</div>
+						<div className="col-span-2">
+							<VesselPricingTable isEditable={false} boatId={boat?._id} />
 						</div>
 					</div>
 					<div className="space-y-2">

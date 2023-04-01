@@ -8,15 +8,25 @@ export default function useComponentVisible(initialIsVisible) {
 
     const handleClickOutside = (event) => {
 
-        //Add this to any buttons that need actions that need to fire first
-        if (event.target?.getAttribute('data-action') === 'click') {
+        // console.log(event.target)
+        if (event.target?.getAttribute('data-action') === 'close-modal') {
+            setIsComponentVisible(false)
             return
-        } else if (event.target?.parentElement?.getAttribute('data-action') === 'click') {
-            return
+        } 
+
+        if (ref.current.getAttribute('data-action') === 'navbar') {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setIsComponentVisible(false);
+            }
         }
-        if (ref.current && !ref.current.contains(event.target)) {
-            setIsComponentVisible(false);
-        }
+
+        //DEPRCATED: Add this to any buttons that need actions that need to fire first
+        // if (event.target?.getAttribute('data-action') === 'click') {
+        //     return
+        // } else if (event.target?.parentElement?.getAttribute('data-action') === 'click') {
+        //     return
+        // } 
+     
     };
 
     useEffect(() => {

@@ -10,7 +10,7 @@ export default function PhotosModal({ photoUrls = [] }) {
 	}, []);
 
 	const modalContent = (
-		<div className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
+		<div data-action="close-modal" className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
 			<div className="overflow-auto bg-white w-screen h-screen rounded p-16">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-2 justify-center items-center">
 				{photoUrls.map(url => (<div key={url} className="relative w-full h-72">

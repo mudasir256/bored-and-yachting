@@ -11,7 +11,7 @@ export default function VesselPricingTableModal({ boatId, isEditable }) {
 	}, []);
 
 	const modalContent = (
-		<div className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
+		<div data-action="close-modal"  className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
 			<div className="bg-white rounded p-4">
 				<div className="ml-1 mb-2">
 					<Subheader text="Pricing Breakdown" />

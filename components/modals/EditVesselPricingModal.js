@@ -58,7 +58,7 @@ export default function EditVesselPricingModal({ boat, boatId, setIsComponentVis
 		},
 	]
 	const modalContent = (
-		<div className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
+		<div data-action="close-modal"  className="fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-black bg-opacity-50">
 			<div className="bg-white rounded p-4">
 				<Subheader text="Vessel Pricing" />
 				<hr/>

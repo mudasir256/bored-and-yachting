@@ -20,7 +20,7 @@ export default function VesselAvailabilityTable({ boatId }) {
 						<caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
 						  <span>Vessel Availability</span>
 						  <div className="flex flex-row gap-2">
-						  	<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Set when your vessel is available for booking on Bored and Yachting and apply discounts on specific days if desired.</p>
+						  	<p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Set when your vessel is available for booking on Bored and Yachting and apply discounts on specific days if desired.</p>
 								<button onClick={() => setIsComponentVisible(true)}  className="text-sm underline ml-auto underline">Edit</button>
 							</div>
 						</caption>	       	
