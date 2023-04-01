@@ -155,18 +155,26 @@ export const useTrips = () => {
 	}
 }
 
+/*    User Endpoints    */
 export const useUser = () => {
-	if (typeof window === 'undefined') {
-	  return {
-	  	user: [],
-	  	isLoading: true,
-	  	isError: false
-	  }
+	let userId = ''
+	if (typeof window !== 'undefined') {
+		userId = localStorage?.getItem('userId')
 	}
-	const { data, error } = useSWR(baseUrl(`/users/${localStorage.getItem('userId')}`), fetcher)
+	const { data, error } = useSWR(baseUrl(`/users/${userId}`), fetcher)
 
 	return {
 		user: data?.user,
+		isLoading: !error && !data,
+		isError: error
+	}
+}
+
+export const useCaptains = () => {
+	const { data, error } = useSWR(baseUrl(`/users/captains`), fetcher)
+
+	return {
+		captains: data?.captains,
 		isLoading: !error && !data,
 		isError: error
 	}

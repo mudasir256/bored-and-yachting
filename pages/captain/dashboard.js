@@ -34,18 +34,18 @@ export default function Dashboard() {
 						checkCompleted="BASIC_PROFILE"
 					/>
 					<ActionItemCard 
-						title="Location" 
+						title="USCG License information" 
 						text="This information allows us to keep a safe and secure network, and is needed before you're allowed to book a rental."
-						href="/user/location?redirect=true&key=captain"
-						buttonText="Add address"
-						checkCompleted="BILLING_INFORMATION"
+						href="/captain/license?redirect=true"
+						buttonText="Add license"
+						checkCompleted="CAPTAIN_LICENSE"
 					/>
 					<ActionItemCard 
-						title="Billing Information" 
+						title="Billing information" 
 						text="This information allows us to keep a safe and secure network, and is needed before you're allowed to book a rental."
 						href="/user/billing-connect?redirect=true&key=captain"
 						buttonText="Add information"
-						checkCompleted="BILLING_INFORMATION"
+						checkCompleted="CONNECT_FINISHED"
 					/>
 				</div>
 

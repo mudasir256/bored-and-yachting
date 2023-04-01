@@ -1,4 +1,9 @@
+import { useCaptains } from '@/endpoints/get'
+
 export default function CaptainsForm() {
+
+	const { captains, isLoading } = useCaptains()
+	
 
 	const handleCaptainSubmit = (e) => {
 		e.preventDefault()
@@ -6,7 +11,7 @@ export default function CaptainsForm() {
 
 	return(
 		<form onSubmit={handleCaptainSubmit}>
-		
+
 		</form>
 	)
 }
