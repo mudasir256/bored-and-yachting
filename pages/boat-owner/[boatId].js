@@ -9,6 +9,7 @@ import LocationForm from '@/components/combined/boat/LocationForm'
 import PhotosAndVideoForm from '@/components/combined/boat/PhotosAndVideoForm'
 import PricingForm from '@/components/combined/boat/PricingForm'
 import DeclarationsForm from '@/components/combined/boat/DeclarationsForm'
+import CaptainsForm from '@/components/combined/boat/CaptainsForm'
 
 import { useRouter } from 'next/router'
 import WarningDeleteModal from '@/components/modals/WarningDeleteModal'
@@ -31,6 +32,7 @@ export default function Create() {
 		MEDIA: 'PHOTOS_AND_VIDEOS',
 		PRICING: 'PRICING_DETAILS',
 		DECLARATIONS: 'DECLARATIONS',
+		CREW: 'CREW'
 	}
 
 	const [tabSelected, setTabSelected] = useState(BOAT_TABS.INFO)
@@ -92,6 +94,12 @@ export default function Create() {
 						selected={tabSelected === BOAT_TABS.DECLARATIONS}
 					/>
 					<LinkWithIcon
+						iconName="crew"
+						onClick={() => setTabSelected(BOAT_TABS.CREW)}
+						text="Crew Preferences"
+						selected={tabSelected === BOAT_TABS.CREW}
+					/>
+					<LinkWithIcon
 						iconName="delete"
 						onClick={() => setIsComponentVisible(true)}
 						text="Delete Vessel"
@@ -127,6 +135,11 @@ export default function Create() {
 				<div className="p-4 shadow w-full">
 					<DeclarationsForm boatId={boatId} />
 				</div>
+			}
+			{tabSelected === BOAT_TABS.CREW &&
+				<div className="p-4 shadow w-full">
+					<CaptainsForm boatId={boatId} />
+				</div>	
 			}
 			<div ref={ref}>
 				{isComponentVisible && <WarningDeleteModal 

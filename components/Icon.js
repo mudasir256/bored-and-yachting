@@ -30,7 +30,8 @@ import {
 	faFireBurner,
 	faBed,
 	faRefrigerator,
-	faWaterLadder
+	faWaterLadder,
+	faPeopleGroup,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -53,7 +54,8 @@ export default function Icon({ name, color = 'black', size = 'lg' }) {
 		{ name: 'star', component: faStar },
 		{ name: 'credit-card', component: faCreditCard },
 		{ name: 'confirm-calendar', component: faCalendarCheck },
-
+		{ name: 'crew', component: faPeopleGroup },
+		
 		//AMENITIES
 		{ name: 'COOLER', component: faBox },
 		{ name: 'LILY_PAD', component: faSpa },
