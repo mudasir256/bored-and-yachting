@@ -2,10 +2,25 @@ import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 import Link from 'next/link'
 import Subheader from '@/components/small/Subheader'
 import ActionItemCard from '@/components/combined/dashboard/ActionItemCard'
+import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker'
+import { useCharters } from '@/endpoints/get'
+import { useState } from 'react'
+import Image from 'next/image'
+import { mapDuration, formatDay } from '@/helpers/index'
 
 export default function Dashboard() {
 
+	const [selected, setSelected] = useState('')
+	const { bookings, isLoading } = useCharters()
 
+	const ImageWithName = ({ src, text, alt }) => (
+		<div className="flex flex-col items-center">
+			<div className="relative w-14 h-14">
+				<Image src={src} alt={alt} className="object-cover rounded-full" layout="fill" />
+			</div>
+			<p className="text-sm">{text}</p>
+		</div>
+	)
 
 	return (<>
 		<ContentPageLayout>
@@ -19,6 +34,13 @@ export default function Dashboard() {
 						checkCompleted="BASIC_PROFILE"
 					/>
 					<ActionItemCard 
+						title="Location" 
+						text="This information allows us to keep a safe and secure network, and is needed before you're allowed to book a rental."
+						href="/user/location?redirect=true&key=captain"
+						buttonText="Add address"
+						checkCompleted="BILLING_INFORMATION"
+					/>
+					<ActionItemCard 
 						title="Billing Information" 
 						text="This information allows us to keep a safe and secure network, and is needed before you're allowed to book a rental."
 						href="/user/billing-connect?redirect=true&key=captain"
@@ -27,9 +49,57 @@ export default function Dashboard() {
 					/>
 				</div>
 
-				<div>
-					<Subheader text="Your Charters" />
-				</div>
+		 		<div className="space-y-4">
+		 			<Subheader text="Your charters" />
+		 			<div className="flex flex-row items-center">
+		 				<ReservationsTypePicker selected={selected} setSelected={setSelected} />
+		 				<div className="ml-auto">
+		 					<p onClick={() => setSelected('')} className={`underline cursor-pointer ${selected === '' && 'text-blue-500'}`}>All reservations</p>
+		 				</div>
+		 			</div>
+		 			<div className="flex flex-row flex-wrap gap-4">
+			 			{bookings?.filter(booking => { 
+			 				if (!selected) { return true } else {
+			 					return booking.status === selected
+			 				}
+			 			}).map(booking => {
+			 				return (
+			 					<div key={booking._id} className="max-w-[360px] min-w-[360px] shadow rounded">
+			 						<div className="flex flex-row">
+			 							<div className="mt-2 ml-2 space-y-2 p-2">
+			 								<div className="relative w-32 h-24">
+			 									<Image alt={booking.boatId?.name} src={booking.boatId?.photos[0]} className="object-cover rounded" layout="fill" />
+			 								</div>
+			 							</div>
+			 							<div className="ml-auto mr-4 flex flex-col justify-center gap-1.5">
+			 								<p className="text-sm">{formatDay(booking.startDate)}</p>
+			 								<p className="text-sm">{mapDuration(booking.duration)}</p>
+			 								<p className="text-sm">on {booking.boatId?.name}</p>
+
+			 							</div>
+			 						</div>
+
+		 							<ImageWithName 
+			 							alt={booking.bookedBy?.firstName} 
+			 							src={booking.bookedBy?.profilePicture}
+			 							text={`Booked by ${booking.bookedBy?.firstName}`}
+		 							/>
+				 						
+
+			 						<hr />
+			 						<p className="my-2 text-sm px-4">{booking.boatId?.parkingLocation?.address.slice(0, -5)}</p>
+
+			 					</div>
+			 				)
+			 			})}
+		 			</div>
+		 			{bookings?.filter(booking => { 
+			 				if (!selected) { return true } else {
+			 					return booking.status === selected
+			 				}
+			 		}).length === 0 && <p className="pt-6 text-center">No reservations found.</p>}
+		 		</div>
+
 				<div>
 					<h2 className="text-lg mb-2">Other Features</h2>
 					<div className="flex flex-row gap-2">

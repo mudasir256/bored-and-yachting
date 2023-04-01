@@ -4,7 +4,7 @@ import { approveCharter } from '@/endpoints/post'
 import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker'
 import Subheader from '@/components/small/Subheader'
 import { useState } from 'react'
-import { RESERVATION_STATUS, RATE_LENGTHS, formatDay, differenceBetweenDates, formatMoney, mapDuration } from '@/helpers/index'
+import { RESERVATION_STATUS, formatDay, differenceBetweenDates, formatMoney, mapDuration } from '@/helpers/index'
 import Image from 'next/image'
 
 export default function BoatOwnerReservations({ boatsOwned = [] }) {
@@ -37,6 +37,8 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 	const declineCharter = () => {
 		//TODO: notify user
 	}
+
+	console.log(bookings)
 
 	return (
 		<div className="space-y-4">

@@ -111,6 +111,21 @@ export const useBoat = (id) => {
 	}
 }
 
+export const useCharters = () => {
+	let userId = ''
+	if (typeof window !== 'undefined') {
+		userId = localStorage?.getItem('userId')
+	}
+	const { data, error, mutate } = useSWR(baseUrl(`/bookings/charters/${userId}`), fetcher)
+
+	return {
+		bookings: data?.bookings,
+		isLoading: !error && !data,
+		isError: error,
+		mutate: mutate
+	}
+}
+
 export const useReservations = () => {
 	let userId = ''
 	if (typeof window !== 'undefined') {
@@ -127,14 +142,11 @@ export const useReservations = () => {
 }
 
 export const useTrips = () => {
-	if (typeof window === 'undefined') {
-	  return {
-	  	bookings: [],
-	  	isLoading: true,
-	  	isError: false
-	  }
+	let userId = ''
+	if (typeof window !== 'undefined') {
+		userId = localStorage?.getItem('userId')
 	}
-	const { data, error } = useSWR(baseUrl(`/bookings/trips/${localStorage.getItem('userId')}`), fetcher)
+	const { data, error } = useSWR(baseUrl(`/bookings/trips/${userId}`), fetcher)
 
 	return {
 		bookings: data?.bookings,
