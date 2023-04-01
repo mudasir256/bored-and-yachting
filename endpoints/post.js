@@ -55,6 +55,12 @@ export const updateUserFiles = async (file, key) => {
 	return data
 }
 
+export const updateCaptainLocation = async (userId, location, type) => {
+	const result = await fetch(baseUrl(`/users/change-location/${userId}`), POST_FETCH_OPTIONS({ location, type }, true))
+	const data = await result.json()
+	return data
+}
+
 /*     Boat Endpoints     */
 export const createBoat = async (belongsTo) => {
 	const result = await fetch(baseUrl('/boats/create'), POST_FETCH_OPTIONS({ belongsTo }, true))

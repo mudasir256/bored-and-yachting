@@ -104,6 +104,13 @@ export const GRATUITY = {
 	RATE: 0.25
 }
 
+export const isCaptain = (user) => {
+	if (user?.roles?.includes(USER_TYPES.CAPTAIN)) {
+		return true
+	}
+	return false
+}
+
 export const mapDuration = (reservationDuration) => {
 	switch (reservationDuration) {
 		case RATE_LENGTHS.HALF_DAY:
