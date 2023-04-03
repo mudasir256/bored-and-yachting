@@ -3,15 +3,20 @@ import Link from 'next/link'
 import Subheader from '@/components/small/Subheader'
 import ActionItemCard from '@/components/combined/dashboard/ActionItemCard'
 import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker'
-import { useCharters } from '@/endpoints/get'
+import { baseUrl, useCharters } from '@/endpoints/get'
+import { acceptCharter } from '@/endpoints/post'
 import { useState } from 'react'
 import Image from 'next/image'
-import { mapDuration, formatDay } from '@/helpers/index'
+import { mapDuration, formatDay, USER_TYPES} from '@/helpers/index'
+import { useSWRConfig } from 'swr'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Dashboard() {
 
-	const [selected, setSelected] = useState('')
+	const { mutate } = useSWRConfig()
 	const { bookings, isLoading } = useCharters()
+	const [selected, setSelected] = useState('')
 
 	const ImageWithName = ({ src, text, alt }) => (
 		<div className="flex flex-col items-center">
@@ -22,8 +27,24 @@ export default function Dashboard() {
 		</div>
 	)
 
+	const handleAcceptCharter = async (booking) => {
+		try {
+			const result = await acceptCharter(booking._id)
+			if (result.success) {
+				mutate(baseUrl('/bookings/charters/' + localStorage.getItem('userId')))
+				return
+			}
+			toast.error(result.message || 'Something went wrong. Please try again.')
+		} catch (err) {
+			console.log(err)
+			toast.error(err?.message || err)
+		}
+
+	}
+
 	return (<>
 		<ContentPageLayout>
+			<ToastContainer />
 			<div className="space-y-8">
 				<div className="flex flex-col md:flex-row gap-4">
 					<ActionItemCard 
@@ -52,7 +73,7 @@ export default function Dashboard() {
 		 		<div className="space-y-4">
 		 			<Subheader text="Your charters" />
 		 			<div className="flex flex-row items-center">
-		 				<ReservationsTypePicker selected={selected} setSelected={setSelected} />
+		 				<ReservationsTypePicker selected={selected} setSelected={setSelected} role={USER_TYPES.CAPTAIN} />
 		 				<div className="ml-auto">
 		 					<p onClick={() => setSelected('')} className={`underline cursor-pointer ${selected === '' && 'text-blue-500'}`}>All reservations</p>
 		 				</div>
@@ -86,9 +107,13 @@ export default function Dashboard() {
 		 							/>
 				 						
 
-			 						<hr />
-			 						<p className="my-2 text-sm px-4">{booking.boatId?.parkingLocation?.address.slice(0, -5)}</p>
-
+			 						{booking?.captainId === localStorage.getItem('userId')
+			 							?	<div className="mt-2">
+			 									<hr/>
+			 									<p className="mt-2 mb-1 italic text-center text-sm text-green-500">You&apos;ve accepted this charter!</p>
+			 								</div>
+			 						 	: <button onClick={() => handleAcceptCharter(booking)} className="mt-2 w-full border py-1 hover:bg-gray-200">Accept Charter</button>
+			 						}
 			 					</div>
 			 				)
 			 			})}

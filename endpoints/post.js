@@ -112,8 +112,16 @@ export const updateBooking = async (bookingId, { status }) => {
 	return data
 }
 
+//boat owners
 export const approveCharter = async (bookingId) => {
 	const result = await fetch(baseUrl(`/bookings/approve-charter/${bookingId}`), POST_FETCH_OPTIONS({}, true))
+	const data = await result.json()
+	return data
+}
+
+//captains
+export const acceptCharter = async (bookingId) => {
+	const result = await fetch(baseUrl(`/bookings/accept-charter/${bookingId}`), POST_FETCH_OPTIONS({}, true))
 	const data = await result.json()
 	return data
 }

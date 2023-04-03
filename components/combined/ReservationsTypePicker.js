@@ -1,7 +1,7 @@
 import Button from '@/components/small/Button'
-import { RESERVATION_STATUS, RESERVATION_STATUS_TEXT } from '@/helpers/index'
+import { RESERVATION_STATUS, RESERVATION_STATUS_TEXT, USER_TYPES } from '@/helpers/index'
 
-export default function ReservationsTypePicker({ selected, setSelected }) {
+export default function ReservationsTypePicker({ selected, setSelected, role }) {
 	
 	return (<div className="space-x-2">
 		<Button 
@@ -9,11 +9,13 @@ export default function ReservationsTypePicker({ selected, setSelected }) {
 			text={RESERVATION_STATUS_TEXT[RESERVATION_STATUS.UPCOMING]} 
 			isOutlined={selected !== RESERVATION_STATUS.UPCOMING} 
 		/>
-		<Button 
-			onClick={() => setSelected(RESERVATION_STATUS.PENDING_REVIEW)} 
-			text={RESERVATION_STATUS_TEXT[RESERVATION_STATUS.PENDING_REVIEW]} 
-			isOutlined={selected !== RESERVATION_STATUS.PENDING_REVIEW} 
-		/>
+		{role !== USER_TYPES.CAPTAIN &&
+			<Button 
+				onClick={() => setSelected(RESERVATION_STATUS.PENDING_REVIEW)} 
+				text={RESERVATION_STATUS_TEXT[RESERVATION_STATUS.PENDING_REVIEW]} 
+				isOutlined={selected !== RESERVATION_STATUS.PENDING_REVIEW} 
+			/>
+		}
 		<Button 
 			onClick={() => setSelected(RESERVATION_STATUS.COMPLETED)} 
 			text={RESERVATION_STATUS_TEXT[RESERVATION_STATUS.COMPLETED]} 
