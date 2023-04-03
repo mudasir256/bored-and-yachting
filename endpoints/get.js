@@ -102,12 +102,13 @@ export const useBoats = () => {
 }
 
 export const useBoat = (id) => {
-	const { data, error } = useSWR(baseUrl(`/boats/${id}`), fetcher)
+	const { data, error, mutate } = useSWR(baseUrl(`/boats/${id}`), fetcher)
 
 	return {
 		boat: data?.boat,
 		isLoading: !error && !data,
-		isError: error
+		isError: error,
+		mutate
 	}
 }
 

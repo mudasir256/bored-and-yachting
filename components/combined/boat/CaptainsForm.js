@@ -2,10 +2,11 @@ import { useCaptains, useBoat } from '@/endpoints/get'
 import Image from 'next/image'
 import Button from '@/components/small/Button'
 import Subheader from '@/components/small/Subheader'
+import { updateBoat } from '@/endpoints/post'
 
 export default function CaptainsForm({ boatId }) {
 
-	const { boat, isLoading: isLoadinBoat } = useBoat(boatId)
+	const { boat, isLoading: isLoadingBoat, mutate } = useBoat(boatId)
 	const { captains, isLoading } = useCaptains()
 
 	const handleCaptainSubmit = (e) => {
@@ -13,12 +14,23 @@ export default function CaptainsForm({ boatId }) {
 	}
 
 
-	const removeFromRoster = (id) => {
-
+	const removeFromRoster = async (captain) => {
+		const ids = boat?.preferredCaptains.map(item => item._id)
+		const indexOf = ids.indexOf(captain._id)
+		const newDisplayArray = [...boat.preferredCaptains]
+		newDisplayArray.splice(indexOf, 1)
+		const newIds = newDisplayArray.map(item => item._id)
+		const result = await updateBoat(boatId, { preferredCaptains: newIds })
+		console.log(result)
+		mutate(newDisplayArray)
 	}
 
-	const addToRoster = (id) => {
-
+	const addToRoster = async (captain) => {
+		const newDisplayArray = [...boat.preferredCaptains, captain]
+		const ids = newDisplayArray.map(item => item._id)
+		const result = await updateBoat(boatId, { preferredCaptains: ids })
+		console.log(result)
+		mutate(newDisplayArray)
 	}
 
 	const CaptainRow = ({ _id, profilePicture, firstName, email, children }) => (
@@ -27,9 +39,9 @@ export default function CaptainsForm({ boatId }) {
 				<div className="relative w-12 h-12">
 					<Image src={profilePicture} alt={firstName} className="object-cover rounded-full" layout="fill" />
 				</div>
-				<p>{firstName}</p>
+				<p className="text-sm">{firstName}</p>
 			</div>
-			<p>{email}</p>
+			<p className="text-sm">{email}</p>
 			<div className="col-span-2">
 				<p></p>
 			</div>
@@ -37,10 +49,14 @@ export default function CaptainsForm({ boatId }) {
 		</div>
 	)
 
+	const captainExistsInArray = (array, captain) => {
+		return array?.find(item => item._id === captain._id)
+	}
+
 	return(
 		<div className="space-y-12">
 
-			<div>
+			<div className="space-y-4 min-h-[120px]">
 				<Subheader text="Current Roster" />
 				{boat?.preferredCaptains?.length === 0 &&
 					<p className="text-gray-500 text-center text-sm">Add your first captain.</p>
@@ -52,7 +68,7 @@ export default function CaptainsForm({ boatId }) {
 							firstName={captain?.firstName} 
 							email={captain?.email} 
 						>
-							<Button text="Remove from roster" onClick={() => removeFromRoster(captain?._id)} /> 
+							<Button text="Remove from roster" onClick={() => removeFromRoster(captain)} /> 
 						</CaptainRow>
 					</div>
 				))}
@@ -80,7 +96,10 @@ export default function CaptainsForm({ boatId }) {
 							firstName={captain?.firstName} 
 							email={captain?.email} 
 						>
-							<Button text="Add to roster" onClick={() => addToRoster(captain?._id)} /> 
+							{captainExistsInArray(boat?.preferredCaptains, captain) 
+								? <p className="italic text-right mr-4">Added to roster</p>
+								: <Button text="Add to roster" onClick={() => addToRoster(captain)} /> 
+							}
 						</CaptainRow>
 					</div>
 				))}
