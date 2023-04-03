@@ -41,7 +41,7 @@ export default function Dashboard() {
 	 	<ContentPageLayout>
 	 		<div className="space-y-8">
 		 		<div className="space-y-4">
-		 			<Header text="Verify your account:"/ >
+		 			<Header text="Finish your account setup:"/ >
 		 			<div className="flex flex-col md:flex-row gap-4">
 			 			<ActionItemCard 
 			 				title="Basic profile information" 
