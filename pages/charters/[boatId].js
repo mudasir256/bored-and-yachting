@@ -150,7 +150,7 @@ export default function BoatAndYachtRentals() {
 				}
 
 				{/* Information Section */}
-				<div className="flex flex-row gap-4">
+				<div className="flex flex-row gap-4 flex-wrap">
 					<div className="space-y-6">
 						<div>
 							<Subheader text={`Hosted by ${boat?.belongsTo.firstName}`} />
@@ -183,7 +183,7 @@ export default function BoatAndYachtRentals() {
 
 
 					{/* Side panel form */}
-					<div className={`ml-auto mt-8 space-y-3 shadow rounded border w-72 p-4 h-fit`}> {/* style={{ marginTop: calculatedMargin }}>*/}
+					<div className={`ml-auto mt-8 space-y-3 shadow rounded border w-full md:w-72 p-4 h-fit`}> {/* style={{ marginTop: calculatedMargin }}>*/}
 						<Input 
 							type="date" 
 							id="date"

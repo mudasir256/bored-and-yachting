@@ -178,7 +178,12 @@ export const differenceBetweenDates = (startDate, endDate) => {
 }
 
 export const boatHasAllValidInformation = (boat) => {
-	if (boat.parkingLocation && boat.photos.length > 2) { //TODO: add more qualifiers
+	if (
+		boat.parkingLocation && 
+		boat.photos.length > 2 && 
+		boat.boatRentalPrice &&
+		boat.prepaidFuelPrice
+	) { //TODO: add more qualifiers
 		return true
 	}
 	return false

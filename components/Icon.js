@@ -29,7 +29,7 @@ import {
 	faRestroom,
 	faFireBurner,
 	faBed,
-	faRefrigerator,
+	faSnowflake,
 	faWaterLadder,
 	faPeopleGroup,
 } from '@fortawesome/free-solid-svg-icons'
@@ -55,7 +55,7 @@ export default function Icon({ name, color = 'black', size = 'lg' }) {
 		{ name: 'credit-card', component: faCreditCard },
 		{ name: 'confirm-calendar', component: faCalendarCheck },
 		{ name: 'crew', component: faPeopleGroup },
-		
+
 		//AMENITIES
 		{ name: 'COOLER', component: faBox },
 		{ name: 'LILY_PAD', component: faSpa },
@@ -72,7 +72,7 @@ export default function Icon({ name, color = 'black', size = 'lg' }) {
 		{ name: 'BATHROOM', component: faRestroom },
 		{ name: 'STOVE_TOP', component: faFireBurner },
 		{ name: 'BEDROOMS', component: faBed },
-		{ name: 'REFRIGERATOR', component: faRefrigerator },
+		{ name: 'REFRIGERATOR', component: faSnowflake },
 		{ name: 'LADDER', component: faWaterLadder },
 
 	]

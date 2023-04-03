@@ -27,6 +27,12 @@ const fetcher = ( url, query = '' ) => fetch(
 	return res.json()
 }) 
 
+export const verifyEmailToken = async (token) => {
+	const result = await fetch(baseUrl(`/auth/verify-email/${token}`), GET_FETCH_OPTIONS())
+	const data = await result.json()
+	return data
+}
+
 //Google Maps API
 export const getAutocompleteAddresses = (searchText, callback) => {
 	fetch(`${baseUrl('/locations/autocomplete')}?searchText=${searchText}`, GET_FETCH_OPTIONS())

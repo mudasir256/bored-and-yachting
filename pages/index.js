@@ -28,7 +28,7 @@ export default function Home() {
       }
     })
 
-    return <div className="flex flex-row justify-between p-4 gap-2">
+    return <div className="flex flex-row p-4 gap-2">
       {cards}
     </div>
   }

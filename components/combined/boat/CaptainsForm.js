@@ -68,7 +68,7 @@ export default function CaptainsForm({ boatId }) {
 							firstName={captain?.firstName} 
 							email={captain?.email} 
 						>
-							<Button text="Remove from roster" onClick={() => removeFromRoster(captain)} /> 
+							<Button text="Remove" onClick={() => removeFromRoster(captain)} /> 
 						</CaptainRow>
 					</div>
 				))}

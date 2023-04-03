@@ -8,7 +8,7 @@ export default function useComponentVisible(initialIsVisible) {
 
     const handleClickOutside = (event) => {
 
-        // console.log(event.target)
+        console.log(event.target)
         if (event.target?.getAttribute('data-action') === 'close-modal') {
             setIsComponentVisible(false)
             return
