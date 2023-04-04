@@ -1,5 +1,5 @@
 import { useReservations } from '@/endpoints/get'
-import { approveCharter } from '@/endpoints/post'
+import { approveCharter, declineCharter } from '@/endpoints/post'
 
 import ReservationsTypePicker from '@/components/combined/ReservationsTypePicker'
 import Subheader from '@/components/small/Subheader'
@@ -34,8 +34,13 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 		}
 	}
 
-	const declineCharter = () => {
+	const handleDeclineCharter = () => {
 		//TODO: notify user
+		try {
+
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
 	console.log(bookings)
@@ -78,7 +83,7 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 							{booking.status === RESERVATION_STATUS.PENDING_REVIEW && 
 							<div className="flex flex-row">
 								<button onClick={() => handleApproveCharter(booking)} className="w-full border py-1 hover:bg-gray-200">Approve</button>
-								<button onClick={() => declineCharter()} className="w-full border py-1 hover:bg-gray-200">Decline</button>
+								<button onClick={() => handleDeclineCharter()} className="w-full border py-1 hover:bg-gray-200">Decline</button>
 							</div>
 							}
 						</div>

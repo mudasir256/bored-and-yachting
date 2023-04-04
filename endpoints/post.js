@@ -118,6 +118,11 @@ export const approveCharter = async (bookingId) => {
 	const data = await result.json()
 	return data
 }
+export const declineCharter = async (bookingId) => {
+	const result = await fetch(baseUrl(`/bookings/decline-charter/${bookingId}`), POST_FETCH_OPTIONS({}, true))
+	const data = await result.json()
+	return data
+}
 
 //captains
 export const acceptCharter = async (bookingId) => {

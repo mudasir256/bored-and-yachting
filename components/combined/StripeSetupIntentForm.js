@@ -4,11 +4,14 @@ import {
 	PaymentElement
 } from '@stripe/react-stripe-js';
 import Input from '@/components/Input'
+import { useState } from 'react'
 
 export default function StripeSetupIntentForm() {
 
 	const stripe = useStripe();
 	const elements = useElements();
+
+	const [errorMessage, setErrorMessage] = useState('')
 
 	const handlePaymentElement = async (e) => {
 		e.preventDefault()
