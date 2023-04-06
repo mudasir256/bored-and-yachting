@@ -35,6 +35,10 @@ export default function Input({
 						label: e.label,
 						lat: location.geometry.location.lat(),
 						lng: location.geometry.location.lng(),
+						location: {
+							type: "Point",
+							coordinates: [location.geometry.location.lng(), location.geometry.location.lat()]
+						},
 						address: address[0].formatted_address,
 						place_id: address[0].place_id,
 						value: {} //prevents place_id reference crash
