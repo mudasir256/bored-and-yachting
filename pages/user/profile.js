@@ -20,6 +20,7 @@ export default function Profile() {
 
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
+	const [phoneNumber, setPhoneNumber]  = useState('')
 
 	const [profilePic, setProfilePic] = useState('') //fill with image from https
 	const [fileSelected, setFileSelected] = useState(null)
@@ -30,6 +31,7 @@ export default function Profile() {
 		if (user) {
 			setFirstName(user?.firstName)
 			setLastName(user?.lastName)
+			setPhoneNumber(user?.phoneNumber)
 			setProfilePic(user?.profilePicture)
 			if (isCaptain(user)) {
 				setCaptainAddress({ ...user.captainAddress, value: {}, isOld: true })
@@ -57,11 +59,11 @@ export default function Profile() {
 			const result = await updateCaptainLocation(user?._id, { state, ...captainAddress }, LOCATION_TYPE.IS_HOME)
 			console.log(result)
 		}
-		
-		if (firstName && lastName) {
-			const result = await updateUser({ firstName, lastName })
+
+		if (firstName && lastName && phoneNumber) {
+			const result = await updateUser({ firstName, lastName, phoneNumber })
 			if (result.success) {
-				// redirect == 'true' ? router.back() : ''
+				redirect == 'true' ? router.back() : ''
 			}
 		}
 	}
@@ -106,6 +108,15 @@ export default function Profile() {
 					 	src={profilePic}
 					 	label="Profile Picture"
 					 />
+					 <Input
+					 	type="text"
+					 	label="Phone Number"
+					 	id="phoneNumber"
+				 		onChange={(e) => setPhoneNumber(e.target?.value)}
+				 		value={phoneNumber}
+				 	 	placeholder="Phone Number" 
+				 	 	isRequired={true} 
+				 	 />
 					 {isCaptain(user) &&
 						 <div className="col-span-3">
 						 	<Input 
