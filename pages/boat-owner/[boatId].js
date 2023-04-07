@@ -84,7 +84,7 @@ export default function Create() {
 					<LinkWithIcon
 						iconName="pricing"
 						onClick={() => setTabSelected(BOAT_TABS.PRICING)}
-						text="Pricing Details"
+						text="Pricing & Availability"
 						selected={tabSelected === BOAT_TABS.PRICING}
 					/>
 					<LinkWithIcon
