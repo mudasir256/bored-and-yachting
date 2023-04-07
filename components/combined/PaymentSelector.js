@@ -1,12 +1,11 @@
-
 import { useStripePaymentMethods } from '@/endpoints/get'
 
-export default function PaymentSelector({ paymentSelected, setPaymentSelected }) {
+export default function PaymentSelector({ paymentSelected, setPaymentSelected, isFull }) {
 
 	const { paymentMethods, isLoading } = useStripePaymentMethods()
 
 	return(
-		<select className="border rounded-md p-1" data-action="click" value={paymentSelected} onChange={(e) => setPaymentSelected(e.target?.value)}>
+		<select className={`border rounded-md p-1 ${isFull && 'w-full'}`} data-action="click" value={paymentSelected} onChange={(e) => setPaymentSelected(e.target?.value)}>
 			<option value="">Select a payment method</option>
 			{paymentMethods?.data?.map(item => (
 				<option value={item.id} key={item.id}>			

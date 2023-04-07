@@ -5,12 +5,14 @@ import { mapDuration, formatDay, formatMoney } from '@/helpers/index'
 import Icon from '@/components/Icon'
 import Button from '@/components/small/Button'
 import PaymentSelector from '@/components/combined/PaymentSelector'
+import CaptainSelector from '@/components/combined/CaptainSelector'
 import VesselPricingTable from '@/components/combined/VesselPricingTable'
 
 export default function BookingConfirmationModal({ boat, bookingData, confirmBooking }) {
 	const [isBrowser, setIsBrowser] = useState(false);
 
 	const [paymentSelected, setPaymentSelected] = useState('')
+	const [captainSelected, setCaptainSelected] = useState('')
 
 	useEffect(() => {
 	  setIsBrowser(true);
@@ -37,11 +39,11 @@ export default function BookingConfirmationModal({ boat, bookingData, confirmBoo
 						</div>
 						<div>
 							<p className="font-bold">Pay With</p>
-							<PaymentSelector paymentSelected={paymentSelected} setPaymentSelected={setPaymentSelected} />
+							<PaymentSelector paymentSelected={paymentSelected} setPaymentSelected={setPaymentSelected} isFull />
 						</div>
 						<div>
-							<p className="font-bold">Ground Rules</p>
-							<p>TODO: ground rules pulled from where?</p>
+							<p className="font-bold">Captains List</p>
+							<CaptainSelector captainSelected={captainSelected} setCaptainSelected={setCaptainSelected} captains={boat?.preferredCaptains} isFull />
 						</div>
 						<div>
 							<p className="font-bold">Charter Insurance</p>
