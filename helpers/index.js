@@ -98,10 +98,13 @@ export const CAPTAIN_RATES = {
 	HOURLY: 45
 }
 
-export const CLEANING_FEE = 150
-export const GRATUITY = {
+export const SERVICE_FEE = {
 	LABEL: 25,
 	RATE: 0.25
+}
+export const GRATUITY = {
+	LABEL: 10,
+	RATE: 0.10
 }
 
 export const isCaptain = (user) => {

@@ -9,7 +9,7 @@ import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 import Input from '@/components/Input'
 import { useState } from 'react'
 import { formatMoney, formattedTime, RATE_LENGTHS, RATE_IN_HOURS, formatAddressLine } from '@/helpers/index'
-import { getFinalRateWithGratuity, getRateWithoutGratuity } from '@/helpers/money'
+import { getFinalRate, getRateWithoutFees } from '@/helpers/money'
 import useComponentVisible from '@/hooks/useComponentVisible'
 import Button from '@/components/small/Button'
 import Link from 'next/link'
@@ -52,8 +52,8 @@ export default function BoatAndYachtRentals() {
  			const startTimeDate = DateTime.fromISO(dateSelected).plus({ seconds: startTime })
  			const hoursToAdd = RATE_IN_HOURS[durationSelected]
  			const endTimeDate = startTimeDate.plus({ hours: hoursToAdd })
- 			const totalPrice = getFinalRateWithGratuity(boat, durationSelected)
- 			const subtotalPrice = getRateWithoutGratuity(boat, durationSelected)
+ 			const totalPrice = getFinalRate(boat, durationSelected)
+ 			const subtotalPrice = getRateWithoutFees(boat, durationSelected)
  			
  			setBookingData({
  				startTimeDate,
@@ -223,11 +223,11 @@ export default function BoatAndYachtRentals() {
 						<div className="flex flex-row justify-between p-1">
 							<div>
 								<h3 className="font-bold">Half Day Rate</h3>
-								<p>{formatMoney(getFinalRateWithGratuity(boat, RATE_LENGTHS.HALF_DAY))}</p>
+								<p>{formatMoney(getFinalRate(boat, RATE_LENGTHS.HALF_DAY))}</p>
 							</div>
 							<div>
 								<h3 className="font-bold">Full Day Rate</h3>
-								<p>{formatMoney(getFinalRateWithGratuity(boat, RATE_LENGTHS.FULL_DAY))}</p>
+								<p>{formatMoney(getFinalRate(boat, RATE_LENGTHS.FULL_DAY))}</p>
 							</div>
 						</div>
 						

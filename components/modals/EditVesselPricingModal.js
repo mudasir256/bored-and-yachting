@@ -19,19 +19,22 @@ export default function EditVesselPricingModal({ boat, boatId, setIsComponentVis
 			setBoatRentalPrice(boat.boatRentalPrice)
 			setCrewRatePrice(boat.crewRatePrice)
 			setPrepaidFuelPrice(boat.prepaidFuelPrice)
+			setCleaningFee(boat.cleaningFee)
 		}
 	}, [boat])
 
 	const [boatRentalPrice, setBoatRentalPrice] = useState({})
 	const [crewRatePrice, setCrewRatePrice] = useState({})
 	const [prepaidFuelPrice, setPrepaidFuelPrice] = useState({})
+	const [cleaningFee, setCleaningFee] = useState('')
 
 	const handleVesselPricingSubmit = async (e) => {
 		e.preventDefault()
 		const result = await updateBoat(boatId, {
 			boatRentalPrice,
 			crewRatePrice,
-			prepaidFuelPrice
+			prepaidFuelPrice,
+			cleaningFee
 		})
 
 		if (result.success) {
@@ -96,6 +99,20 @@ export default function EditVesselPricingModal({ boat, boatId, setIsComponentVis
         	    isInModal={true}
              />
 					</div>))}
+
+					<div className="w-1/2">
+				   	<Input 
+					    type="number" 
+					    label="Cleaning Fee"
+					    id="cleaningFee"
+					    placeholder="Dollar amount"
+					    min={1}
+					    onChange={(e) => setCleaningFee(e.target?.value)}
+					    value={cleaningFee}
+					    isInModal={true}
+				     />
+			     </div>
+
 					<Input 
 						type="submit"
 						value={"Save"} 

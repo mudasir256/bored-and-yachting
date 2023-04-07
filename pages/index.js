@@ -3,7 +3,7 @@ import { useBoats } from '@/endpoints/get'
 import Loading from '@/components/small/Loading'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getRateWithoutGratuity } from '@/helpers/money'
+import { getRateWithoutFees } from '@/helpers/money'
 import { RATE_LENGTHS, formatMoney, formatAddressLine, boatHasAllValidInformation } from '@/helpers/index'
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
             <div className="mt-2 space-y-1">
               <p className="font-bold">{boat.name}</p>
               <p className="text-sm">{formatAddressLine(boat.parkingLocation.address)}</p>
-              <p><span className="text-sm">starting at&nbsp;</span><span className="font-bold">{formatMoney(getRateWithoutGratuity(boat, RATE_LENGTHS.HALF_DAY))}</span></p>
+              <p><span className="text-sm">starting at&nbsp;</span><span className="font-bold">{formatMoney(getRateWithoutFees(boat, RATE_LENGTHS.HALF_DAY))}</span></p>
             </div>
           </Link>
         )

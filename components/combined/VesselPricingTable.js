@@ -1,36 +1,17 @@
 import EditVesselPricingModal from '@/components/modals/EditVesselPricingModal'
 import useComponentVisible from '@/hooks/useComponentVisible'
 import { useBoat } from '@/endpoints/get'
-import { formatMoney, TAX_RATES_BY_REGION, GRATUITY, CAPTAIN_RATES, CLEANING_FEE } from '@/helpers/index'
+import { formatMoney, RATE_LENGTHS,TAX_RATES_BY_REGION, GRATUITY, SERVICE_FEE, CAPTAIN_RATES, CLEANING_FEE } from '@/helpers/index'
+import { getFinalRate, getRateWithoutFees } from '@/helpers/money'
 
 export default function VesselPricingTable({ isEditable = false, boatId }) {
 
 	const { boat, isLoading } = useBoat(boatId)
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
-	const totalHalfDayPriceWithoutGratuity = 
-		boat?.boatRentalPrice?.halfDayRate 
-			+ (boat?.boatRentalPrice?.halfDayRate * TAX_RATES_BY_REGION.FLORIDA) 
-			+ boat?.crewRatePrice?.halfDayRate
-			+ CAPTAIN_RATES.HALF_DAY
-			+ boat?.prepaidFuelPrice?.halfDayRate
-			+ CLEANING_FEE;
-
-	const totalFullDayPriceWithoutGratuity = 
-		boat?.boatRentalPrice?.fullDayRate 
-			+ (boat?.boatRentalPrice?.fullDayRate * TAX_RATES_BY_REGION.FLORIDA) 
-			+ boat?.crewRatePrice?.fullDayRate
-			+ CAPTAIN_RATES.FULL_DAY
-			+ boat?.prepaidFuelPrice?.fullDayRate
-			+ CLEANING_FEE;
-
-	const totalHourlyPriceWithoutGratuity = 
-		boat?.boatRentalPrice?.hourlyRate 
-			+ (boat?.boatRentalPrice?.hourlyRate * TAX_RATES_BY_REGION.FLORIDA) 
-			+ boat?.crewRatePrice?.hourlyRate
-			+ CAPTAIN_RATES.HOURLY
-			+ boat?.prepaidFuelPrice?.hourlyRate
-			+ CLEANING_FEE;
+	const totalHalfDayPriceWithoutFees = getRateWithoutFees(boat, RATE_LENGTHS.HALF_DAY)
+	const totalFullDayPriceWithoutFees = getRateWithoutFees(boat, RATE_LENGTHS.FULL_DAY)
+	const totalHourlyPriceWithoutFees = getRateWithoutFees(boat, RATE_LENGTHS.HOURLY)
 
 	return(<>
 		<div className="relative overflow-x-auto sm:rounded-lg">
@@ -141,29 +122,42 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		                  	Cleaning Fee
 		                </th>
 		                <td className="px-6 py-4">
-		                    ${CLEANING_FEE}
+		                    {formatMoney(boat?.cleaningFee)}
 		                </td>
 		                <td className="px-6 py-4">
-		                    ${CLEANING_FEE}
+		                    {formatMoney(boat?.cleaningFee)}
 		                </td>
 		                <td className="px-6 py-4">
 		                    N/A
 		                </td>
 		             
 		            </tr>
-		 
+		 						<tr>
+		 							<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		 							  	Auto Gratuity (${GRATUITY.LABEL}%)
+		 							</th>
+		 							<td className="px-6 py-4">
+		 							  {formatMoney(boat?.boatRentalPrice?.halfDayRate * GRATUITY.RATE)}
+		 							</td>
+		 							<td className="px-6 py-4">
+		 							  {formatMoney(boat?.boatRentalPrice?.fullDayRate * GRATUITY.RATE)}
+		 							</td>
+		 							<td className="px-6 py-4">
+		 							   {formatMoney(boat?.boatRentalPrice?.hourlyRate * GRATUITY.RATE)}
+		 							</td>
+		 						</tr>
 		            <tr>
 		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-		                  	Service fee ({GRATUITY.LABEL}%)
+		                  	Service fee ({SERVICE_FEE.LABEL}%)
 		                </th>
 		                <td className="px-6 py-4">
-		                  {formatMoney(totalHalfDayPriceWithoutGratuity * GRATUITY.RATE)}
+		                  {formatMoney(totalHalfDayPriceWithoutFees * SERVICE_FEE.RATE)}
 		                </td>
 		                <td className="px-6 py-4">
-		                  {formatMoney(totalFullDayPriceWithoutGratuity * GRATUITY.RATE)}
+		                  {formatMoney(totalFullDayPriceWithoutFees * SERVICE_FEE.RATE)}
 		                </td>
 		                <td className="px-6 py-4">
-		                   {formatMoney(totalHourlyPriceWithoutGratuity * GRATUITY.RATE)}
+		                   {formatMoney(totalHourlyPriceWithoutFees * SERVICE_FEE.RATE)}
 		                </td>
 		              
 		            </tr>
@@ -172,13 +166,13 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		                    Total Price
 		                </th>
 		                <td className="px-6 py-4">
-		                    {formatMoney((totalHalfDayPriceWithoutGratuity * GRATUITY.RATE) + totalHalfDayPriceWithoutGratuity)}
+		                    {formatMoney(getFinalRate(boat, RATE_LENGTHS.HALF_DAY))}
 		                </td>
 		                <td className="px-6 py-4">
-		                    {formatMoney((totalFullDayPriceWithoutGratuity * GRATUITY.RATE) + totalFullDayPriceWithoutGratuity)}
+		                    {formatMoney(getFinalRate(boat, RATE_LENGTHS.FULL_DAY))}
 		                </td>
 		                <td className="px-6 py-4">
-		                    {formatMoney((totalHourlyPriceWithoutGratuity * GRATUITY.RATE) + totalHourlyPriceWithoutGratuity)}
+		                    {formatMoney(getFinalRate(boat, RATE_LENGTHS.HOURLY))}
 		                </td>
 		             
 		            </tr>
