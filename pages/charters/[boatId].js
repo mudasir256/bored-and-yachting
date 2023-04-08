@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useBoat } from '@/endpoints/get'
+import { useBoat, useBoatAvailability } from '@/endpoints/get'
 import { useRouter } from 'next/router'
 import Loading from '@/components/small/Loading'
 import Header from '@/components/small/Header'
@@ -7,7 +7,7 @@ import Subheader from '@/components/small/Subheader'
 import Image from 'next/image'
 import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 import Input from '@/components/Input'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { formatMoney, formattedTime, RATE_LENGTHS, RATE_IN_HOURS, formatAddressLine } from '@/helpers/index'
 import { getFinalRate, getRateWithoutFees } from '@/helpers/money'
 import useComponentVisible from '@/hooks/useComponentVisible'
@@ -22,6 +22,7 @@ import BookingConfirmationModal from '@/components/modals/BookingConfirmationMod
 import AmenitiesList from '@/components/combined/AmenitiesList'
 import FeaturesList from '@/components/combined/FeaturesList'
 import GoogleMaps from '@/components/combined/GoogleMaps'
+import { getAvailableTimeslotsForDay, getDiscountForBoatDay, getDayTextFromIso } from '@/helpers/availability'
 
 export default function BoatAndYachtRentals() {
 
@@ -32,19 +33,29 @@ export default function BoatAndYachtRentals() {
 	const { boatId } = router.query
 
 	const { boat, isLoading } = useBoat(boatId)
+	const { data } = useBoatAvailability(boatId)
 
 	const [dateSelected, setDateSelected] = useState('')
 	const [durationSelected, setDurationSelected] = useState('')
 	const [startTime, setStartTime] = useState('')
+	const [availableTimes, setAvailableTimes] = useState(formattedTime())
+	const [discount, setDiscount] = useState(0)
 
 	const [bookingData, setBookingData] = useState({})
+
+	useEffect(() => {
+		const result = getAvailableTimeslotsForDay(data, data?.blockedTimes, dateSelected)
+		setAvailableTimes(formattedTime(result))
+		const discount = getDiscountForBoatDay(data, dateSelected)
+		setDiscount(discount)
+	}, [dateSelected])
 
 	if (isLoading) {
 		return <div className="flex justify-center mt-12"><Loading /></div>
 	}
 
 	const handleRequestReservation = async () => {
-		if (!dateSelected || !durationSelected || !startTime) {
+		if (!dateSelected || !durationSelected || !startTime || availableTimes.length === 0) {
 			return
 		}
 
@@ -52,8 +63,8 @@ export default function BoatAndYachtRentals() {
  			const startTimeDate = DateTime.fromISO(dateSelected).plus({ seconds: startTime })
  			const hoursToAdd = RATE_IN_HOURS[durationSelected]
  			const endTimeDate = startTimeDate.plus({ hours: hoursToAdd })
- 			const totalPrice = getFinalRate(boat, durationSelected)
- 			const subtotalPrice = getRateWithoutFees(boat, durationSelected)
+ 			const totalPrice = getFinalRate(boat, durationSelected, discount)
+ 			const subtotalPrice = getRateWithoutFees(boat, durationSelected, discount)
  			
  			setBookingData({
  				startTimeDate,
@@ -192,6 +203,7 @@ export default function BoatAndYachtRentals() {
 							onChange={(e) => setDateSelected(e.target?.value)} 
 							value={dateSelected} 
 						/>
+						{(availableTimes.length === 0 && dateSelected) && <p className="italic text-sm text-red-500">Vessel is unavailable on this day. Please select a different day.</p>}
 						<Input
 							type="select"
 							id="duration"
@@ -218,17 +230,26 @@ export default function BoatAndYachtRentals() {
 					    placeholder="Select a start time"
 					    onChange={(e) => setStartTime(e.target?.value)}
 					    value={startTime} 
-					    options={formattedTime}//.filter(time => time.value < field.endValue)}
+					    options={availableTimes}
 				    />
-						<div className="flex flex-row justify-between p-1">
+					  
+
+						<div className="flex flex-row flex-wrap justify-between p-1">
 							<div>
 								<h3 className="font-bold">Half Day Rate</h3>
-								<p>{formatMoney(getFinalRate(boat, RATE_LENGTHS.HALF_DAY))}</p>
+								<p>
+									<span className={`${discount && 'line-through text-xs'}`}>{formatMoney(getFinalRate(boat, RATE_LENGTHS.HALF_DAY))}</span>
+									{discount && <span>&nbsp;{formatMoney(getFinalRate(boat, RATE_LENGTHS.HALF_DAY, discount))}</span>}
+								</p>
 							</div>
 							<div>
 								<h3 className="font-bold">Full Day Rate</h3>
-								<p>{formatMoney(getFinalRate(boat, RATE_LENGTHS.FULL_DAY))}</p>
+								<p>
+									<span className={`${discount && 'line-through text-xs'}`}>{formatMoney(getFinalRate(boat, RATE_LENGTHS.FULL_DAY))}</span>
+									{discount && <span>&nbsp;{formatMoney(getFinalRate(boat, RATE_LENGTHS.FULL_DAY, discount))}</span>}
+								</p>
 							</div>
+							{discount && <p className="mt-1 text-blue-500 italic">{discount}% off on {getDayTextFromIso(dateSelected)}&apos;s</p>}
 						</div>
 						
 						<PriceBreakdownButton boatId={boatId} />

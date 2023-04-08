@@ -146,12 +146,14 @@ export const formatAMPM = (hoursInSeconds) => {
 	return ''
 }
 
-export const formattedTime = Object.values(AVAILABLE_TIME_SLOTS).map(hoursInSeconds => {
-	return {
-		value: hoursInSeconds,
-		label: formatAMPM(hoursInSeconds)
-	}
-})
+export const formattedTime = (timeSlots = AVAILABLE_TIME_SLOTS) => {
+	return Object.values(timeSlots).map(hoursInSeconds => {
+		return {
+			value: hoursInSeconds,
+			label: formatAMPM(hoursInSeconds)
+		}
+	})
+} 
 
 export const formatDay = (isoTimestamp) => {
 	if (isoTimestamp?.isLuxonDateTime) {

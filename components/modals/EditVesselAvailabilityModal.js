@@ -183,6 +183,8 @@ export default function EditVesselAvailability({ boat, boatId, setIsComponentVis
 		}
 		field.onStartChange(-1)
 		field.onEndChange(-1)
+		field.onDiscountChange(0)
+
 	}
 
 	const modalContent = (
@@ -212,7 +214,7 @@ export default function EditVesselAvailability({ boat, boatId, setIsComponentVis
 					    onChange={(e) => field.onStartChange(e.target?.value)}
 					    value={field.startValue === -1 ? '' : field.startValue} 
 					    isInModal={true}
-					    options={formattedTime}//.filter(time => time.value < field.endValue)}
+					    options={formattedTime()}//.filter(time => time.value < field.endValue)}
 				     />
 		       	<Input 
 		    	    type="select" 
@@ -222,7 +224,7 @@ export default function EditVesselAvailability({ boat, boatId, setIsComponentVis
 		    	    onChange={(e) => field.onEndChange(e.target?.value)}
 		    	    value={field.endValue === -1 ? '' : field.endValue} 
 		    	    isInModal={true}
-		    	    options={formattedTime.filter(time => time.value > field.startValue)} 
+		    	    options={formattedTime().filter(time => time.value > field.startValue)} 
 		         />
 		       	<Input 
 		    	    type="number" 

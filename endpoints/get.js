@@ -118,6 +118,16 @@ export const useBoat = (id) => {
 	}
 }
 
+export const useBoatAvailability = (id) => {
+	const { data, error } = useSWR(baseUrl(`/boats/availability/${id}`), fetcher)
+
+	return {
+		data: data,
+		isLoading: !error && !data,
+		isError: error,
+	}
+}
+
 export const useCharters = () => {
 	let userId = ''
 	if (typeof window !== 'undefined') {

@@ -34,6 +34,7 @@ export default function PricingForm({ boatId }) {
 		setSaved(true)
 	}
 
+	//TODO: ADD instant book switch
 	return (<>
 
 		<form className="mt-2" onSubmit={handleOptions}>
