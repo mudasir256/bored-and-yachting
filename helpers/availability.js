@@ -31,7 +31,6 @@ export const getAvailableTimeslotsForDay = (boatAvailability, blockedTimes, cale
 	)
 
 	blockedOnSameDay.forEach(time => {
-		//TODO: remove availableTimes
 		const startDate = new Date(time.startDate)
 		const secondsStart = (startDate.getHours() * 3600) + (startDate.getMinutes() * 60)
 		

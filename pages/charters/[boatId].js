@@ -23,6 +23,8 @@ import AmenitiesList from '@/components/combined/AmenitiesList'
 import FeaturesList from '@/components/combined/FeaturesList'
 import GoogleMaps from '@/components/combined/GoogleMaps'
 import { getAvailableTimeslotsForDay, getDiscountForBoatDay, getDayTextFromIso } from '@/helpers/availability'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function BoatAndYachtRentals() {
 
@@ -98,7 +100,10 @@ export default function BoatAndYachtRentals() {
  			console.log(result)
  			if (result.success) {
  				router.push('/reservation-confirmed')
+ 				return
  			}
+ 			toast.error(result.message || 'Something went wrong. Please try again.')
+
 		} catch (err) {
 			console.log(err)
 			//TODO: must provide errors
@@ -131,6 +136,7 @@ export default function BoatAndYachtRentals() {
 		  <meta name="description" content="" />
 		</Head>
 		<ContentPageLayout>
+			<ToastContainer />
 			<div className="space-y-6">
 				<div>
 					<Header text={boat?.name} />
