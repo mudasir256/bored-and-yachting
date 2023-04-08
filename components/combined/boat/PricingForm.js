@@ -23,7 +23,7 @@ export default function PricingForm({ boatId }) {
 			setAllowMultipleBookingsSameDay(boat?.allowMultipleBookingsSameDay)
 			setTimeNoticeBeforeCharter(boat?.timeNoticeBeforeCharter)
 		}
-	}, [])
+	}, [boat])
 
 	useEffect(() => {
 		setSaved(false)

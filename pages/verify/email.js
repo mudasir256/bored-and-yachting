@@ -25,7 +25,7 @@ export default function Email() {
 			setErrorMessage(result.message)
 		}
 		handleVerify()
-	}, [])
+	}, [token])
 
 	if (isLoading) {
 		return <div className="pt-4 flex justify-center items-center"><Loading /></div>

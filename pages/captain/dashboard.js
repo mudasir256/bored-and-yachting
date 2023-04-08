@@ -93,7 +93,7 @@ export default function Dashboard() {
 			 								</div>
 			 							</div>
 			 							<div className="ml-auto mr-4 flex flex-col justify-center gap-1.5">
-			 								<p className="text-sm">{formatDay(booking.startDate)}</p>
+			 								<p className="text-sm">{formatDay(booking.startDate, booking.boatId.timezone)}</p>
 			 								<p className="text-sm">{mapDuration(booking.duration)}</p>
 			 								<p className="text-sm">on {booking.boatId?.name}</p>
 

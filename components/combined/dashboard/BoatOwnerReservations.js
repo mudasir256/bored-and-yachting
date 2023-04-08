@@ -67,9 +67,9 @@ export default function BoatOwnerReservations({ boatsOwned = [] }) {
 									<div className="">
 										{[RESERVATION_STATUS.PENDING_REVIEW, RESERVATION_STATUS.UPCOMING, RESERVATION_STATUS.FINDING_CAPTAIN].find(one => one === booking.status) && <p className="font-bold">charter in {differenceBetweenDates(new Date().toISOString(), booking.startDate)}</p>}
 									</div>
-									<p className="text-sm">{formatDay(booking.startDate)}</p>
+									<p className="text-sm">{formatDay(booking.startDate, booking.boatId.timezone)}</p>
 									<p className="text-sm">{mapDuration(booking.duration)}</p>
-									<p className="text-sm">on {matchBoat(booking.boatId)?.name}</p>
+									<p className="text-sm">on {booking.boatId.name}</p>
 								</div>
 								<div className="ml-auto mr-4 mt-2 flex flex-col justify-center items-center">
 									<div className="relative w-14 h-14">

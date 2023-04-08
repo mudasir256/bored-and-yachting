@@ -14,12 +14,19 @@ export default function LocationForm({ boatId }) {
 	const [charterDockNumber, setCharterDockNumber] = useState('')
 	const [parkingAddress, setParkingAddress] = useState('')
 
+	const [timezone, setTimezone] = useState('')
+
 	const [saved, setSaved] = useState(false)
 
 	const handleBoatLocation = async (e) => {
+
+		//TODO: double check this is working initially without
+		console.log(timezone)
+		//****
+		
 		e.preventDefault()
 		if (dockNumber || charterDockNumber) {
-			updateBoat(boatId, { charterDockNumber, dockNumber })
+			updateBoat(boatId, { charterDockNumber, dockNumber, timezone })
 		}
 		if (boatAddress && !boatAddress.isOld) {
 			const state = boatAddress.address.split(', ')[2].split(' ')[0]
@@ -48,6 +55,7 @@ export default function LocationForm({ boatId }) {
 			setParkingAddress({ ...boat.parkingLocation, value: {}, isOld: true })			
 			setDockNumber(boat.dockNumber || '')
 			setCharterDockNumber(boat.charterDockNumber || '')
+			setTimezone(boat.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone)
 		}
 	}, [boat])
 
@@ -106,15 +114,48 @@ export default function LocationForm({ boatId }) {
 						</div>
 					</div>
 
-					 <Input 
-				  	type="address" 
-				  	label="Address where customers should park"
-				  	id="parkingAddress"
-				   	placeholder="Parking Address"
-				   	onChange={(data) => setParkingAddress(data)}
-				   	value={parkingAddress} 
-				   	isRequired={true} 
-				   />
+
+					<div className="grid grid-cols-1 md:grid-cols-4 items-center gap-2">
+						<div className="col-span-3">
+						 <Input 
+					  	type="address" 
+					  	label="Address where customers should park"
+					  	id="parkingAddress"
+					   	placeholder="Parking Address"
+					   	onChange={(data) => setParkingAddress(data)}
+					   	value={parkingAddress} 
+					   	isRequired={true} 
+					   />
+					  </div>
+					  <div className="col-span-1">
+					   <Input
+					   	type="select"
+					   	label="Time Zone for Charter Location"
+					   	placeholder="Select the time zone this vessel is in"
+					   	value={timezone}
+					   	onChange={(e) => setTimezone(e.target?.value)}
+					   	options={[
+					   		{
+					   			value: 'America/New_York',
+					   			label: 'America/New_York'
+					   		},
+					   		{
+									value: 'America/Chicago',
+									label: 'America/Chicago',
+					   		},
+					   		{
+					   			value: 'America/Denver',
+					   			label: 'America/Denver'
+					   		},
+					   		{
+					   			value: 'America/Los_Angeles',
+					   			label: 'America/Los_Angeles'
+					   		}
+					   	]}
+					   />
+					  </div>
+					 </div>
+
 				    <div className="col-span-2">
 				   	 <Input 
 				   	 	type="submit"

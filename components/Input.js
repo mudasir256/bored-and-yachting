@@ -31,6 +31,7 @@ export default function Input({
 					const address = await geocodeByAddress(e.label)
 					console.log(address)
 					const location = await address[0]
+					console.log(location)
 					onChange({ 
 						label: e.label,
 						lat: location.geometry.location.lat(),

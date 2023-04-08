@@ -46,11 +46,13 @@ export default function BoatAndYachtRentals() {
 	const [bookingData, setBookingData] = useState({})
 
 	useEffect(() => {
-		const result = getAvailableTimeslotsForDay(data, data?.blockedTimes, dateSelected)
-		setAvailableTimes(formattedTime(result))
-		const discount = getDiscountForBoatDay(data, dateSelected)
-		setDiscount(discount)
-	}, [dateSelected])
+		if (data && dateSelected) {
+			const result = getAvailableTimeslotsForDay(data, data?.blockedTimes, dateSelected)
+			setAvailableTimes(formattedTime(result))
+			const discount = getDiscountForBoatDay(data, dateSelected)
+			setDiscount(discount)
+		}
+	}, [data, dateSelected])
 
 	if (isLoading) {
 		return <div className="flex justify-center mt-12"><Loading /></div>
@@ -86,11 +88,11 @@ export default function BoatAndYachtRentals() {
 
 	const confirmBooking = async (paymentMethodId) => {
 		try {
-			console.log('confirming')
+			console.log('confirming: '+ boat.timezone)
 			//send payment method to endpoint
  			const result = await createBooking(
-				bookingData.startTimeDate.toJSDate(), 
-				bookingData.endTimeDate.toJSDate(), 
+				bookingData.startTimeDate.setZone(boat.timezone).toISO(), 
+				bookingData.endTimeDate.setZone(boat.timezone).toISO(), 
 				{ 
 					...bookingData, 
 					boatId: boatId, 
@@ -255,7 +257,7 @@ export default function BoatAndYachtRentals() {
 									{discount && <span>&nbsp;{formatMoney(getFinalRate(boat, RATE_LENGTHS.FULL_DAY, discount))}</span>}
 								</p>
 							</div>
-							{discount && <p className="mt-1 text-blue-500 italic">{discount}% off on {getDayTextFromIso(dateSelected)}&apos;s</p>}
+							{discount > 0 && <p className="mt-1 text-blue-500 italic">{discount}% off on {getDayTextFromIso(dateSelected)}&apos;s</p>}
 						</div>
 						
 						<PriceBreakdownButton boatId={boatId} />

@@ -155,12 +155,12 @@ export const formattedTime = (timeSlots = AVAILABLE_TIME_SLOTS) => {
 	})
 } 
 
-export const formatDay = (isoTimestamp) => {
+export const formatDay = (isoTimestamp, timezone) => {
 	if (isoTimestamp?.isLuxonDateTime) {
-		return isoTimestamp.toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)
+		return isoTimestamp.setZone(timezone).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)
 	}
 	if (isoTimestamp) {
-		return DateTime.fromISO(isoTimestamp).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY) //DATETIME_FULL debug timezone
+		return DateTime.fromISO(isoTimestamp).setZone(timezone).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY) //DATETIME_FULL debug timezone
 	}
 	return ''
 }
