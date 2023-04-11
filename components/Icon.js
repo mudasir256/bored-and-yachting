@@ -14,6 +14,7 @@ import {
 	faStar,
 	faCreditCard,
 	faCalendarCheck,
+	faMagnifyingGlass,
 	//Amenities
 	faBox,
 	faSpa,
@@ -55,6 +56,7 @@ export default function Icon({ name, color = 'black', size = 'lg' }) {
 		{ name: 'credit-card', component: faCreditCard },
 		{ name: 'confirm-calendar', component: faCalendarCheck },
 		{ name: 'crew', component: faPeopleGroup },
+		{ name: 'search', component: faMagnifyingGlass },
 
 		//AMENITIES
 		{ name: 'COOLER', component: faBox },

@@ -128,6 +128,26 @@ export const useBoatAvailability = (id) => {
 	}
 }
 
+export const useBoatsSearch = ({ lat, lng, date, numberOfGuests }) => {
+	const params = new URLSearchParams({
+	  lat,
+	 	lng,
+	 	date,
+	 	numberOfGuests
+	});
+	const queryString = "?" + params.toString()
+	const { data, error } = useSWR(
+		[baseUrl(`/boats/search`), queryString], 
+		([url, query]) => fetcher(url, query)
+	)
+
+	return {
+		boats: data?.boats,
+		isLoading: !error && !data,
+		isError: error,
+	}
+}
+
 export const useCharters = () => {
 	let userId = ''
 	if (typeof window !== 'undefined') {

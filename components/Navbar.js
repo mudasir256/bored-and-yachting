@@ -24,7 +24,6 @@ export default function Navbar() {
 	}, [])
 
 	const handleStorageChange = () => {
-		console.log(localStorage.getItem('isLoggedIn'))
 		setIsLoggedIn(localStorage.getItem('isLoggedIn'))
 		setRoles(localStorage.getItem('roles'))
 	}

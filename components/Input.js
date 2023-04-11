@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
-import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete'
+import dynamic from 'next/dynamic'
 //https://tintef.github.io/react-google-places-autocomplete/docs/get-lat-lng
+const GooglePlacesAutocomplete = dynamic(() => 	import('react-google-places-autocomplete'), { ssr: false })
+import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete'
+
 export default function Input({ 
 	id, 
 	placeholder, 
@@ -29,9 +31,7 @@ export default function Input({
 			try {
 				if (e.label) {
 					const address = await geocodeByAddress(e.label)
-					console.log(address)
 					const location = await address[0]
-					console.log(location)
 					onChange({ 
 						label: e.label,
 						lat: location.geometry.location.lat(),
@@ -59,7 +59,7 @@ export default function Input({
 					 value,
 	         onChange: handlePlaceSelected,
 	         placeholder: placeholder,
-	         className: 'text-sm'
+	         className: 'text-sm',
 	       }}
 			/>
 			
