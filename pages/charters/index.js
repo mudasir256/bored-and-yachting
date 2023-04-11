@@ -29,7 +29,7 @@ export default function Charters() {
 			return result.length > 0
 		}) || []
 
-		return <BoatGrid boats={withAvailabilityBoats} />
+		return <BoatGrid boats={withAvailabilityBoats} dateSelected={query.date} />
 	}
 
 	return (<>
