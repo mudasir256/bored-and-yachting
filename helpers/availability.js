@@ -11,13 +11,14 @@ export const getDayTextFromIso = (calendarDate) => {
 //TODO: block off 4 hours before charter since that's minimum length
 //TODO: block off x hours after charter
 export const getAvailableTimeslotsForDay = (boatAvailability, blockedTimes, calendarDateSelected) => {
-	if (!calendarDateSelected) {
+	if (!calendarDateSelected || !boatAvailability) {
 		return []
 	}
 	const dayOfTheWeek = getDayTextFromIso(calendarDateSelected)
 	const availability = boatAvailability[dayOfTheWeek]
 
 	console.log(availability)
+	console.log(blockedTimes)
 
 	const calendarDate = DateTime.fromISO(calendarDateSelected)
 	const blockedOnSameDay = blockedTimes.filter(time => 

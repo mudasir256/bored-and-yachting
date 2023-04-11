@@ -4,6 +4,7 @@ import BoatGrid from '@/components/combined/utility/BoatGrid'
 import { useBoatsSearch } from '@/endpoints/get'
 import { useState } from 'react'
 import Loading from '@/components/small/Loading'
+import { getDayTextFromIso, getAvailableTimeslotsForDay } from '@/helpers/availability'
 
 export default function Charters() {
 
@@ -14,19 +15,25 @@ export default function Charters() {
 			lat: address.lat,
 			lng: address.lng,
 			date: date.toLocaleString(),
+			day: getDayTextFromIso(date.toLocaleString()),
 			numberOfGuests
 		})
 	}
 
 	const Table = ({ query }) => {
 		const { boats, isLoading } = useBoatsSearch({ ...query })
-		console.log(boats)
 		if (isLoading) return <Loading />
-		return <BoatGrid boats={boats} />
+
+		const withAvailabilityBoats = boats?.filter(boat => {
+			const result = getAvailableTimeslotsForDay(boat, boat.blockedTimes, query.date)
+			return result.length > 0
+		}) || []
+
+		return <BoatGrid boats={withAvailabilityBoats} />
 	}
 
 	return (<>
-		<div className="my-4 flex justify-center">
+		<div className="flex justify-center mt-8">
 			<Searchbar onSearch={onSearch} />
 		</div>
 		<ContentPageLayout>

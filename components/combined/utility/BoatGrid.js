@@ -28,6 +28,6 @@ export default function BoatGrid({ boats = [] }) {
 
 
 	return <div className="flex flex-row p-4 gap-2">
-	  {cards.length > 0 ? cards : <p>No vessels found</p>}
+	  {cards.length > 0 ? cards : <p className="text-sm italic">No vessels found. Please try a different search.</p>}
 	</div>
 }

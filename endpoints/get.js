@@ -128,11 +128,12 @@ export const useBoatAvailability = (id) => {
 	}
 }
 
-export const useBoatsSearch = ({ lat, lng, date, numberOfGuests }) => {
+export const useBoatsSearch = ({ lat, lng, date, day, numberOfGuests }) => {
 	const params = new URLSearchParams({
 	  lat,
 	 	lng,
 	 	date,
+	 	day,
 	 	numberOfGuests
 	});
 	const queryString = "?" + params.toString()
