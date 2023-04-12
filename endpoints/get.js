@@ -22,7 +22,7 @@ const fetcher = ( url, query = '' ) => fetch(
 	GET_FETCH_OPTIONS()
 ).then(res => { 
 	if (res.status === 401) {
-		window.location.href = '/?sessionExpired=true'
+		window.location.href = '/login?sessionExpired=true'
 	}
 	return res.json()
 }) 
