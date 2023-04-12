@@ -90,7 +90,7 @@ export default function PostCharter() {
 
 			 {interiorPhotos.map(photo => {
 			 	return(<div key={photo.name} className="relative w-full h-32">
-			 		<Image src={URL.createObjectURL(photo)} className="object-contain" layout="fill" alt="exterior-boat" />
+			 		<Image src={URL.createObjectURL(photo)} className="object-contain" layout="fill" alt="interior-boat" />
 			 	</div>)
 			 })}
 			 <Button text="Next" onClick={() => handleInteriorSubmit()} isFull />
