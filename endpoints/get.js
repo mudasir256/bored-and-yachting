@@ -193,6 +193,16 @@ export const useTrips = () => {
 	}
 }
 
+export const useBooking = (bookingId) => {
+	const { data, error } = useSWR(baseUrl(`/bookings/${bookingId}`), fetcher)
+
+	return {
+		booking: data?.booking,
+		isLoading: !error && !data,
+		isError: error
+	}
+}
+
 /*    User Endpoints    */
 export const useUser = () => {
 	let userId = ''

@@ -86,15 +86,16 @@ export default function BoatAndYachtRentals() {
  		}
 	}
 
-	const confirmBooking = async (paymentMethodId) => {
+	const confirmBooking = async (paymentMethodId, numberOfGuests) => {
 		try {
 			console.log('confirming: '+ boat.timezone)
-			//send payment method to endpoint
+
  			const result = await createBooking(
 				bookingData.startTimeDate.setZone(boat.timezone).toISO(), 
 				bookingData.endTimeDate.setZone(boat.timezone).toISO(), 
 				{ 
 					...bookingData, 
+					numberOfGuests,
 					boatId: boatId, 
 					customerStripePaymentMethod: paymentMethodId 
 				}

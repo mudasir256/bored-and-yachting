@@ -7,12 +7,14 @@ import Button from '@/components/small/Button'
 import PaymentSelector from '@/components/combined/PaymentSelector'
 import CaptainSelector from '@/components/combined/CaptainSelector'
 import VesselPricingTable from '@/components/combined/VesselPricingTable'
+import Input from '@/components/Input'
 
 export default function BookingConfirmationModal({ boat, bookingData, confirmBooking }) {
 	const [isBrowser, setIsBrowser] = useState(false);
 
 	const [paymentSelected, setPaymentSelected] = useState('')
 	const [captainSelected, setCaptainSelected] = useState('')
+	const [numberOfGuests, setNumberOfGuests] = useState('')
 
 	useEffect(() => {
 	  setIsBrowser(true);
@@ -20,7 +22,7 @@ export default function BookingConfirmationModal({ boat, bookingData, confirmBoo
 
 	const handleConfirmBooking = async () => {
 		if (paymentSelected) {
-			confirmBooking(paymentSelected)
+			confirmBooking(paymentSelected, numberOfGuests)
 			return
 		} 
 		//TODO: please select a payment method
@@ -46,8 +48,15 @@ export default function BookingConfirmationModal({ boat, bookingData, confirmBoo
 							<CaptainSelector captainSelected={captainSelected} setCaptainSelected={setCaptainSelected} captains={boat?.preferredCaptains} isFull />
 						</div>
 						<div>
-							<p className="font-bold">Charter Insurance</p>
-							<p>TODO:insurance section</p>
+							<p className="font-bold">Number of Guests</p>
+					   	<Input 
+						    type="number" 
+						    id="numberOfGuests"
+						    placeholder="# of guests"
+						    min={1}
+						    onChange={(e) => setNumberOfGuests(e.target?.value)}
+						    value={numberOfGuests}
+					     />
 						</div>
 						<div className="col-span-2">
 							<VesselPricingTable isEditable={false} boatId={boat?._id} />

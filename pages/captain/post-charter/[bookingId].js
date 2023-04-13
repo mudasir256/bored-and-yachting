@@ -9,6 +9,24 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { updateChecklist, updateChecklistImages } from '@/endpoints/post'
 
+const ButtonPosition = ({ children }) => (
+	<div className="absolute bottom-14 left-[0.25px] w-full">
+		{children}
+	</div>
+)
+
+const StepFour = ({ notes, setNotes, handleNotesSubmit }) => (
+	<div className="space-y-8">
+		<div>
+			<Header text="Notes about the charterer" />
+			<p>Tell us about the charterer and include any notes about damages here.</p>
+		</div>
+		<textarea className="border rounded-md w-full h-40" id="notes" name="notes" value={notes} onChange={(e) => setNotes(e.target?.value)} />
+		<ButtonPosition>
+			<Button text="Next" onClick={() => handleNotesSubmit()} isFull />
+		</ButtonPosition>
+	</div>
+)
 
 export default function PostCharter() {
 
@@ -31,7 +49,7 @@ export default function PostCharter() {
 	}
 
 	const handleFuelGaugeSubmit = async () => {
-		//TODO: submit
+		await updateChecklistImages(bookingId, fuelGaugePhotos, 'fuelGaugePhotos')
 		setStep(2)
 	}
 
@@ -62,17 +80,12 @@ export default function PostCharter() {
 	const handlePumpedOutWasteSubmit = async () => {
 		await updateChecklist(bookingId, { pumpedOutWaste })
 		setStep(8)
+		await updateChecklist(bookingId< { feedbackComplete: true })
 	}
 
 	const handleBackClick = () => {
 		setStep(step - 1)
 	}
-
-	const ButtonPosition = ({ children }) => (
-		<div className="absolute bottom-14 left-[0.25px] w-full">
-			{children}
-		</div>
-	)
 
 	const StepOne = () => (
 		<div className="space-y-8">
@@ -172,10 +185,10 @@ export default function PostCharter() {
 
 		 		<label>
 		 		 	<input 
-		 		 		onChange={() => setCustomerBoatDamage(-1)} 
+		 		 		onChange={() => setCustomerBoatDamage(false)} 
 		 		 		type="radio" 
 		 		 		value={false} 
-		 		 		checked={customerBoatDamage}
+		 		 		checked={!customerBoatDamage}
 		 		 		name="customerBoatDamage"
 		 		 	/> 
 		 		 	&nbsp;<span>No</span>
@@ -189,18 +202,7 @@ export default function PostCharter() {
 		</div>
 	)
 
-	const StepFour = () => (
-		<div className="space-y-8">
-			<div>
-				<Header text="Notes about the charterer" />
-				<p>Tell us about the charterer and include any notes about damages here.</p>
-			</div>
-			<textarea className="border rounded-md w-full h-40" id="notes" name="notes" value={notes} onChange={(e) => setNotes(e.target?.value)} />
-			<ButtonPosition>
-				<Button text="Next" onClick={() => handleNotesSubmit()} isFull />
-			</ButtonPosition>
-		</div>
-	)
+
 
 	const StepFive = () => (
 		<div className="space-y-8">
@@ -327,7 +329,7 @@ export default function PostCharter() {
 			{step === 1 ? <StepOne />
 				: step === 2 ? <StepTwo />
 				: step === 3 ? <StepThree />
-				: step === 4 ? <StepFour />
+				: step === 4 ? <StepFour notes={notes} setNotes={setNotes} handleNotesSubmit={handleNotesSubmit} />
 				: step === 5 ? <StepFive />
 				: step === 6 ? <StepSix />
 				: step === 7 ? <StepSeven />

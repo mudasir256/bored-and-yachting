@@ -5,21 +5,26 @@ import Subheader from '@/components/small/Subheader'
 import Button from '@/components/small/Button'
 import Input from '@/components/Input'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useBooking } from '@/endpoints/get'
 import { updateChecklist, updateChecklistImages } from '@/endpoints/post'
 import CharterChecklistHeader from '@/components/mobile/CharterChecklistHeader'
+import { formatDay } from '@/helpers/index'
 
 export default function PostCharter() {
 
 	const router = useRouter()
 	const { bookingId } = router.query
 
-	const [step, setStep] = useState(1)
+	const { booking, isLoading } = useBooking(bookingId)
+
+	const [step, setStep] = useState(0)
 	const [exteriorPhotos, setExteriorPhotos] = useState([])
 	const [interiorPhotos, setInteriorPhotos] = useState([])
 	const [existingBoatDamage, setExistingBoatDamage] = useState(false)
 
 	const handleNewFiles = async (files, type) => {
+		console.log(files)
 		const array = Array.from(files)
 		if (type === 'EXTERIOR') {
 			setExteriorPhotos([...exteriorPhotos, ...array])
@@ -30,14 +35,12 @@ export default function PostCharter() {
 	}
 
 	const handleExteriorSubmit = async () => {
-		//TODO: verify working with real bookingId,
-		//possible array won't wory
 		await updateChecklistImages(bookingId, exteriorPhotos, 'exteriorBoatPhotos')
 		setStep(2)
 	}
 
 	const handleInteriorSubmit = async () => {
-		//^^
+		await updateChecklistImages(bookingId, interiorPhotos, 'interiorBoatPhotos')
 		setStep(3)
 	}
 
@@ -46,6 +49,22 @@ export default function PostCharter() {
 		setStep(4)
 	}
 
+
+	const Intro = () => (
+		<div className="space-y-8">
+			<div>
+				<Header text={`Hey there, ${booking?.captainId.firstName}`} />
+				<p>We&apos;re excited to have you charter for our guest {booking?.bookedBy.firstName} and their {booking?.numberOfGuests} guests.</p>
+				<p>You&apos;ll be captaining {booking?.boatId.name} on {formatDay(booking?.startDate)} till {formatDay(booking?.endDate)}.</p>
+			</div>
+			<div className="relative w-full h-96">
+				<Image src={booking?.boatId.photos[0]} alt={booking?.boatId.name} layout="fill" className="object-cover rounded" />
+			</div>
+			<p>Before you being your charter, please complete this pre-charter checklist to ensure a smooth experience.</p>
+			<Button text="Next" onClick={() => setStep(1)} isFull />
+
+		</div>
+	)
 
 	const StepOne = () => (
 		<div className="space-y-8">
@@ -159,7 +178,8 @@ export default function PostCharter() {
 			onBackClick={() => handleBackClick()}
 		/>
 		<ContentPageLayout>
-			{step === 1 ? <StepOne />
+			{step === 0 ? <Intro />
+			  : step === 1 ? <StepOne />
 				: step === 2 ? <StepTwo />
 				: step === 3 ? <StepThree />
 				: <Done />
