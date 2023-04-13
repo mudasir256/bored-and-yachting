@@ -4,10 +4,11 @@ import Input from '@/components/Input'
 import Header from '@/components/small/Header'
 import Button from '@/components/small/Button'
 import Image from 'next/image'
-
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { updateChecklist, updateChecklistImages } from '@/endpoints/post'
+import { useCharterChecklist } from '@/endpoints/get'
+import Loading from '@/components/small/Loading'
 
 const ButtonPosition = ({ children }) => (
 	<div className="absolute bottom-14 left-[0.25px] w-full">
@@ -33,6 +34,8 @@ export default function PostCharter() {
 	const router = useRouter()
 	const { bookingId } = router.query
 
+	const { charterChecklist, isLoading}  = useCharterChecklist(bookingId)
+
 	const [step, setStep] = useState(1)
 
 	const [fuelGaugePhotos, setFuelGaugePhotos] = useState([])
@@ -43,6 +46,16 @@ export default function PostCharter() {
 	const [refueledBoat, setRefueledBoat] = useState(false)
 	const [pumpedOutWaste, setPumpedOutWaste] = useState(false)
 
+	if (isLoading) return <div className="flex flex-row justify-center mt-4"><Loading /></div>
+	if (charterChecklist?.feedbackComplete) {
+		return (<ContentPageLayout>
+			<div className="space-y-2">
+				<p>This charter has already been completed and feedback given.</p>
+				<p>If you need to add additional information or update information please contact us.</p>
+			</div>
+		</ContentPageLayout>)
+	}
+	console.log(charterChecklist)
 	const handleNewFiles = async (files, type) => {
 		const array = Array.from(files)
 		setFuelGaugePhotos([...fuelGaugePhotos, ...array])
@@ -80,7 +93,7 @@ export default function PostCharter() {
 	const handlePumpedOutWasteSubmit = async () => {
 		await updateChecklist(bookingId, { pumpedOutWaste })
 		setStep(8)
-		await updateChecklist(bookingId< { feedbackComplete: true })
+		await updateChecklist(bookingId, { feedbackComplete: true })
 	}
 
 	const handleBackClick = () => {

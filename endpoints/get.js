@@ -203,6 +203,16 @@ export const useBooking = (bookingId) => {
 	}
 }
 
+export const useCharterChecklist = (bookingId) => {
+	const { data, error } = useSWR(baseUrl(`/charter-checklist/${bookingId}`), fetcher)
+
+	return {
+		charterChecklist: data?.charterChecklist,
+		isLoading: !error && !data,
+		isError: error
+	}
+}
+
 /*    User Endpoints    */
 export const useUser = () => {
 	let userId = ''
