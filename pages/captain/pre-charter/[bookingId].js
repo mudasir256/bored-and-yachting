@@ -6,6 +6,7 @@ import Button from '@/components/small/Button'
 import Input from '@/components/Input'
 import Image from 'next/image'
 import { useState } from 'react'
+import { updateChecklist, updateChecklistImages } from '@/endpoints/post'
 import CharterChecklistHeader from '@/components/mobile/CharterChecklistHeader'
 
 export default function PostCharter() {
@@ -28,18 +29,20 @@ export default function PostCharter() {
 		
 	}
 
-	const handleExteriorSubmit = () => {
-		//TODO: submit
+	const handleExteriorSubmit = async () => {
+		//TODO: verify working with real bookingId,
+		//possible array won't wory
+		await updateChecklistImages(bookingId, exteriorPhotos, 'exteriorBoatPhotos')
 		setStep(2)
 	}
 
-	const handleInteriorSubmit = () => {
-		//TODO: submit
+	const handleInteriorSubmit = async () => {
+		//^^
 		setStep(3)
 	}
 
-	const handleExistingBoatDamageSubmit = () => {
-		//TODO: submit
+	const handleExistingBoatDamageSubmit = async () => {
+		await updateChecklist(bookingId, { existingBoatDamage })
 		setStep(4)
 	}
 

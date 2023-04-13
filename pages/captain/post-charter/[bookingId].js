@@ -7,6 +7,8 @@ import Image from 'next/image'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { updateChecklist, updateChecklistImages } from '@/endpoints/post'
+
 
 export default function PostCharter() {
 
@@ -28,37 +30,37 @@ export default function PostCharter() {
 		setFuelGaugePhotos([...fuelGaugePhotos, ...array])
 	}
 
-	const handleFuelGaugeSubmit = () => {
+	const handleFuelGaugeSubmit = async () => {
 		//TODO: submit
 		setStep(2)
 	}
 
-	const handleActualCharterDurationSubmit = () => {
-		//TODO: submit
+	const handleActualCharterDurationSubmit = async () => {
+		await updateChecklist(bookingId, { actualCharterDuration })
 		setStep(3)
 	}
 
-	const handleCustomerBoatDamageSubmit = () => {
-		//TODO: 
+	const handleCustomerBoatDamageSubmit = async () => {
+		await updateChecklist(bookingId, { customerBoatDamage })
 		setStep(4)
 	}
 
-	const handleNotesSubmit = () => {
-		//TODO...
+	const handleNotesSubmit = async () => {
+		await updateChecklist(bookingId, { notes })
 		setStep(5)
 	}
-	const handleBoatReadyOnArrivalSubmit = () => {
-		//TODO
+	const handleBoatReadyOnArrivalSubmit = async () => {
+		await updateChecklist(bookingId, { boatReadyOnArrival })
 		setStep(6)
 	}
 
-	const handleRefueledBoatSubmit = () => {
-		//
+	const handleRefueledBoatSubmit = async () => {
+		await updateChecklist(bookingId, { refueledBoat })
 		setStep(7)
 	}
 
-	const handlePumpedOutWasteSubmit = () => {
-
+	const handlePumpedOutWasteSubmit = async () => {
+		await updateChecklist(bookingId, { pumpedOutWaste })
 		setStep(8)
 	}
 
@@ -309,7 +311,7 @@ export default function PostCharter() {
 
 	const Done = () => (
 		<div className="space-y-8">
-			Congrats!!
+			Thanks for completing this charter and being a part of the Bored and Yachting community.
 		</div>
 	)
 

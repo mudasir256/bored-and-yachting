@@ -130,3 +130,29 @@ export const acceptCharter = async (bookingId) => {
 	const data = await result.json()
 	return data
 }
+
+/*     Charter Checklist     */
+export const updateChecklist = async (bookingId, json) => {
+	const result = await fetch(baseUrl(`/charter-checklist/update/${bookingId}`), POST_FETCH_OPTIONS(json, true))
+	const data = await result.json()
+	return data
+}
+
+export const updateChecklistImages = async (bookingId, files, key) => {
+	const array = Array.from(files)
+
+	const formData = new FormData();
+	formData.append('key', key)
+	formData.append('isSingleFile', array.length == 1)
+	formData.append('fileCount', array.length)
+	array.forEach((file, i) => {
+		//TODO: replace file name with uuid?
+		//TODO: check multi file same name problems
+		formData.append(`file-${i}`, file, file.name);
+	})
+
+	const result = await fetch(baseUrl(`/charter-checklist/files/${bookingId}`), POST_FETCH_OPTIONS(formData, true, true))
+	const data = await result.json()
+	return data
+}
+
