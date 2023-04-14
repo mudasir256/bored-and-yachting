@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { 
-	formatAddressLine, 
 	formatMoney, 
 	boatHasAllValidInformation,
 	RATE_LENGTHS
@@ -21,8 +20,8 @@ export default function BoatGrid({ boats = [], dateSelected = '' }) {
 	          <Image className="rounded object-cover" alt={boat.name} layout="fill" src={boat.photos[0]} />
 	        </div>
 	        <div className="mt-2 space-y-1">
-	          <p className="font-bold">{boat.name}</p>
-	          <p className="text-sm">{formatAddressLine(boat.parkingLocation.address)}</p>
+	          <p className="font-bold">{boat.name}, {boat.model}</p>
+	          <p className="text-sm">{boat.indoorFeatures.maxNumberOfPassengers} passengers max  • {boat.vesselLengthInFeet}&apos; length vessel</p>
 	          <p><span className="text-sm">starting at&nbsp;</span><span className="font-bold">{formatMoney(getFinalRate(boat, RATE_LENGTHS.HALF_DAY, discount))}</span></p>
 	        </div>
 	      </Link>
