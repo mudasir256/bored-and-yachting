@@ -71,7 +71,7 @@ export default function Home() {
                   </div>
 
                   <div className="p-8 bg-gray-200 flex flex-col md:flex-row">
-                    <div className="p-6 flex flex-col justify-center bg-blue-200">
+                    <div className="shadow rounded p-6 flex flex-col justify-center bg-blue-200">
                       <Header text="Charter your yacht and earn more" />
                       <p className="max-w-7xl">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search fo will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
                     </div>
@@ -85,7 +85,7 @@ export default function Home() {
                     <div className="relative w-full h-96">
                       <Image src="/content/captain.jpg" alt="section-3-image" className="object-cover" layout="fill" />
                     </div>
-                    <div className="p-6 flex flex-col justify-center bg-blue-200">
+                    <div className="shadow rounded p-6 flex flex-col justify-center bg-blue-200">
                       <Header text="Captain with Bored and Yachting" />
                       <p className="max-w-7xl">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search fo will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
                     </div>
