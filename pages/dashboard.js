@@ -10,6 +10,9 @@ import { useState } from 'react'
 import { RESERVATION_STATUS, RATE_LENGTHS, formatDay, differenceBetweenDates, formatMoney, mapDuration } from '@/helpers/index'
 import Image from 'next/image'
 import ActionItemCard from '@/components/combined/dashboard/ActionItemCard'
+import CreateNewAccountType from '@/components/combined/utility/CreateNewAccountType'
+import { USER_TYPES } from '@/helpers/index'
+import Loading from '@/components/small/Loading'
 
 export default function Dashboard() {
 
@@ -17,6 +20,10 @@ export default function Dashboard() {
 		const { bookings, isLoading: isLoadingBookings } = useTrips()
 
 		const [selected, setSelected] = useState('')
+
+		const [profileFilled, setProfileFilled] = useState(false)
+		const [licenseFilled, setLicenseFilled] = useState(false)
+		const [billingFilled, setBillingFilled] = useState(false)
 
 		const ImageWithName = ({ src, text, alt }) => (
 			<div className="flex flex-col items-center">
@@ -35,13 +42,16 @@ export default function Dashboard() {
 				<p className="text-sm">{text}</p>
 			</div>
 		)
-		
 
+		if (isLoading) return <div className="flex justify-center mt-8"><Loading /></div>
+		
 	 return(
 	 	<ContentPageLayout>
-	 		<div className="space-y-8">
+	 		<div className="space-y-8 mb-12">
+		 		{(!profileFilled || !licenseFilled || !billingFilled) &&
 		 		<div className="space-y-4">
 		 			<Header text="Finish your account setup:"/ >
+		 
 		 			<div className="flex flex-col md:flex-row gap-4">
 			 			<ActionItemCard 
 			 				title="Basic profile information" 
@@ -49,6 +59,7 @@ export default function Dashboard() {
 			 				href="/user/profile?redirect=true"
 			 				buttonText="Add information"
 			 				checkCompleted="BASIC_PROFILE"
+			 				setParentCompleted={setProfileFilled}
 			 			/>
 			 			
 			 			<ActionItemCard 
@@ -56,6 +67,8 @@ export default function Dashboard() {
 			 				text="This information allows us to keep a safe and secure network, and is needed before you're allowed to book a rental."
 			 				href="/user/drivers-license"
 			 				buttonText="Add license"
+			 				checkCompleted="DRIVERS_LICENSE"
+			 				setParentCompleted={setLicenseFilled}
 			 			/>
 			 			<ActionItemCard 
 			 				title="Billing details" 
@@ -63,9 +76,11 @@ export default function Dashboard() {
 			 				href="/user/billing"
 			 				buttonText="Add payment method"
 			 				checkCompleted="BILLING_INFORMATION"
+			 				setParentCompleted={setBillingFilled}
 			 			/>
 		 			</div>
 		 		</div>
+		 		}
 		 		<div className="space-y-4">
 		 			<Subheader text="Your reservations" />
 		 			<div className="flex flex-row items-center">
@@ -124,6 +139,17 @@ export default function Dashboard() {
 			 		}).length === 0 && <p className="pt-6 text-center">No reservations found.</p>}
 		 		</div>
 	 		</div>
+
+	 		<div>
+	 			<h2 className="text-lg mb-2">Other Features</h2>
+	 			<div className="flex flex-row gap-2">
+	 				<Link href="/user/profile?redirect=true" className="cursor-pointer underline text-sm">Update profile</Link>
+	 				<Link href="/user/billing" className="cursor-pointer underline text-sm">Update billing</Link>
+	 				<CreateNewAccountType type={USER_TYPES.BOAT_OWNER} />
+	 				<CreateNewAccountType type={USER_TYPES.CAPTAIN} />
+	 			</div>
+	 		</div>
+
 	 	</ContentPageLayout>
 	 )
 }

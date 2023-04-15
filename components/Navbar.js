@@ -57,7 +57,7 @@ export default function Navbar() {
 			<div className="mr-4 pt-2 cursor-pointer" onClick={() => setIsComponentVisible(true)}>
 				<Icon name="menu" />
 				<div className="absolute">
-					<div className="relative -left-28 top-2" ref={ref} data-action="navbar">
+					<div className="relative -left-28 top-2 z-10" ref={ref} data-action="navbar">
 						{isComponentVisible && <DropdownMenu />}
 					</div>
 				</div>

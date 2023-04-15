@@ -8,6 +8,7 @@ import { USER_TYPES } from '@/helpers/index'
 import BoatOwnerReservations from '@/components/combined/dashboard/BoatOwnerReservations'
 import { createBoat } from '@/endpoints/post'
 import { useUserBoats } from '@/endpoints/get'
+import CreateNewAccountType from '@/components/combined/utility/CreateNewAccountType'
 
 import { useEffect, useState } from 'react' 
 import { useRouter } from 'next/router'
@@ -41,9 +42,6 @@ export default function Dashboard() {
 		router.push(`/boat-owner/${result.boat._id}`)
 	}
 
-	const handleAddRole = (role) => {
-
-	}
 
 	return (<>
 		<ContentPageLayout>
@@ -73,8 +71,8 @@ export default function Dashboard() {
 					<div className="flex flex-row gap-2">
 						<Link href="/user/profile?redirect=true" className="cursor-pointer underline text-sm">Update profile</Link>
 						<Link href="/user/billing-connect?redirect=true&key=boat-owner" className="cursor-pointer underline text-sm">Update billing</Link>
-						<p className="cursor-pointer underline text-sm" onClick={() => handleAddRole(USER_TYPES.CAPTAIN)}>Become a captain</p>
-						<p className="cursor-pointer underline text-sm" onClick={() => handleAddRole(USER_TYPES.CUSTOMER)}>Create a customer account</p>
+						<CreateNewAccountType type={USER_TYPES.CAPTAIN} />
+						<CreateNewAccountType type={USER_TYPES.CUSTOMER} />
 					</div>
 				</div>
 			</div>	

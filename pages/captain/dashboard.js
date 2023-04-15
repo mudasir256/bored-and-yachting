@@ -7,6 +7,7 @@ import { baseUrl, useCharters } from '@/endpoints/get'
 import { acceptCharter } from '@/endpoints/post'
 import { useState } from 'react'
 import Image from 'next/image'
+import CreateNewAccountType from '@/components/combined/utility/CreateNewAccountType'
 import { mapDuration, formatDay, USER_TYPES} from '@/helpers/index'
 import { useSWRConfig } from 'swr'
 import { ToastContainer, toast } from 'react-toastify';
@@ -130,8 +131,8 @@ export default function Dashboard() {
 					<div className="flex flex-row gap-2">
 						<Link href="/user/profile?redirect=true" className="cursor-pointer underline text-sm">Update profile</Link>
 						<Link href="/user/billing-connect?redirect=true&key=boat-owner" className="cursor-pointer underline text-sm">Update billing</Link>
-						<p className="cursor-pointer underline text-sm" onClick={() => handleAddRole(USER_TYPES.BOAT_OWNER)}>List a vessel</p>
-						<p className="cursor-pointer underline text-sm" onClick={() => handleAddRole(USER_TYPES.CUSTOMER)}>Create a customer account</p>
+						<CreateNewAccountType type={USER_TYPES.BOAT_OWNER} />
+						<CreateNewAccountType type={USER_TYPES.CUSTOMER} />
 					</div>
 				</div>
 			</div>

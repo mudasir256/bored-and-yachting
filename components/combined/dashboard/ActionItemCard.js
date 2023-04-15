@@ -1,65 +1,83 @@
 import { useUser } from '@/endpoints/get'
 import Icon from '@/components/Icon'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 
-export default function ActionItemCard({ title, text, buttonText, href, checkCompleted }) {
+export default function ActionItemCard({ title, text, buttonText, href, checkCompleted, setParentCompleted = function(){} }) {
 	
 	const { user, isLoading } = useUser()
 
-	const isBasicProfileFilled = () => {
-		if (user?.firstName && user?.lastName && user?.profilePicture) {
-			return true
-		}
-		return false
-	}
+	const [complete, setComplete] = useState(false)
 
-	const isBillingInformationFilled = () => {
-		if (user?.stripePreferredPaymentMethodId) {
-			return true
+	useEffect(() => {
+		const isComplete = () => {
+			switch (checkCompleted) {
+				case 'BASIC_PROFILE':
+					return isBasicProfileFilled()
+				case 'BILLING_INFORMATION':
+					return isBillingInformationFilled()
+				case 'CONNECT_FINISHED':
+					return isConnectProcessDone()
+				case 'CAPTAIN_LICENSE':
+					return isCaptainLicenseFilled()
+				case 'DRIVERS_LICENSE':
+					return isDriversLicenseFilled()
+			
+			}
 		}
-		return false
-	}
+		const isBasicProfileFilled = () => {
+			if (user?.firstName && user?.lastName && user?.profilePicture) {
+				return true
+			}
+			return false
+		}
 
-	//TODO: technically need a different flag
-	const isConnectProcessDone = () => {
-		if (user?.stripeAccountId) {
-			return true
+		const isBillingInformationFilled = () => {
+			if (user?.stripePreferredPaymentMethodId) {
+				return true
+			}
+			return false
 		}
-		 return false
-	}
 
-	const isCaptainLicenseFilled = () => {
-		if (user?.captainLicense) { //TODO: check all fields
-			return true
+		//TODO: technically need a different flag
+		const isConnectProcessDone = () => {
+			if (user?.stripeAccountId) {
+				return true
+			}
+			 return false
 		}
-		return false
-	}
 
-	const isComplete = () => {
-		switch (checkCompleted) {
-			case 'BASIC_PROFILE':
-				return isBasicProfileFilled()
-			case 'BILLING_INFORMATION':
-				return isBillingInformationFilled()
-			case 'CONNECT_FINISHED':
-				return isConnectProcessDone()
-			case 'CAPTAIN_LICENSE':
-				return isCaptainLicenseFilled()
-		
+		const isCaptainLicenseFilled = () => {
+			if (user?.captainLicense) { //TODO: check all fields
+				return true
+			}
+			return false
 		}
-	}
+
+		const isDriversLicenseFilled = () => {
+			if (user?.backDriversLicense && user?.frontDriversLicense) {
+				return true
+			}
+			return false
+		}
+		const result = isComplete()
+		setComplete(result)
+		setParentCompleted(result)
+	}, [user, setParentCompleted, checkCompleted])
+
+
 	return (
 		<div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 				<div className="flex flex-row">
 		    	<h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
-					{isComplete() && <div className="ml-auto">
+					{complete && <div className="ml-auto">
 						<Icon name="circle-checkmark" color="green" />
 					</div>
 					}
 				</div>
 		    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{text}</p>
 		    
-		    {isComplete() ? <Link href={href} className="underline text-sm text-gray-500">Edit</Link>
+		    {complete ? <Link href={href} className="underline text-sm text-gray-500">Edit</Link>
 
 		    : <Link href={href} className={`inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>
 		        {buttonText}
