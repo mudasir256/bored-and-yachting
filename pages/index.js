@@ -52,7 +52,7 @@ export default function Home() {
                         <Searchbar onSearch={handleSearchClick} />
                       </div>
                     </div>
-                    <Image src="/content/boat.jpg" alt="hero-image" className="object-cover brightness-50" layout="fill" />
+                    <Image priority src="/content/boat.jpg" alt="hero-image" className="object-cover brightness-50" layout="fill" />
                   </div>
                 </div>
 

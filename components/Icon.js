@@ -16,6 +16,8 @@ import {
 	faCalendarCheck,
 	faMagnifyingGlass,
 	faBarsProgress,
+	faAnchor,
+	faShip,
 	//Amenities
 	faBox,
 	faSpa,
@@ -59,6 +61,8 @@ export default function Icon({ name, color = 'black', size = 'lg' }) {
 		{ name: 'crew', component: faPeopleGroup },
 		{ name: 'search', component: faMagnifyingGlass },
 		{ name: 'filter', component: faBarsProgress },
+		{ name: 'anchor', component: faAnchor },
+		{ name: 'ship', component: faShip },
 
 		//AMENITIES
 		{ name: 'COOLER', component: faBox },
