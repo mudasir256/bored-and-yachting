@@ -60,6 +60,7 @@ export default function Navbar() {
 				<div className="space-x-6 text-sm">
 					<Link className="hover:underline" href="/become-a-captain">Become a Captain</Link>
 					<Link className="hover:underline" href="/list-my-boat">List your Boat</Link>
+					<Link className="hover:underline" href="/become-an-affiliate">Become an Affiliate</Link>
 					<Link className="hover:underline" href="/contact-us">Contact Us</Link>
 				</div>
 
