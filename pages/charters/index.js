@@ -2,13 +2,30 @@ import ContentPageLayout from '@/components/layouts/ContentPageLayout'
 import Searchbar from '@/components/combined/utility/Searchbar'
 import BoatGrid from '@/components/combined/utility/BoatGrid'
 import { useBoatsSearch } from '@/endpoints/get'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Loading from '@/components/small/Loading'
 import { getDayTextFromIso, getAvailableTimeslotsForDay } from '@/helpers/availability'
 
 export default function Charters() {
 
 	const [query, setQuery] = useState('')
+
+	useEffect(() => {
+		const address = localStorage.getItem('address')
+		const date = localStorage.getItem('date')
+		const numberOfGuests = localStorage.getItem('numberOfGuests')
+
+		if (address && date && numberOfGuests) {
+			setQuery({
+				lat: address.lat,
+				lng: address.lng,
+				date: date.toLocaleString(),
+				day: getDayTextFromIso(date.toLocaleString()),
+				numberOfGuests
+			})
+		}
+
+	}, [])
 
 	const onSearch = ({ address, date, numberOfGuests }) => {		
 		setQuery({

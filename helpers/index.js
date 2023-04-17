@@ -219,6 +219,18 @@ export const formatMoney = (dollarAmount) => {
 	return ''
 }
 
+export const saveSearchBarFields = ({ address, date, numberOfGuests }) => {
+	if (address) {
+		localStorage.setItem('address', JSON.stringify(address))
+	}
+	if (date) {
+		localStorage.setItem('date', date)
+	}
+	if (numberOfGuests) {
+		localStorage.setItem('numberOfGuests', numberOfGuests)
+	}
+}
+
 export const saveLoginCredentials = ({ _id, token, firstName, roles }) => {
 	if (_id) {
 		localStorage.setItem('userId', _id)

@@ -1,6 +1,6 @@
 import Input from '@/components/Input'
 import { DateTime } from 'luxon'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Icon from '@/components/Icon'
 
 export default function Searchbar({ onSearch }) {
@@ -8,6 +8,22 @@ export default function Searchbar({ onSearch }) {
 	const [address, setAddress] = useState('')
 	const [date, setDate] = useState('')
 	const [numberOfGuests, setNumberOfGuests] = useState('')
+
+	useEffect(() => {
+		const storedAddress = localStorage.getItem('address')
+		const storedDate = localStorage.getItem('date')
+		const storedNumberOfGuests = localStorage.getItem('numberOfGuests')
+
+		if (storedAddress) {
+			setAddress(JSON.parse(storedAddress))
+		}
+		if (storedDate) {
+			setDate(storedDate)
+		}
+		if (storedNumberOfGuests) {
+			setNumberOfGuests(storedNumberOfGuests)
+		}
+	}, [])
 
 	const handleClick = (e) => {
 		e.preventDefault()

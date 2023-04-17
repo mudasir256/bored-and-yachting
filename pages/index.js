@@ -8,12 +8,15 @@ import Searchbar from '@/components/combined/utility/Searchbar'
 import Input from '@/components/Input'
 import Image from 'next/image'
 import Button from '@/components/small/Button'
+import { saveSearchBarFields } from '@/helpers/index'
 
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Home() {
 
   const { boats, isLoading } = useBoats()
+  const router = useRouter()
 
   const [newsletterEmail, setNewsletterEmail] = useState('')
   const [saved, setSaved] = useState(false)
@@ -23,6 +26,12 @@ export default function Home() {
     //TODO: 
     console.log(newsletterEmail)
     setSaved(true)
+  }
+
+  const handleSearchClick = (data) => {
+    console.log(data)
+    saveSearchBarFields(data)
+    router.push('/charters')
   }
 
   return (
@@ -43,7 +52,7 @@ export default function Home() {
                         <p>Find the best charters available near you</p>
                       </div>
                       <div className="mx-auto p-4">
-                        <Searchbar />
+                        <Searchbar onSearch={handleSearchClick} />
                       </div>
                     </div>
                     <Image src="/content/boat.jpg" alt="hero-image" className="object-cover brightness-50" layout="fill" />
