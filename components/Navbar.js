@@ -54,11 +54,22 @@ export default function Navbar() {
 	return (
 		<nav className="p-4 shadow flex flex-row items-center justify-between">
 			<Link href="/"><Image src="/logo.png" alt="Bored and Yachting Logo" width="290" height="57" /></Link>
-			<div className="mr-4 pt-2 cursor-pointer" onClick={() => setIsComponentVisible(true)}>
-				<Icon name="menu" />
-				<div className="absolute">
-					<div className="relative -left-28 top-2 z-10" ref={ref} data-action="navbar">
-						{isComponentVisible && <DropdownMenu />}
+			
+			<div className="flex flex-row gap-8 items-center">
+				{/* Site links */}
+				<div className="space-x-6 text-sm">
+					<Link className="hover:underline" href="/become-a-captain">Become a Captain</Link>
+					<Link className="hover:underline" href="/list-my-boat">List your Boat</Link>
+					<Link className="hover:underline" href="/contact-us">Contact Us</Link>
+				</div>
+
+				{/* Login menus */}
+				<div className="mr-4 cursor-pointer" onClick={() => setIsComponentVisible(true)}>
+					<Icon name="menu" />
+					<div className="absolute">
+						<div className="relative -left-28 top-2 z-10" ref={ref} data-action="navbar">
+							{isComponentVisible && <DropdownMenu />}
+						</div>
 					</div>
 				</div>
 			</div>
