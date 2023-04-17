@@ -5,14 +5,16 @@ import { useBoatsSearch } from '@/endpoints/get'
 import { useState, useEffect } from 'react'
 import Loading from '@/components/small/Loading'
 import { getDayTextFromIso, getAvailableTimeslotsForDay } from '@/helpers/availability'
-import { formatCalendarDay } from '@/helpers/index'
 import Icon from '@/components/Icon'
 import useComponentVisible from '@/hooks/useComponentVisible'
 import SearchbarModal from '@/components/modals/SearchbarModal'
+import Subheader from '@/components/small/Subheader'
+import DisplaySearchbar from '@/components/combined/utility/DisplaySearchbar'
 
 export default function Charters() {
 
 	const [query, setQuery] = useState('')
+	const [numberOfBoatsFound, setNumberOfBoatsFound] = useState(0)
 	const [showSearchbar, setShowSearchBar] = useState(false)
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
@@ -34,19 +36,7 @@ export default function Charters() {
 
 	}, [])
 
-	const onSearch = ({ address, date, numberOfGuests }) => {		
-		setQuery({
-			label: address.label,
-			lat: address.lat,
-			lng: address.lng,
-			date: date.toLocaleString(),
-			day: getDayTextFromIso(date.toLocaleString()),
-			numberOfGuests
-		})
-		setIsComponentVisible(false)
-	}
-
-	const Table = ({ query }) => {
+	const Table = ({ query, setNumberOfBoatsFound }) => {
 		const { boats, isLoading } = useBoatsSearch({ ...query })
 		if (isLoading) return <Loading />
 
@@ -55,27 +45,24 @@ export default function Charters() {
 			return result.length > 0
 		}) || []
 
+		setNumberOfBoatsFound(withAvailabilityBoats.length)
 		return <BoatGrid boats={withAvailabilityBoats} dateSelected={query.date} />
 	}
 
 	return (<>
-		<div onClick={() => setIsComponentVisible(true)} className="flex justify-center mt-8 cursor-pointer">
-			<div className="rounded-full shadow-md flex flex-row gap-2 py-2.5 px-4 items-center">
-				<p className="font-bold text-sm">{query.label}</p>
-				<span className="text-gray-400">|</span> 
-				<p className="font-bold text-sm">{formatCalendarDay(query.date)}</p>
-				<span className="text-gray-400">|</span> 
-				<p className="text-sm">{query.numberOfGuests} guests</p>
-				<div className="ml-1 bg-blue-500 rounded-full w-8 h-8 flex justify-center items-center">
-					<Icon name="search" color="white" size="xs" />
-				</div>
-			</div>
-		</div>
+		<DisplaySearchbar label={query.label} date={query.date} numberOfGuests={query.numberOfGuests} setData={setQuery} />
 		<div ref={ref}>
-			{isComponentVisible && <SearchbarModal onSearch={onSearch} setIsComponentVisible={setIsComponentVisible} />}
+			{isComponentVisible && <div>filter modal TODO</div>}
 		</div>
 		<ContentPageLayout>
-			{query && <Table query={query} />}
+			<div className="flex flex-row items-end">
+				{numberOfBoatsFound > 0 && <Subheader text={`${numberOfBoatsFound} vessel(s) found`} />}
+				<div onClick={() => setIsComponentVisible(true)} className="ml-auto cursor-pointer rounded-lg border shadow w-fit py-1 px-4 flex flex-row items-center gap-2">
+					<span className="text-sm">Add Filters</span>
+					<Icon name="filter" size="md" />
+				</div>
+			</div>
+			{query && <Table query={query} setNumberOfBoatsFound={setNumberOfBoatsFound} />}
 		</ContentPageLayout>
 	</>)
 }
