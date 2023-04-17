@@ -1,5 +1,5 @@
 export default function Subheader({ text }) {
 	return (
-		<h2 className="text-xl font-bold">{text}</h2>
+		<h2 className="text-2xl font-bold">{text}</h2>
 	)
 }

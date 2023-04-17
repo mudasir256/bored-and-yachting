@@ -53,8 +53,8 @@ export default function BecomeACaptain() {
 					</div>			
 
 					<div className="flex flex-row">
-						<div className="p-4">
-							<Header text="How Captaining with B&Y Works" />
+						<div className="p-4 text-center">
+							<Header text="You could earn $50/hr" />
 							<ul>
 								<li>Sign up for free</li>
 								<li>Next step</li>
