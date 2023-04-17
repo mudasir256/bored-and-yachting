@@ -8,7 +8,6 @@ import Searchbar from '@/components/combined/utility/Searchbar'
 import Input from '@/components/Input'
 import Image from 'next/image'
 import Button from '@/components/small/Button'
-import { saveSearchBarFields } from '@/helpers/index'
 
 import { useState } from 'react'
 import { useRouter } from 'next/router'
@@ -29,8 +28,6 @@ export default function Home() {
   }
 
   const handleSearchClick = (data) => {
-    console.log(data)
-    saveSearchBarFields(data)
     router.push('/charters')
   }
 

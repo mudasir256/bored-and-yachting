@@ -46,7 +46,14 @@ export default function BoatAndYachtRentals() {
 	const [bookingData, setBookingData] = useState({})
 
 	useEffect(() => {
-		if (data && dateSelected) {
+		const storedDate = localStorage.getItem('date')
+		if (storedDate) {
+			setDateSelected(storedDate)
+		}
+	}, [])
+
+	useEffect(() => {
+		if (data && data.success && dateSelected) {
 			const result = getAvailableTimeslotsForDay(data, data?.blockedTimes, dateSelected)
 			setAvailableTimes(formattedTime(result))
 			const discount = getDiscountForBoatDay(data, dateSelected)

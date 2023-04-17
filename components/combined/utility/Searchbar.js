@@ -2,6 +2,7 @@ import Input from '@/components/Input'
 import { DateTime } from 'luxon'
 import { useState, useEffect } from 'react'
 import Icon from '@/components/Icon'
+import { saveSearchBarFields } from '@/helpers/index'
 
 export default function Searchbar({ onSearch }) {
 
@@ -13,7 +14,6 @@ export default function Searchbar({ onSearch }) {
 		const storedAddress = localStorage.getItem('address')
 		const storedDate = localStorage.getItem('date')
 		const storedNumberOfGuests = localStorage.getItem('numberOfGuests')
-
 		if (storedAddress) {
 			setAddress(JSON.parse(storedAddress))
 		}
@@ -28,6 +28,7 @@ export default function Searchbar({ onSearch }) {
 	const handleClick = (e) => {
 		e.preventDefault()
 		//TODO: toast fill out entire form.
+		saveSearchBarFields({ address, date, numberOfGuests })
 		onSearch({ address, date, numberOfGuests })
 	}
 

@@ -155,6 +155,13 @@ export const formattedTime = (timeSlots = AVAILABLE_TIME_SLOTS) => {
 	})
 } 
 
+export const formatCalendarDay = (dateString) => {
+	if (dateString) {
+		return DateTime.fromISO(dateString).toLocaleString(DateTime.DATE_MED)
+	}
+	return ''
+}
+
 export const formatDay = (isoTimestamp, timezone) => {
 	if (isoTimestamp?.isLuxonDateTime) {
 		return isoTimestamp.setZone(timezone).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)
