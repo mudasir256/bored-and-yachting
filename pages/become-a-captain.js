@@ -55,11 +55,23 @@ export default function BecomeACaptain() {
 					<div className="flex flex-row">
 						<div className="p-4 text-center">
 							<Header text="You could earn $50/hr" />
-							<ul>
-								<li>Sign up for free</li>
-								<li>Next step</li>
-								<li>Next step</li>
-								<li>Next step</li>
+							<ul class="max-w-md pt-2 space-y-3 text-lg text-gray-600 list-inside dark:text-gray-400">
+							    <li class="flex items-center">
+							        <svg class="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+							        Sign up for free
+							    </li>
+							    <li class="flex items-center">
+							        <svg class="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+							        Set your crew rates
+							    </li>
+							    <li class="flex items-center">
+							    	<svg class="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+							 			Find vessels to charter for
+							    </li>
+							    <li class="flex items-center">
+							    	<svg class="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+							    	Earn while doing what you love
+							    </li>
 							</ul>
 						</div>
 						<div className="ml-auto relative w-1/2 h-80">
@@ -74,12 +86,21 @@ export default function BecomeACaptain() {
 
 						<div className="ml-auto pt-8 pr-8">
 							<Header text="Earnings that work for you" />
-							<ul>
-								<li>Earn more with B&Y</li>
-								<li>Get paid fast</li>
-								<li>Make money on your schedule</li>
-								<li>Peace of mind, wherever you go</li>
+							<ul class="max-w-md pt-2 space-y-3 text-lg text-gray-600 list-inside dark:text-gray-400">
+							    <li class="flex items-center">
+							        <svg class="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+							        Get paid fast
+							    </li>
+							    <li class="flex items-center">
+							        <svg class="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+							  			Make money on your schedule
+							    </li>
+							    <li class="flex items-center">
+							    	<svg class="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+							 			Peace of mind, wherever you go
+							    </li>
 							</ul>
+			
 						</div>
 					</div>
 
