@@ -70,11 +70,11 @@ export default function BoatAndYachtRentals() {
 	}, [data, dateSelected, durationSelected])
 
 	useEffect(() => {
-		if (data && data.success && startTime) {
+		if (boat && boat?.timeNoticeBeforeCharter && startTime) {
 			const needsNotice = !factorNoticeBeforeCharter(dateSelected, startTime, boat?.timeNoticeBeforeCharter)
 			setNeedsMoreNotice(needsNotice)
 		}
-	}, [boat, startTime])
+	}, [boat, dateSelected, startTime])
 
 	if (isLoading) {
 		return <div className="flex justify-center mt-12"><Loading /></div>

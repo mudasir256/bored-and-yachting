@@ -22,6 +22,12 @@ export const baseUrl = (slug) => {
 	return `${process.env.NEXT_PUBLIC_API_URL}${slug}`
 }
 
+export const submitContactForm = async (json) => {
+	const result = await fetch(baseUrl('/contact'), POST_FETCH_OPTIONS(json))
+	const data = await result.json()
+	return data
+}
+
 /*    Auth Endpoints    */
 export const createAccount = async ({ email, phoneNumber, password, roles }) => {
 	const result = await fetch(baseUrl('/auth/create-user'), POST_FETCH_OPTIONS({ email, phoneNumber, password, roles }))
