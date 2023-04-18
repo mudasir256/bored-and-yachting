@@ -11,6 +11,7 @@ export default function LocationForm({ boatId }) {
 	const [boatAddress, setBoatAddress] = useState('')
 	const [charterAddress, setCharterAddress] = useState('')
 	const [dockNumber, setDockNumber] = useState('')
+	const [lockboxExplainer, setLockboxExplainer] = useState('')
 	const [charterDockNumber, setCharterDockNumber] = useState('')
 	const [parkingAddress, setParkingAddress] = useState('')
 
@@ -23,10 +24,10 @@ export default function LocationForm({ boatId }) {
 		//TODO: double check this is working initially without
 		console.log(timezone)
 		//****
-		
+
 		e.preventDefault()
-		if (dockNumber || charterDockNumber) {
-			updateBoat(boatId, { charterDockNumber, dockNumber, timezone })
+		if (dockNumber || charterDockNumber || lockboxExplainer) {
+			updateBoat(boatId, { charterDockNumber, dockNumber, lockboxExplainer, timezone })
 		}
 		if (boatAddress && !boatAddress.isOld) {
 			const state = boatAddress.address.split(', ')[2].split(' ')[0]
@@ -54,6 +55,7 @@ export default function LocationForm({ boatId }) {
 			setCharterAddress({ ...boat.charterLocation, value: {}, isOld: true })
 			setParkingAddress({ ...boat.parkingLocation, value: {}, isOld: true })			
 			setDockNumber(boat.dockNumber || '')
+			setLockboxExplainer(boat.lockboxExplainer || '')
 			setCharterDockNumber(boat.charterDockNumber || '')
 			setTimezone(boat.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone)
 		}
@@ -66,7 +68,7 @@ export default function LocationForm({ boatId }) {
 			<div className="space-y-4 gap-2">
 
 					<div className="grid grid-cols-1 md:grid-cols-4 items-center gap-2">
-						<div className="col-span-3">
+						<div className="col-span-2">
 							<Input 
 								type="address" 
 								label="Address where boat is docked"
@@ -76,6 +78,17 @@ export default function LocationForm({ boatId }) {
 							 	value={boatAddress}
 							 	isRequired={true} 
 							 />
+						</div>
+						<div className="col-span-1">
+							<Input 
+						 		type="text" 
+						 		label="Lock box location"
+						 		id="lockboxExplainer"
+						  	placeholder="give directions for locating and using lock box" 
+						  	onChange={(e) => setLockboxExplainer(e.target?.value)}
+						  	value={lockboxExplainer}
+						  	isRequired={true} 
+							/>
 						</div>
 						<div className="col-span-1">
 							<Input 
