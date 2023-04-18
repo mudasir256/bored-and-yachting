@@ -53,17 +53,16 @@ export const getAvailableTimeslotsForDay = (boatAvailability, blockedTimes, cale
 	const secondsNeededBefore = 
 		durationSelected === 'HALF_DAY' ? 14400 
 		: durationSelected === 'FULL_DAY' ?  28800
-		: 0;
+		: 14400;
 
-	//?? it's not notice before
-	// const secondsNeededAfter = boatAvailability.timeNoticeBeforeCharter * 3600
+	const secondsNeededAfter = 3600 //1hr
 	
 	blockedOnSameDay.forEach(time => {
 		const startDate = new Date(time.startDate)
 		const secondsStart = (startDate.getHours() * 3600) + (startDate.getMinutes() * 60) - secondsNeededBefore
 		
 		const endDate = new Date(time.endDate)
-		const secondsEnd = (endDate.getHours() * 3600) + (endDate.getMinutes() * 60)
+		const secondsEnd = (endDate.getHours() * 3600) + (endDate.getMinutes() * 60) + secondsNeededAfter
 
 		boatAvailableTimes = boatAvailableTimes.filter(time => 
 			time < secondsStart || time > secondsEnd
