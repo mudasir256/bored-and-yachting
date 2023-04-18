@@ -74,7 +74,7 @@ export default function BoatAndYachtRentals() {
 			const needsNotice = !factorNoticeBeforeCharter(dateSelected, startTime, boat?.timeNoticeBeforeCharter)
 			setNeedsMoreNotice(needsNotice)
 		}
-	}, [startTime])
+	}, [boat, startTime])
 
 	if (isLoading) {
 		return <div className="flex justify-center mt-12"><Loading /></div>

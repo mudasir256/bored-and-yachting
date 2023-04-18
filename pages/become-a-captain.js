@@ -29,7 +29,7 @@ export default function BecomeACaptain() {
 						<p>Do more of what you love as a captain on Bored and Yachting</p>
 					</div>
 				</div>
-				<Image src="/content/boat-2.jpg" layout="fill" className="absolute brightness-50 object-cover" />
+				<Image alt="boat-hero-image" src="/content/boat-2.jpg" layout="fill" className="absolute brightness-50 object-cover" />
 				<div className="absolute bottom-10 transform -translate-x-1/2 left-1/2">
 					<div className="z-10">
 						<Button text="Sign up and earn more" onClick={() => handleSignUp()} />
