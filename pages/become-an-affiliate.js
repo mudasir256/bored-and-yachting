@@ -71,10 +71,6 @@ export default function BecomeAnAffiliate(){
 						</div>
 					</div>
 
-
-
-
-
 				</div>
 			</ContentPageLayout>
 			<div className="p-20 bg-blue-200 flex flex-row justify-between flex-wrap gap-4">

@@ -22,7 +22,13 @@ import BookingConfirmationModal from '@/components/modals/BookingConfirmationMod
 import AmenitiesList from '@/components/combined/AmenitiesList'
 import FeaturesList from '@/components/combined/FeaturesList'
 import GoogleMaps from '@/components/combined/GoogleMaps'
-import { getAvailableTimeslotsForDay, getDiscountForBoatDay, getDayTextFromIso } from '@/helpers/availability'
+import { 
+	getAvailableTimeslotsForDay, 
+	getDiscountForBoatDay, 
+	getDayTextFromIso, 
+	factorNoticeBeforeCharter,
+	formatHoursToReadable,
+} from '@/helpers/availability'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -40,6 +46,8 @@ export default function BoatAndYachtRentals() {
 	const [dateSelected, setDateSelected] = useState('')
 	const [durationSelected, setDurationSelected] = useState('')
 	const [startTime, setStartTime] = useState('')
+
+	const [needsMoreNotice, setNeedsMoreNotice] = useState('')
 	const [availableTimes, setAvailableTimes] = useState(formattedTime())
 	const [discount, setDiscount] = useState(0)
 
@@ -54,12 +62,19 @@ export default function BoatAndYachtRentals() {
 
 	useEffect(() => {
 		if (data && data.success && dateSelected) {
-			const result = getAvailableTimeslotsForDay(data, data?.blockedTimes, dateSelected)
+			const result = getAvailableTimeslotsForDay(data, data?.blockedTimes, dateSelected, durationSelected)
 			setAvailableTimes(formattedTime(result))
 			const discount = getDiscountForBoatDay(data, dateSelected)
 			setDiscount(discount)
 		}
-	}, [data, dateSelected])
+	}, [data, dateSelected, durationSelected])
+
+	useEffect(() => {
+		if (data && data.success && startTime) {
+			const needsNotice = !factorNoticeBeforeCharter(dateSelected, startTime, boat?.timeNoticeBeforeCharter)
+			setNeedsMoreNotice(needsNotice)
+		}
+	}, [startTime])
 
 	if (isLoading) {
 		return <div className="flex justify-center mt-12"><Loading /></div>
@@ -201,10 +216,6 @@ export default function BoatAndYachtRentals() {
 									<FeaturesList features={boat?.featuresList} />
 								</div>
 							</div>
-
-							{/* location of boat */}
-							<Subheader text="Where you'll be" />
-							<GoogleMaps width={width * 2/3} lat={boat?.parkingLocation?.lat} lng={boat?.parkingLocation?.lng} />
 						</div>
 					</div>
 
@@ -248,7 +259,7 @@ export default function BoatAndYachtRentals() {
 					    value={startTime} 
 					    options={availableTimes}
 				    />
-					  
+					  {(needsMoreNotice) && <p className="italic text-sm text-red-500">This vessel needs at least {formatHoursToReadable(boat?.timeNoticeBeforeCharter)} notice to book.</p>}
 
 						<div className="flex flex-row flex-wrap justify-between p-1">
 							<div>
@@ -281,11 +292,20 @@ export default function BoatAndYachtRentals() {
 						</div>
 					</div>
 				</div>
+
+
+	
+
 				
 				<div ref={ref}>
 					{isComponentVisible && <BookingConfirmationModal boat={boat} bookingData={bookingData} confirmBooking={confirmBooking} />}
 				</div>
 			</div>
 		</ContentPageLayout>
+
+		{/* location of boat */}
+		<div className="flex flex-col items-center justify-center mb-4">
+			<GoogleMaps width={width * .90} lat={boat?.parkingLocation?.lat} lng={boat?.parkingLocation?.lng} />
+		</div>
 	</>)
 }
