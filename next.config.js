@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'bored-and-yachting-dev.nyc3.digitaloceanspaces.com',
+        hostname: 'boredandyachting.nyc3.digitaloceanspaces.com',
         port: '',
         pathname: '**',
       },

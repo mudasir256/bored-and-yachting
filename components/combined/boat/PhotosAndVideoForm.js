@@ -37,7 +37,10 @@ export default function PhotosAndVideoForm({ boatId }) {
 	const handleNewFiles = async (files) => {
 		setNewPhotos(files)
 		try {
+			console.log(boatId)
 			const result = await updateBoatFiles(boatId, files, 'photos')
+			console.log(result)
+			console.log('boat file')
 			if (result.success) {
 				setNewPhotos([])
 				mutate(baseUrl(`/boats/${boatId}`))

@@ -22,7 +22,10 @@ export default function Email() {
 				return
 			}
 			setIsLoading(false)
-			setErrorMessage(result.message)
+
+			const message = result.message === typeof 'string' ? result.message : ''
+			console.log(message)
+			setErrorMessage(message)
 		}
 		handleVerify()
 	}, [token])
@@ -31,11 +34,11 @@ export default function Email() {
 		return <div className="pt-4 flex justify-center items-center"><Loading /></div>
 	}
 
+	
 	return (
 		<ContentPageLayout>
-			{errorMessage ? <p>{errorMessage}</p>
-				: <p>Your email has been verified. Please <Link className="underline hover:text-gray-400" href="/login">login</Link>.</p>
-			}
+			{!errorMessage && <p>Your email has been verified. Please <Link className="underline hover:text-gray-400" href="/login">login</Link>.</p>}
+			{errorMessage && <p>{errorMessage}</p>}
 		</ContentPageLayout>
 	)
 }

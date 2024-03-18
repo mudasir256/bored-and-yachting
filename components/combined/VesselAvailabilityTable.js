@@ -16,15 +16,15 @@ export default function VesselAvailabilityTable({ boatId }) {
 	}
 	return(<>
 		<div className="relative overflow-x-auto sm:rounded-lg">
-		    <table className="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
-						<caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+		    <table className="table-auto w-full text-sm text-left text-gray-500 ">
+						<caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white">
 						  <span>Vessel Availability</span>
 						  <div className="flex flex-row gap-2">
 						  	<p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Set when your vessel is available for booking on Bored and Yachting and apply discounts on specific days if desired.</p>
 								<button onClick={() => setIsComponentVisible(true)}  className="text-sm underline ml-auto underline">Edit</button>
 							</div>
 						</caption>	       	
-		        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+		        <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
 		            <tr>
 		                <th scope="col" className="px-6 py-3">
 		                    Day
@@ -41,8 +41,8 @@ export default function VesselAvailabilityTable({ boatId }) {
 		            </tr>
 		        </thead>
 		        <tbody className="text-gray-600">
-		            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="bg-white border-b">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
 		                  	Monday
 		                </th>
 		                <td className="px-6 py-4">
@@ -55,8 +55,8 @@ export default function VesselAvailabilityTable({ boatId }) {
 		                  {formatDiscount(boat.monday?.discount)}
 		                </td>
 		            </tr>
-		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="border-b bg-gray-50">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
 		                    Tuesday
 		                </th>
 		                <td className="px-6 py-4">
@@ -70,8 +70,8 @@ export default function VesselAvailabilityTable({ boatId }) {
 		                </td>
 		
 		            </tr>
-		            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="bg-white border-b ">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
 		                  	Wednesday
 		                </th>
 		               	<td className="px-6 py-4">
@@ -85,8 +85,8 @@ export default function VesselAvailabilityTable({ boatId }) {
 		               	</td>
 		          
 		            </tr>
-		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="border-b bg-gray-50 ">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		                    Thursday
 		                </th>
 		                <td className="px-6 py-4">
@@ -100,8 +100,8 @@ export default function VesselAvailabilityTable({ boatId }) {
 		                </td>
 		         
 		            </tr>
-		            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="bg-white border-b">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		                  	Friday
 		                </th>
 		                <td className="px-6 py-4">
@@ -114,8 +114,8 @@ export default function VesselAvailabilityTable({ boatId }) {
 		                  {formatDiscount(boat.friday?.discount)}
 		                </td>
 		            </tr>
-		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="border-b bg-gray-50">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		                    Saturday
 		                </th>
 		                <td className="px-6 py-4">
@@ -128,8 +128,8 @@ export default function VesselAvailabilityTable({ boatId }) {
 		                  {formatDiscount(boat.saturday?.discount)}
 		                </td>
 		            </tr>
-		            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="bg-white border-b">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		                  	Sunday
 		                </th>
 		                <td className="px-6 py-4">

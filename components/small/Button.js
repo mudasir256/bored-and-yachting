@@ -18,7 +18,7 @@ export default function Button({
 					data-action="click"
 					onClick={onClick}
 					type="button" 
-					className={`text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ${isFull && 'w-full'}`}>
+					className={`text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 ${isFull && 'w-full'}`}>
 					<div className="flex flex-row items-center justify-center">{isLoading && <Loading isSmall={true} />} {text}</div>
 				</button>
 

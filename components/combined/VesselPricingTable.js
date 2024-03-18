@@ -15,17 +15,17 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 
 	return(<>
 		<div className="relative overflow-x-auto sm:rounded-lg">
-		    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+		    <table className="w-full text-sm text-left text-gray-500">
 		        {isEditable &&
-			        <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+			        <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white">
 			          <span>Vessel Pricing</span>
 			          <div className="flex flex-row gap-2">
-			          	<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Set your vessel&apos;s pricing. The total price is the final price the customer will see which includes our 25% platform fee.</p>
+			          	<p class="mt-1 text-sm font-normal text-gray-500">Set your vessel&apos;s pricing. The total price is the final price the customer will see which includes our 25% platform fee.</p>
 			        		<button onClick={() => setIsComponentVisible(true)} className="text-sm underline ml-auto underline">Edit</button>
 			        	</div>
 			        </caption>	  
 		        } 
-		        <thead className="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+		        <thead className="text-xs text-gray-900 uppercase bg-gray-50 ">
 		            <tr>
 		                <th scope="col" className="px-6 py-3">
 		                    Item
@@ -43,8 +43,8 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		            </tr>
 		        </thead>
 		        <tbody className="text-gray-600">
-		            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="bg-white border-b ">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		                    Boat Rental Price
 		                </th>
 		                <td className="px-6 py-4">
@@ -58,8 +58,8 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		                </td>
 		           
 		            </tr>
-		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="border-b bg-gray-50 ">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		                    Boat Rental Tax (7%)
 		                </th>
 		                <td className="px-6 py-4">
@@ -73,8 +73,8 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		                </td>
 		         
 		            </tr>
-		            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="bg-white border-b">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		                    Crew Rate
 		                </th>
 		                <td className="px-6 py-4">
@@ -88,8 +88,8 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		                </td>
 		             
 		            </tr>
-		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="border-b bg-gray-50">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		                   	Captain Rate
 		                </th>
 		                <td className="px-6 py-4">
@@ -103,7 +103,7 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		                </td>
 		            </tr>
 		    				<tr>
-		    				    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		    				    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		    				        Prepaid Fuel
 		    				    </th>
 		    				    <td className="px-6 py-4">
@@ -117,8 +117,8 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		    				    </td>
 		    				
 		    				</tr>
-		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="border-b bg-gray-50 ">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 		                  	Cleaning Fee
 		                </th>
 		                <td className="px-6 py-4">
@@ -133,8 +133,8 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		             
 		            </tr>
 		 						<tr>
-		 							<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-		 							  	Auto Gratuity (${GRATUITY.LABEL}%)
+		 							<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+		 							  	Auto Gratuity ({GRATUITY.LABEL}%)
 		 							</th>
 		 							<td className="px-6 py-4">
 		 							  {formatMoney(boat?.boatRentalPrice?.halfDayRate * GRATUITY.RATE)}
@@ -147,7 +147,7 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		 							</td>
 		 						</tr>
 		            <tr>
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
 		                  	Service fee ({SERVICE_FEE.LABEL}%)
 		                </th>
 		                <td className="px-6 py-4">
@@ -161,8 +161,8 @@ export default function VesselPricingTable({ isEditable = false, boatId }) {
 		                </td>
 		              
 		            </tr>
-		            <tr className="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		            <tr className="border-b bg-gray-50 ">
+		                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
 		                    Total Price
 		                </th>
 		                <td className="px-6 py-4">
