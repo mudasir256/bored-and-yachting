@@ -47,7 +47,7 @@ export default function SignUp() {
             <Header text="Sign Up for Bored and Yachting" />
             <p>Tell us a little more about what you&apos;re looking for:</p>
           </div>
-          <div className="my-2 flex gap-16 text-center justify-center">
+          <div className="my-2 pb-2 flex gap-16 text-center justify-center">
             <Card
               id={USER_TYPES.CUSTOMER}
               header="I'm a renter"
