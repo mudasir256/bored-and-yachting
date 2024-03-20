@@ -26,7 +26,7 @@ export const steps = [
   },
 ];
 
-export const actions = [
+export const benefits = [
   {
     title: "USCG Compliance",
     description: "Captains & Crew paid directly and signed paperwork on every charter. Done the right way.",

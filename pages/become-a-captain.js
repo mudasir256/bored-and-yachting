@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
+
 import Header from "@/components/small/Header";
 import Subheader from "@/components/small/Subheader";
 import ContentPageLayout from "@/components/layouts/ContentPageLayout";
@@ -6,7 +8,8 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 import BenefitGrid from "@/components/combined/utility/BenefitGrid";
 import { steps } from "@/data/CaptainData";
 import { USER_TYPES } from "@/helpers/index";
-import { useRouter } from "next/router";
+import { benefits } from "@/data/CaptainData.js";
+
 export default function BecomeACaptain() {
   const router = useRouter();
   const handleSignUp = () => {
@@ -60,7 +63,7 @@ export default function BecomeACaptain() {
                           {stepIdx !== steps.length - 1 ? (
                             <div className="absolute left-4 top-4 -ml-px mt-0.5 h-full w-0.5 bg-blue-500" aria-hidden="true" />
                           ) : null}
-                          <a href="#" className="group relative flex items-start">
+                          <div className="group relative flex items-start">
                             <span className="flex h-9 items-center">
                               <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-blue-500">
                                 <CheckIcon className="h-5 w-5 text-white" aria-hidden="true" />
@@ -70,7 +73,7 @@ export default function BecomeACaptain() {
                               <span className="text-[22px] font-medium">{step.name}</span>
                               <span className="text-sm text-gray-500">{step.description}</span>
                             </span>
-                          </a>
+                          </div>
                         </>
                       ) : null}
                     </li>
@@ -90,7 +93,7 @@ export default function BecomeACaptain() {
               <p>Now accepting Captains with USCG and RYA Certifications!</p>
             </div>
             <div className="my-8">
-              <BenefitGrid />
+              <BenefitGrid actions={benefits}/>
             </div>
           </div>
         </div>
