@@ -1,36 +1,69 @@
 import Header from "@/components/small/Header";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { USER_TYPES } from "@/helpers/index";
 import SignupForm from "@/components/combined/auth/SignupForm";
 import Subheader from "@/components/small/Subheader";
 
 export default function SignUp() {
-  const [roleSelected, setRoleSelected] = useState(null);
+  const router = useRouter();
+  const [roleSelected, setRoleSelected] = useState(undefined);
   const [signUpState, setSignUpState] = useState("");
   const [signUpStateImage, setSignUpStateImage] = useState("");
 
-  const goBack = () => {
-    setRoleSelected(null);
+  const roleMappings = {
+    CAPTAIN: {
+      signUpState: "Captain",
+      signUpStateImage: "/content/yacht_captain.jpeg",
+    },
+    CUSTOMER: {
+      signUpState: "Renter",
+      signUpStateImage: "/content/boat.jpg",
+    },
+    BOAT_OWNER: {
+      signUpState: "Owner",
+      signUpStateImage: "/content/yacht_owner.jpg",
+    },
   };
+
+  const goBack = () => {
+    router.back();
+  };
+
+  useEffect(() => {
+    const role = router.query.role;
+    if (role && roleMappings[role]) {
+      const { signUpState, signUpStateImage } = roleMappings[role];
+      setRoleSelected(role);
+      setSignUpState(signUpState);
+      setSignUpStateImage(signUpStateImage);
+    } else {
+      const timer = setTimeout(() => {
+        setRoleSelected(null);
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [router.query.role]);
+
+  if (roleSelected === undefined) {
+    return null;
+  }
 
   const Card = ({ id, header, description, src, alt = "", signUpState }) => (
     <div
       onClick={() => {
-        setRoleSelected(id),
-          setSignUpState(signUpState),
-          setSignUpStateImage(src);
+        setRoleSelected(id), setSignUpState(signUpState), setSignUpStateImage(src);
+        router.push({
+          pathname: "/sign-up",
+          query: { role: id },
+        });
       }}
       className="rounded-lg bg-white shadow w-[380px] cursor-pointer hover:shadow-xl"
     >
       <div className="w-[380px] h-[450px] relative rounded-lg">
-        <Image
-          className="rounded-t-lg"
-          src={src}
-          alt={alt}
-          layout="fill"
-          objectFit="cover"
-        />
+        <Image className="rounded-t-lg" src={src} alt={alt} layout="fill" objectFit="cover" />
       </div>
       <div className="p-4">
         <Subheader text={header} />
@@ -74,12 +107,7 @@ export default function SignUp() {
       )}
       {roleSelected && (
         <div className="h-[720px]">
-          <SignupForm
-            header={signUpState}
-            srcImg={signUpStateImage}
-            roleSelectedID={roleSelected}
-            goBack={goBack}
-          />
+          <SignupForm header={signUpState} srcImg={signUpStateImage} roleSelectedID={roleSelected} goBack={goBack} />
         </div>
       )}
     </>
