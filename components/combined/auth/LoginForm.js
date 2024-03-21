@@ -47,8 +47,7 @@ export default function LoginForm() {
               Login to Bored and Yachting
             </h2>
             <p className="text-sm mb-2">
-              Great! Login to your account and access features and more from
-              your account.
+              Book your next rental, manage your yachts, or view your upcoming charters.
             </p>
           </div>
 
