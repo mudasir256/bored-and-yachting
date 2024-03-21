@@ -6,7 +6,7 @@ export const steps = [
   },
   {
     name: "Set your crew rates",
-    description: "Determining fair crew compensation, considering industry standards, vessel specifics.",
+    description: "Determine fair crew compensation, considering industry standards, vessel specifics, etc.",
     status: "complete",
   },
   {
@@ -21,7 +21,7 @@ export const steps = [
   },
   {
     name: "You could earn $50/hr",
-    description: "Unlock earning potential with a lucrative rate of $50 per hour.",
+    description: "Get started today and start earning with Bored & Yachting.",
     status: "complete",
   },
 ];
@@ -53,7 +53,7 @@ export const benefits = [
   },
   {
     title: "Connect with the Community",
-    description: "Engage with vibrant community; share experiences, insights, and opportunities.",
+    description: "Join our exclusive community and share experiences, insights, and opportunities.",
     href: "#",
     iconName: "crew",
     iconForeground: "text-yellow-700",
